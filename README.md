@@ -1,3 +1,16 @@
+# Melkaweb
+
+A Next.js frontend is being migrated onto the existing Django/MySQL backend.
+See [frontend/README.md](frontend/README.md) for setup, migration coverage, and verification.
+
+Quick start after installing the Python requirements and running `npm --prefix frontend ci`:
+
+```bash
+npm run dev
+```
+
+The original Django project documentation follows.
+
 
 ## OTECHmain: Dynamic web app for OTECH
 

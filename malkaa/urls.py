@@ -13,6 +13,7 @@ from about_us.urls import ServicesPage,TechnologyPage
 admin.site.site_header = 'Super Administrator'
 
 urlpatterns = [
+    path('api/frontend/', include('core.frontend_api')),
     path('internalAdmin/', admin.site.urls),
     path('', index, name="index"),#for homage page
 

@@ -18,9 +18,15 @@ DEBUG = True
 
 
 CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
     'https://localhost.com', 
     'https://melkaa.com',
     'https://www.melkaa.com',
+]
+CSRF_TRUSTED_ORIGINS += [
+    origin.strip() for origin in config('FRONTEND_ORIGINS', default='').split(',')
+    if origin.strip()
 ]
 
 # lists of allowed hosts
