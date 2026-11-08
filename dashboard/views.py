@@ -1,9 +1,10 @@
+from core.presentation import render
 from django.views import View
 from django.apps import apps
 from django.conf import settings
 from django.db import ProgrammingError
 from django.db.models.base import ModelBase
-from django.shortcuts import render,redirect
+from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages

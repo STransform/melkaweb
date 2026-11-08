@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from core.presentation import render
+from django.shortcuts import redirect
 from django.views import View 
 from django.contrib import messages
 from django.views import View
@@ -8,7 +9,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.paginator import Paginator
 
 
-from django.shortcuts import render
+
 from django.utils.translation import gettext as _
 
 from core.models import Settings
@@ -123,6 +124,15 @@ def search(request):
         data =  {'no_result':True}
 
     return render (request, 'front/search_results.html',data)
+
+
+def portfolio(request):
+    return render(request, 'front/services.html', {
+        'services': [{'title': work.title, 'content': work.description,
+                      'image_url': work.background_image.url if work.background_image else None}
+                     for work in FeaturedWork.objects.all()],
+        'page_title': _('Featured projects'), 'page_subtitle': '',
+    })
         
 
 class GalleryImagePage(View): 

@@ -1,9 +1,10 @@
+from core.presentation import render
 from typing import Any
 from django.views import View
 from django.utils import timezone
 from django.http import HttpRequest
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.sessions.models import Session 
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import check_password

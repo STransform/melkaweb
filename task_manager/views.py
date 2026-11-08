@@ -1,9 +1,10 @@
+from core.presentation import render
 from django.views import View
 from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 
 
 from .models import Task, Comment

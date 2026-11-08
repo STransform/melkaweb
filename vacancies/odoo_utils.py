@@ -1,4 +1,24 @@
 import xmlrpc.client
+
+
+class TimeoutTransport(xmlrpc.client.Transport):
+    def make_connection(self, host):
+        connection = super().make_connection(host)
+        connection.timeout = config('ODOO_TIMEOUT', default=5, cast=int)
+        return connection
+
+
+class TimeoutSafeTransport(xmlrpc.client.SafeTransport):
+    def make_connection(self, host):
+        connection = super().make_connection(host)
+        connection.timeout = config('ODOO_TIMEOUT', default=5, cast=int)
+        return connection
+
+
+def server_proxy(url):
+    transport = TimeoutSafeTransport() if url.startswith('https://') else TimeoutTransport()
+    return xmlrpc.client.ServerProxy(url, transport=transport)
+
 from decouple import config
 
 def get_odoo_connection():
@@ -8,14 +28,14 @@ def get_odoo_connection():
     ODOO_PASSWORD = config('ODOO_PASSWORD', default='admin')
 
     try:
-        common = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/common')
+        common = server_proxy(f'{ODOO_URL}/xmlrpc/2/common')
         version = common.version()
         if not version:
             raise Exception("Failed to connect to Odoo server.")
         uid = common.authenticate(ODOO_DB, ODOO_USERNAME, ODOO_PASSWORD, {})
         if not uid:
             raise Exception("Odoo authentication failed. Check database, username, or password.")
-        models = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/object')
+        models = server_proxy(f'{ODOO_URL}/xmlrpc/2/object')
         return models, ODOO_DB, uid, ODOO_PASSWORD
     except ConnectionRefusedError:
         raise Exception(f"Connection refused to {ODOO_URL}. Ensure Odoo server is running on port 3334.")

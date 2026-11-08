@@ -1,5 +1,6 @@
+from core.presentation import render
 import os
-from django.shortcuts import render
+
 from .models import Document
 from django.http import FileResponse
 from django.conf import settings

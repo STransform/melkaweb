@@ -1,6 +1,7 @@
-from django.shortcuts import render,redirect
+from core.presentation import render
+from django.shortcuts import redirect
 from .models import *
-from django.shortcuts import render
+
 from django.views import View
 from django.contrib import messages
 from core.views import paginate

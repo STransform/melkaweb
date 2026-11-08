@@ -1,5 +1,6 @@
+from core.presentation import render
 
-from django.shortcuts import render,  redirect
+from django.shortcuts import redirect
 from.models import NewsArticle
 from core.views import paginate
 

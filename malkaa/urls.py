@@ -4,7 +4,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from core.views import index, search, EventListPage, GalleryImagePage, GalleryVideoPage, Contact, BidPage
+from core.views import index, search, portfolio, EventListPage, GalleryImagePage, GalleryVideoPage, Contact, BidPage
 from django.views.i18n import JavaScriptCatalog
 from django.utils.translation import gettext_lazy as _
 from django.conf.urls.i18n import i18n_patterns
@@ -30,6 +30,7 @@ urlpatterns = [
 
     # direct urls
     path('search/', search, name='search'), #header search functionality
+    path('portfolio/', portfolio, name='portfolio'),
     path("contact-us/",Contact.as_view(), name="contact_us"),
     path('events/', EventListPage.as_view(), name='events_list'),
     path('gallery-images/', GalleryImagePage.as_view(), name='gallery_images'),

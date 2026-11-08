@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from core.presentation import render
+
 from .models import Supplier
 from django.db.models import Q
 from core.views import paginate

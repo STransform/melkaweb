@@ -1,5 +1,9 @@
 """Isolated API test database. Never touches the project's MySQL data."""
 from malkaa.settings import *  # noqa: F403
+from tempfile import TemporaryDirectory
+
+_test_media = TemporaryDirectory(prefix='melkaweb-test-media-')
+MEDIA_ROOT = _test_media.name
 
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}}
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'

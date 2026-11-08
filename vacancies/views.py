@@ -1,6 +1,7 @@
+from core.presentation import render
 import base64
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views import View
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -11,7 +12,10 @@ from django.db import connection
 
 def job_list(request):
     search = request.GET.get('search', "")
-    page_number = request.GET.get('page', 1)
+    try:
+        page_number = max(1, int(request.GET.get('page', 1)))
+    except (TypeError, ValueError):
+        page_number = 1
     offset = (page_number - 1) * 12
     
     jobs = fetch_odoo_jobs(search, offset=offset, limit=12)
@@ -52,7 +56,7 @@ def job_list(request):
     })
 
 class jobs_apply(View):
-    def _fetch_job(self, job_id):
+    def _get_job(self, job_id):
         jobs = fetch_odoo_jobs()
         job = next((j for j in jobs if j['id'] == job_id), None)
         if not job:
@@ -74,10 +78,17 @@ class jobs_apply(View):
                 }
             except Job.DoesNotExist:
                 messages.error(self.request, "Job not found.")
-                return redirect('job_list')
+                return None
+            job['_local'] = True
         else:
             job['Status'] = job.get('Status', 'Active' if job.get('is_published', True) else 'Closed')
-        
+            job['_local'] = False
+        return job
+
+    def _fetch_job(self, job_id):
+        job = self._get_job(job_id)
+        if job is None:
+            return redirect('job_list')
         form = ApplicationForm()
         
         return render(
@@ -96,7 +107,7 @@ class jobs_apply(View):
 
     def post(self, *args, **kwargs):
         job_id = self.kwargs['pk']
-        job = self._fetch_job(job_id)
+        job = self._get_job(job_id)
         if not job:
             messages.error(self.request, "Job not found.")
             return redirect('job_list')
@@ -124,7 +135,7 @@ class jobs_apply(View):
                 'cgpa_requirement': cgpa,
                 'job_id': job_id,
                 'linkedin_profile': form.cleaned_data.get('linkedin_profile', ''),
-                'experience': form.cleaned_data.get('experience', 0),
+                'experience': form.cleaned_data.get('experience') or 0,
             }
 
             if form.cleaned_data.get('attachment_ids'):
@@ -132,7 +143,7 @@ class jobs_apply(View):
                 vals['cv_filename'] = cv_file.name
                 vals['cv_data'] = base64.b64encode(cv_file.read()).decode('utf-8')
 
-            is_local_job = job.get('Status') == 'Active'
+            is_local_job = job.get('_local', False)
             company_id = None
             if not is_local_job:
                 try:
@@ -152,15 +163,6 @@ class jobs_apply(View):
                     return redirect('job_list')
 
             try:
-                # Log Application model fields
-                from django.db.models import Field
-                application_fields = [f.name for f in Application._meta.get_fields() if isinstance(f, Field)]
-
-                # Log database schema
-                with connection.cursor() as cursor:
-                    cursor.execute("DESCRIBE vacancies_application")
-                    db_columns = [row[0] for row in cursor.fetchall()]
-
                 if not is_local_job:
                     create_odoo_application(vals)
 

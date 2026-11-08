@@ -31,6 +31,7 @@ CSRF_TRUSTED_ORIGINS += [
 
 # lists of allowed hosts
 ALLOWED_HOSTS = ['melkaa.com', 'www.melkaa.com','127.0.0.1','localhost']
+USE_X_FORWARDED_HOST = True
 CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 
@@ -124,6 +125,7 @@ CUSTOM_INSTALLED_APPS = [
 
 #  to process requests and responses before and after they reach the view.
 MIDDLEWARE = [
+    'core.presentation.PresentationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -309,6 +311,8 @@ CMS_TEMPLATES = (
 
 
 CMS_CONFIRM_VERSION4 = True
+# Pages are data responses to Next.js; never reuse an old rendered-page cache.
+CMS_PAGE_CACHE = False
 # Allow admin sidebar to open admin URLs | Allow embedding from the same origin
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 

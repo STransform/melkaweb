@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from core.presentation import render
+from django.shortcuts import redirect
 from django.views import View
 from .models import *
 from django.db.models.base import ModelBase
