@@ -1,0 +1,932 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-30 09:48+0300\n"
+"PO-Revision-Date: 2024-04-12 15:07+0000\n"
+"Last-Translator: Super admin <adminuser@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\accounts\password_manager.py:53
+msgid "New password"
+msgstr "አዲስ የይለፍ ቃል"
+
+#: .\accounts\password_manager.py:63
+msgid "New password confirmation"
+msgstr "የይለፍ ቃሉን በድጋሚ ያስገቡ"
+
+#: .\accounts\password_manager.py:86
+msgid "Enter new password"
+msgstr "አዲስ የይለፍ ቃል ያስገቡ"
+
+#: .\accounts\templates\login.html:21
+msgid "LogIn"
+msgstr "ግባ"
+
+#: .\accounts\templates\login.html:28 .\templates\front\blog_detail.html:173
+#: .\templates\front\contact.html:72 .\templates\front\index.html:614
+msgid "Email Address"
+msgstr "የኢሜል አድራሻ"
+
+#: .\accounts\templates\login.html:37 .\accounts\templates\register.html:75
+#: .\accounts\templates\signup.html:60
+#: .\templates\staff\accounts\add_user.html:75
+msgid "Password"
+msgstr "አዲስ የይለፍ ቃል"
+
+#: .\accounts\templates\login.html:48
+msgid "Remember Me"
+msgstr "አስታውሰኝ"
+
+#: .\accounts\templates\login.html:52
+msgid "Forgot Password?"
+msgstr "አዲስ የይለፍ ቃል"
+
+#: .\accounts\templates\login.html:64
+msgid "Don't have account"
+msgstr "መለያ የለዎትም"
+
+#: .\accounts\templates\login.html:64
+#: .\accounts\templates\pw_reset_done.html:34
+msgid "Create Account"
+msgstr "መለያ ይፍጠሩ"
+
+#: .\accounts\templates\password_reset.html:25
+msgid "Reset Password"
+msgstr "አዲስ የይለፍ ቃል"
+
+#: .\accounts\templates\pw_reset_complete.html:30
+msgid ""
+"Your new password has been set successfully. You need to use this password "
+"to login to your account afterwards."
+msgstr ""
+"አዲሱ የይለፍ ቃልዎ በተሳካ ሁኔታ ተቀናብሯል። ከዚያ በኋላ አዲሱን የይለፍ ቃል በመጠቀም ወደ መለያዎት መግባት ይችላሉ።"
+
+#: .\accounts\templates\pw_reset_complete.html:36
+msgid "Login"
+msgstr "ግባ"
+
+#: .\accounts\templates\pw_reset_done.html:34
+msgid "Don't have account?"
+msgstr "መለያ የለዎትም?"
+
+#: .\accounts\templates\pw_reset_form.html:23
+msgid "Confirm Your Password"
+msgstr "የይለፍ ቃልዎን ያረጋግጡ"
+
+#: .\accounts\templates\register.html:27
+msgid "Register"
+msgstr "ይመዝገቡ"
+
+#: .\accounts\templates\register.html:33
+#: .\templates\staff\accounts\add_user.html:33
+msgid "First Name"
+msgstr "የመጀመሪያ ስም"
+
+#: .\accounts\templates\register.html:44
+#: .\templates\staff\accounts\add_user.html:44
+msgid "Last Name"
+msgstr "የአባት ስም"
+
+#: .\accounts\templates\register.html:55 .\accounts\templates\signup.html:55
+#: .\templates\front\footer.html:35
+#: .\templates\staff\accounts\add_user.html:55
+msgid "Email"
+msgstr "የኢሜል አድራሻ"
+
+#: .\accounts\templates\register.html:63 .\accounts\templates\signup.html:70
+#: .\templates\staff\accounts\add_user.html:63
+msgid "Role"
+msgstr "የመለያ አይነት"
+
+#: .\accounts\templates\register.html:85
+#: .\templates\staff\accounts\add_user.html:85
+msgid "Reenter Password"
+msgstr "አዲስ የይለፍ ቃል"
+
+#: .\accounts\templates\register.html:98
+msgid "I have read and agree to the "
+msgstr "አንብቤ ተስማምቻለሁ"
+
+#: .\accounts\templates\register.html:98
+msgid "terms of service"
+msgstr "የአገልግሎት ውል"
+
+#: .\accounts\templates\signup.html:10 .\accounts\templates\signup.html:45
+msgid "User Registration"
+msgstr "የተጠቃሚ ምዝገባ"
+
+#: .\accounts\templates\signup.html:50
+msgid "Username"
+msgstr "የተጠቃሚ ስም"
+
+#: .\accounts\templates\signup.html:65
+msgid "Confirm Password"
+msgstr "አዲስ የይለፍ ቃል"
+
+#: .\accounts\templates\signup.html:78
+msgid "By creating an account you agree to our "
+msgstr "መለያ በመፍጠር በእኛ ተስማምተዋል"
+
+#: .\accounts\templates\signup.html:78
+msgid "Terms & Conditions"
+msgstr " ሁኔታዎች እና ግዴታዎች"
+
+#: .\accounts\templates\signup.html:88
+msgid "Already have an account?"
+msgstr "መለያ አለህ?"
+
+#: .\accounts\templates\signup.html:88
+msgid "Sign In"
+msgstr "ግባ"
+
+#: .\dashboard\models.py:93 .\dashboard\models.py:94
+msgid "Home Page Sliders"
+msgstr "መነሻ ገጽ ተንሸራታቾች"
+
+#: .\documents\models.py:11
+msgid "BPR Documentations"
+msgstr "ዶክመንቶች"
+
+#: .\documents\models.py:12
+msgid "Regulations"
+msgstr "አካባቢ"
+
+#: .\documents\models.py:13
+msgid "Declarations"
+msgstr "አካባቢ"
+
+#: .\documents\models.py:14
+msgid "Annual Report"
+msgstr "አመታዊ ሪፖርት"
+
+#: .\documents\models.py:15
+msgid "Other"
+msgstr "ሌሎች"
+
+#: .\suppliers\models.py:7
+msgid "Private"
+msgstr "የግል"
+
+#: .\suppliers\models.py:8
+msgid "Corporate"
+msgstr "ኮርፖሬት"
+
+#: .\suppliers\models.py:9
+msgid "Retail"
+msgstr "ችርቻሮ"
+
+#: .\suppliers\models.py:10
+msgid "Merchant"
+msgstr "ነጋዴ"
+
+#: .\suppliers\templates\supplier_list.html:13 .\templates\403.html:10
+#: .\templates\404.html:10 .\templates\front\about.html:12
+#: .\templates\front\base.html:249 .\templates\front\base.html:339
+#: .\templates\front\bid.html:13 .\templates\front\blog.html:13
+#: .\templates\front\blog_detail.html:13 .\templates\front\contact.html:13
+#: .\templates\front\event.html:22 .\templates\front\gallery.html:15
+#: .\templates\front\news.html:34 .\templates\front\news_detail.html:17
+#: .\templates\front\search_results.html:14 .\templates\front\services.html:12
+#: .\templates\front\structure.html:17 .\templates\front\vacancy.html:13
+#: .\templates\front\videos.html:15
+msgid "Home"
+msgstr "ዋና ገጽ"
+
+#: .\suppliers\templates\supplier_list.html:14 .\templates\front\base.html:280
+#: .\templates\front\base.html:355
+msgid "Blocked Suppliers"
+msgstr "የታገዱ አቅራቢዎች"
+
+#: .\suppliers\templates\supplier_list.html:22
+msgid "No Suppler Found"
+msgstr "ምንም ውጤት አልተገኘም።"
+
+#: .\suppliers\templates\supplier_list.html:22
+msgid "BLOCKED SUPPLIERS LIST"
+msgstr "የታገዱ የአቅራቢዎች ዝርዝር"
+
+#: .\suppliers\templates\supplier_list.html:27
+msgid ""
+"The following are list of suppliers registered as blocked suppliers by our "
+"bureau."
+msgstr "በቢሮአችን በታገዱ አቅራቢዎች የተመዘገቡ አቅራቢዎች ዝርዝር የሚከተሉት ናቸው"
+
+#: .\suppliers\templates\supplier_list.html:41
+msgid "Search for blocked supplier"
+msgstr "ከሙሉ ድህረገጻችን ፍለጋ የተገኙት"
+
+#: .\suppliers\templates\supplier_list.html:56
+msgid "Company Name"
+msgstr "የድርጅት ስም"
+
+#: .\suppliers\templates\supplier_list.html:57
+msgid "Tin Number"
+msgstr "የቲን ቁጥር"
+
+#: .\suppliers\templates\supplier_list.html:58
+msgid "Sector"
+msgstr "ዘርፍ"
+
+#: .\suppliers\templates\supplier_list.html:59
+msgid "Business Area"
+msgstr "የንግድ አይነት"
+
+#: .\task_manager\models.py:10
+msgid "New"
+msgstr "አዲስ"
+
+#: .\task_manager\models.py:11
+msgid "Completed"
+msgstr "ተጠናቀቀ"
+
+#: .\task_manager\models.py:12
+msgid "Inprogress"
+msgstr "በሂደት ላይ"
+
+#: .\task_manager\models.py:13
+msgid "Pending"
+msgstr "በመጠባበቅ ላይ"
+
+#: .\task_manager\models.py:18
+msgid "High"
+msgstr "ከፍተኛ"
+
+#: .\task_manager\models.py:19
+msgid "Medium"
+msgstr "መካከለኛ"
+
+#: .\task_manager\models.py:20
+msgid "Low"
+msgstr "ዝቅተኛ"
+
+#: .\templates\403.html:11 .\templates\403.html:19
+msgid "Permission Denied"
+msgstr "የተከለከለ ተግባር"
+
+#: .\templates\404.html:11 .\templates\404.html:19
+msgid "Page Not Found"
+msgstr "ምንም ውጤት አልተገኘም።"
+
+#: .\templates\front\about.html:13 .\templates\front\about.html:21
+#: .\templates\front\base.html:259 .\templates\front\base.html:344
+msgid "About Us"
+msgstr "ስለ እኛ"
+
+#: .\templates\front\about.html:26
+msgid "Detail about our bureau"
+msgstr "ስለቢሮአችን "
+
+#: .\templates\front\about.html:61 .\templates\front\about.html:71
+msgid "Mission"
+msgstr "አላማ"
+
+#: .\templates\front\about.html:62 .\templates\front\about.html:93
+msgid "Vision"
+msgstr "ራእይ"
+
+#: .\templates\front\about.html:63 .\templates\front\about.html:117
+msgid "Values"
+msgstr "እሴቶች"
+
+#: .\templates\front\about.html:82 .\templates\front\about.html:104
+#: .\templates\front\about.html:129 .\templates\front\bid.html:59
+#: .\templates\front\blog.html:50 .\templates\front\index.html:132
+#: .\templates\front\index.html:190 .\templates\front\index.html:260
+#: .\templates\front\index.html:288 .\templates\front\index.html:315
+#: .\templates\front\index.html:340 .\templates\front\index.html:369
+#: .\templates\front\news.html:76 .\templates\front\search_results.html:68
+#: .\templates\front\services.html:55 .\templates\front\vacancy.html:85
+msgid "Read More"
+msgstr "ተጨማሪ ያንብቡ"
+
+#: .\templates\front\about.html:142
+msgid "Management experts"
+msgstr "ከፍተኛ ባለሙያዎቻችን"
+
+#: .\templates\front\base.html:115 .\templates\front\footer.html:53
+msgid "Success"
+msgstr "ስኬት"
+
+#: .\templates\front\base.html:116
+msgid "Warning"
+msgstr "ማሳሰቢያ"
+
+#: .\templates\front\base.html:117
+msgid "Error"
+msgstr "ችግር"
+
+#: .\templates\front\base.html:139
+msgid "Bureau of Finance"
+msgstr "የፋይናንስ ቢሮ"
+
+#: .\templates\front\base.html:255 .\templates\front\base.html:342
+msgid "About Bureau"
+msgstr "ስለ ቢሯችን"
+
+#: .\templates\front\base.html:262 .\templates\front\base.html:345
+#: .\templates\front\structure.html:18
+msgid "Structure"
+msgstr "ቅርጽ"
+
+#: .\templates\front\base.html:270 .\templates\front\base.html:349
+#: .\templates\front\services.html:13
+msgid "Services"
+msgstr "አገልግሎቶች"
+
+#: .\templates\front\base.html:276 .\templates\front\base.html:352
+msgid "Resources"
+msgstr "ምንጮች"
+
+#: .\templates\front\base.html:279 .\templates\front\base.html:354
+msgid "Documents"
+msgstr "ዶክመንቶች"
+
+#: .\templates\front\base.html:289 .\templates\front\base.html:360
+msgid "Announcements"
+msgstr "መግለጫዎች"
+
+#: .\templates\front\base.html:292 .\templates\front\base.html:362
+#: .\templates\front\bid.html:14 .\templates\front\bid.html:22
+msgid "Bids"
+msgstr "ጨረታዎች"
+
+#: .\templates\front\base.html:295 .\templates\front\base.html:363
+#: .\templates\front\event.html:31
+msgid "Events"
+msgstr "ክስተቶች"
+
+#: .\templates\front\base.html:298 .\templates\front\base.html:364
+msgid "Vacancies"
+msgstr "የስራ ቦታዎች"
+
+#: .\templates\front\base.html:310 .\templates\front\base.html:313
+#: .\templates\front\base.html:371 .\templates\front\base.html:374
+#: .\templates\front\news.html:35
+msgid "News"
+msgstr "ዜና"
+
+#: .\templates\front\base.html:314 .\templates\front\base.html:375
+#: .\templates\front\blog.html:14
+msgid "Blogs"
+msgstr "ቦሎጎች"
+
+#: .\templates\front\base.html:323 .\templates\front\base.html:381
+msgid "Gallery"
+msgstr "ምስሎች"
+
+#: .\templates\front\base.html:326 .\templates\front\base.html:383
+msgid "Images"
+msgstr "ፎቶዎች"
+
+#: .\templates\front\base.html:327 .\templates\front\base.html:384
+msgid "Videos"
+msgstr "ተንቀሳቃሽ ምስሎች"
+
+#: .\templates\front\base.html:333 .\templates\front\base.html:387
+#: .\templates\front\contact.html:14 .\templates\front\contact.html:61
+#: .\templates\front\index.html:598
+msgid "Contact Us"
+msgstr "አግኙን"
+
+#: .\templates\front\bid.html:27
+msgid "List of Bids"
+msgstr "የጨረታዎች ዝርዝር"
+
+#: .\templates\front\bid.html:39
+msgid "Open Date"
+msgstr "ቀን"
+
+#: .\templates\front\bid.html:39
+msgid "Closing Date"
+msgstr "የመዝጊያ ቀን"
+
+#: .\templates\front\blog.html:22
+msgid "BLOGS"
+msgstr "ብሎጎች"
+
+#: .\templates\front\blog.html:27 .\templates\front\docs.html:31
+#: .\templates\front\index.html:402
+msgid "YOU CAN FIND ALL THE RESOURCES IN THIS SECTION"
+msgstr "በዚህ ክፍል ውስጥ ያሉትን ሁሉንም ምንጮች ማግኘት ይችላሉ"
+
+#: .\templates\front\blog.html:48 .\templates\front\blog_detail.html:71
+#: .\templates\front\news_detail.html:77
+msgid "By"
+msgstr "በ"
+
+#: .\templates\front\blog.html:49 .\templates\front\blog_detail.html:73
+#: .\templates\front\blog_detail.html:133 .\templates\front\index.html:280
+#: .\templates\front\index.html:307 .\templates\front\search_results.html:110
+msgid "Comments"
+msgstr "ዶክመንቶች"
+
+#: .\templates\front\blog_detail.html:14
+msgid "Blog List"
+msgstr "ቦሎጎች"
+
+#: .\templates\front\blog_detail.html:15
+msgid "Blog Detail"
+msgstr "የብሎግ ዝርዝር"
+
+#: .\templates\front\blog_detail.html:24
+msgid "BLOG DETAIL"
+msgstr "የብሎግ ዝርዝር"
+
+#: .\templates\front\blog_detail.html:29
+msgid "Blog on "
+msgstr "ቦሎጎች"
+
+#: .\templates\front\blog_detail.html:60
+msgid "Author"
+msgstr "ዘጋቢ"
+
+#: .\templates\front\blog_detail.html:97
+#: .\templates\front\news_detail.html:101
+msgid "Recent Posts"
+msgstr "የቅርብ ጊዜ ልጥፎች"
+
+#: .\templates\front\blog_detail.html:120
+#: .\templates\front\news_detail.html:124
+msgid "Twitter Feed"
+msgstr "የትዊተር ምግብ"
+
+#: .\templates\front\blog_detail.html:123
+#: .\templates\front\news_detail.html:127
+msgid "Tweets by PM Ethiopia"
+msgstr "የሚኒስት ትዊቶች"
+
+#: .\templates\front\blog_detail.html:162
+msgid "Leave a comment"
+msgstr "አስተያየት ይስጡ"
+
+#: .\templates\front\blog_detail.html:169 .\templates\front\contact.html:68
+#: .\templates\front\index.html:608
+msgid "Full Name"
+msgstr "ሙሉ ስም"
+
+#: .\templates\front\blog_detail.html:179
+msgid "Comment"
+msgstr "ዶክመንቶች"
+
+#: .\templates\front\blog_detail.html:186
+msgid "Post Comments"
+msgstr "አስተያየቶችን ይለጥፉ"
+
+#: .\templates\front\contact.html:22
+msgid "CONTACT US"
+msgstr "አግኙን"
+
+#: .\templates\front\contact.html:27
+msgid "Keep in touch and send us your thoughts."
+msgstr "ሀሳብዎን ይላኩልን"
+
+#: .\templates\front\contact.html:42 .\templates\front\index.html:570
+msgid "Our Office Location"
+msgstr "የእኛ የቢሮ መገኛ"
+
+#: .\templates\front\contact.html:47 .\templates\front\index.html:575
+msgid ""
+"HAVE SOMETHING TO SAY OR NEED ADDITIONAL INFORMATION? DROP BY TO OUR OFFICE"
+msgstr "የሚናገሩት ነገር አለዎት ወይም ተጨማሪ መረጃ ይፈልጋሉ? እባኮት ወደ ይምጡ"
+
+#: .\templates\front\contact.html:62
+msgid "WE'RE HERE TO ASSIST YOU!"
+msgstr "እርስዎን ለመርዳት እንተጋለን!"
+
+#: .\templates\front\contact.html:76 .\templates\front\index.html:621
+msgid "Phone Number"
+msgstr "የስልክ ቁጥር"
+
+#: .\templates\front\contact.html:81 .\templates\front\index.html:629
+msgid "Subject"
+msgstr "ዋና ሐሳብ"
+
+#: .\templates\front\contact.html:97 .\templates\front\index.html:650
+msgid "Send Message"
+msgstr "መልዕክት ላክ"
+
+#: .\templates\front\docs.html:26 .\templates\front\index.html:397
+msgid "RESOURCES"
+msgstr "ምንጮች"
+
+#: .\templates\front\docs.html:93
+msgid "Document not found"
+msgstr "ሰነድ አልተገኘም"
+
+#: .\templates\front\event.html:23
+msgid "Event"
+msgstr "ክስተት"
+
+#: .\templates\front\event.html:36
+msgid "Here are the lists of upcoming events"
+msgstr "የመጪ ክስተቶች ዝርዝሮች እነሆ"
+
+#: .\templates\front\event.html:62
+msgid "Date:"
+msgstr "ቀን፡-"
+
+#: .\templates\front\event.html:63
+msgid "Time:"
+msgstr "ጊዜ፡-"
+
+#: .\templates\front\event.html:64
+msgid "Location:"
+msgstr "ቦታ፡"
+
+#: .\templates\front\footer.html:15
+msgid "Total visitors"
+msgstr "ጠቅላላ ጎብኝዎች"
+
+#: .\templates\front\footer.html:24
+msgid "CONTACTS"
+msgstr "አድራሻዎች"
+
+#: .\templates\front\footer.html:27
+msgid "Address"
+msgstr "አድራሻ"
+
+#: .\templates\front\footer.html:31
+msgid "Phone"
+msgstr "ስልክ"
+
+#: .\templates\front\footer.html:42
+msgid "QUICK LINKS"
+msgstr "ፈጣን ማገናኛዎች"
+
+#: .\templates\front\footer.html:50
+msgid "NEWSLETTER"
+msgstr "ዜና"
+
+#: .\templates\front\footer.html:53
+msgid "You've been added to our email list."
+msgstr "ወደ ኢሜል ዝርዝራችን ታክለዋል"
+
+#: .\templates\front\footer.html:60
+msgid "Subscribe"
+msgstr "ሰብስክራይብ ያድርጉ"
+
+#: .\templates\front\footer.html:65
+msgid "Addis Ababa City Administration Bureau of Finance"
+msgstr "የአዲስ አበባ ከተማ አስተዳደር ፋይናንስ ቢሮ"
+
+#: .\templates\front\footer.html:69
+msgid "Working Days"
+msgstr "የስራ ቀናት"
+
+#: .\templates\front\footer.html:84
+msgid "All Rights Reserved. Design"
+msgstr "መብቱ በህግ የተጠበቀ ነው. ንድፍ"
+
+#: .\templates\front\footer.html:84
+msgid "Kanenus Technologies"
+msgstr "ካኖኒስ ቴክኖሎጂ"
+
+#: .\templates\front\gallery.html:16
+msgid "Gallery Images"
+msgstr "ምስሎች"
+
+#: .\templates\front\gallery.html:24
+msgid "GALLERY IMAGES"
+msgstr "ምስሎች"
+
+#: .\templates\front\gallery.html:27 .\templates\front\index.html:477
+msgid "PICTURES TAKEN FROM PREVIOUS ACTIVITIES"
+msgstr "ከቀደምት ተግባራት የተወሰዱ ምስሎች"
+
+#: .\templates\front\gallery.html:36 .\templates\front\videos.html:37
+msgid "All Categories"
+msgstr "ሁሉም ምድቦች"
+
+#: .\templates\front\index.html:41 .\templates\front\index.html:74
+msgid "FEATURED WORKS"
+msgstr "ተለይተው የቀረቡ ስራዎች"
+
+#: .\templates\front\index.html:78
+msgid ""
+"More than 2500 Youths in the Somali Region have been given funding to pursue "
+"their Dreams"
+msgstr "በሶማሌ ክልል ከ2500 በላይ ወጣቶች ህልማቸውን እንዲያሳኩ የገንዘብ ድጋፍ ተደረገላቸው"
+
+#: .\templates\front\index.html:151
+msgid "Recent News"
+msgstr "የቅርብ ጊዜ ዜናዎች"
+
+#: .\templates\front\index.html:156 .\templates\front\news.html:48
+msgid "RECENT NEWS DELIVERED FROM US TO YOU"
+msgstr "የቅርብ ጊዜ ዜናዎች ከኛ ወደ እናንተ ደርሰዋል"
+
+#: .\templates\front\index.html:163
+msgid "See All News"
+msgstr "ሁሉንም ዜና ይመልከቱ"
+
+#: .\templates\front\index.html:214
+msgid "Recent Blogs"
+msgstr "የቅርብ ብሎጎች"
+
+#: .\templates\front\index.html:219
+msgid "BLOGS FROM US TO YOU"
+msgstr "ብሎጎች"
+
+#: .\templates\front\index.html:227
+msgid "SEE ALL BLOGS"
+msgstr "ሁሉንም ብሎጎች ይመልከቱ"
+
+#: .\templates\front\index.html:411
+msgid "SEE ALL RESOURCES"
+msgstr "ሁሉንም ምንጮች ይመልከቱ"
+
+#: .\templates\front\index.html:472
+msgid "GALLERIES"
+msgstr "ማዕከለ-ስዕላት"
+
+#: .\templates\front\index.html:485
+msgid "SEE ALL"
+msgstr "ሁሉም ይዩ"
+
+#: .\templates\front\index.html:537
+msgid "FAQs"
+msgstr "የሚጠየቁ ጥያቄዎች"
+
+#: .\templates\front\index.html:542
+msgid "OUR ANSWERS FOR THE MOST QUESTIONS WE GET"
+msgstr "የጥያቄዎ መልሶች"
+
+#: .\templates\front\index.html:599
+msgid "WE'RE HERE TO ASSIST YOU"
+msgstr "እርስዎን ለመርዳት እንተጋለን"
+
+#: .\templates\front\index.html:641
+msgid "Message"
+msgstr "መልዕክት ላክ"
+
+#: .\templates\front\news.html:43
+msgid "Our News"
+msgstr "ዜና"
+
+#: .\templates\front\news_detail.html:18
+msgid "News List"
+msgstr "ዜና"
+
+#: .\templates\front\news_detail.html:19
+msgid "News Detail"
+msgstr "የዜና ዝርዝር"
+
+#: .\templates\front\news_detail.html:28
+msgid "NEWS DETAIL"
+msgstr "የዜና ዝርዝር"
+
+#: .\templates\front\news_detail.html:33
+msgid "News on"
+msgstr "ዜና"
+
+#: .\templates\front\search_results.html:15
+msgid "Search Results"
+msgstr "የፍለጋ ውጤቶች"
+
+#: .\templates\front\search_results.html:25
+msgid "No Result Found"
+msgstr "ምንም ውጤት አልተገኘም።"
+
+#: .\templates\front\search_results.html:25
+msgid "Your Search Results"
+msgstr "የፍለጋ ውጤቶች"
+
+#: .\templates\front\search_results.html:30
+msgid "Searched our whole site"
+msgstr "ከሙሉ ድህረገጻችን ፍለጋ የተገኙት"
+
+#: .\templates\front\search_results.html:46
+msgid "Result in News"
+msgstr "የዜና ውጤቶች"
+
+#: .\templates\front\search_results.html:90
+msgid "Result in Blogs"
+msgstr "የብሎግ ውጤቶች"
+
+#: .\templates\front\search_results.html:133
+msgid "Result in Vacancies"
+msgstr "የስራ ቦታዎች"
+
+#: .\templates\front\search_results.html:145 .\templates\front\vacancy.html:73
+msgid "Deadline"
+msgstr "ማለቂያ ሰአት"
+
+#: .\templates\front\search_results.html:147
+#: .\templates\front\search_results.html:276 .\templates\front\vacancy.html:90
+msgid "Location"
+msgstr "አካባቢ"
+
+#: .\templates\front\search_results.html:169
+msgid "Result in Gallery"
+msgstr "በጋለሪ ውስጥ ያለው ውጤት"
+
+#: .\templates\front\search_results.html:207
+msgid "Result in Documents"
+msgstr "ዶክመንቶች"
+
+#: .\templates\front\search_results.html:250
+msgid "Result in Events"
+msgstr "በክስተቶች ውስጥ ውጤት"
+
+#: .\templates\front\search_results.html:274
+msgid "Date"
+msgstr "ቀን"
+
+#: .\templates\front\search_results.html:275
+msgid "Time"
+msgstr "ሰአት"
+
+#: .\templates\front\services.html:21
+msgid "Our Services"
+msgstr "አገልግሎቶች"
+
+#: .\templates\front\services.html:26
+msgid "Detail about our services"
+msgstr "ስለቢሮአችን "
+
+#: .\templates\front\vacancy.html:14
+msgid "Vacancy"
+msgstr "የስራ ቦታዎች"
+
+#: .\templates\front\vacancy.html:23 .\templates\front\vacancy.html:28
+msgid "RELATED"
+msgstr "ተያያዝ"
+
+#: .\templates\front\vacancy.html:23 .\templates\front\vacancy.html:28
+msgid "RECENT"
+msgstr "የቅርብ"
+
+#: .\templates\front\vacancy.html:23 .\templates\front\vacancy.html:28
+msgid "VACANCIES"
+msgstr "ክፍት የስራ ቦታዎች"
+
+#: .\templates\front\vacancy.html:44
+msgid "Search for vacancies"
+msgstr "የስራ ቦታዎች"
+
+#: .\templates\front\vacancy.html:54
+msgid "All"
+msgstr "ሁሉም"
+
+#: .\templates\front\vacancy.html:55 .\vacancies\models.py:17
+msgid "Active"
+msgstr "ክፍት"
+
+#: .\templates\front\vacancy.html:56
+msgid "Closed"
+msgstr "ዝግ"
+
+#: .\templates\front\vacancy.html:65
+msgid "No related vacancies related with keyword"
+msgstr "ከቁልፍ ቃል ጋር ምንም ተዛማጅ ክፍት ቦታዎች የሉም"
+
+#: .\templates\front\vacancy.html:93 .\templates\front\vacancy_apply.html:29
+msgid "Apply"
+msgstr "ያመልክቱ"
+
+#: .\templates\front\vacancy_apply.html:12
+msgid "Apply for Vacancy"
+msgstr "ለክፍት የስራ ቦታ ያመልክቱ"
+
+#: .\templates\front\vacancy_apply.html:13
+msgid "Fill in the details to apply for the vacancy"
+msgstr "ለክፍት ቦታው ለማመልከት ዝርዝሩን ይሙሉ"
+
+#: .\templates\front\videos.html:16
+msgid "Gallery Videos"
+msgstr "ተንቀሳቃሽ ምስሎች"
+
+#: .\templates\front\videos.html:25
+msgid "GALLERY VIDEOS"
+msgstr "ተንቀሳቃሽ ምስሎች"
+
+#: .\templates\front\videos.html:28
+msgid "VIDEOS TAKEN FROM PREVIOUS ACTIVITIES"
+msgstr "ከቀደምት ተግባራት የተወሰዱ ተንቀሳቃሽ ምስሎች"
+
+#: .\vacancies\models.py:7
+msgid "Contract"
+msgstr "አግኙን"
+
+#: .\vacancies\models.py:8
+msgid "Freelance"
+msgstr "የግል ተቀጣሪ"
+
+#: .\vacancies\models.py:9
+msgid "Full Time"
+msgstr "ሙሉ ስም"
+
+#: .\vacancies\models.py:10
+msgid "Part Time"
+msgstr "ሰአት"
+
+#: .\vacancies\models.py:11
+msgid "Internship"
+msgstr "የስራ ልምምድ"
+
+#: .\vacancies\models.py:18
+msgid "CLosed"
+msgstr "ዝግ"
+
+#: .\vacancies\models.py:26
+msgid "Junior"
+msgstr "ጀማሪ"
+
+#: .\vacancies\models.py:27
+msgid "Mid-Level"
+msgstr "መካከለኛ የስራ ልምድ"
+
+#: .\vacancies\models.py:28
+msgid "Senior"
+msgstr "ከፍተኛ የስራ ልምድ"
+
+#: .\vacancies\models.py:29
+msgid "Expert"
+msgstr "ሊቅ"
+
+#, fuzzy
+#~ msgid "Translations"
+#~ msgstr "አካባቢ"
+
+#, fuzzy
+#~ msgid "Application"
+#~ msgstr "አካባቢ"
+
+#, fuzzy
+#~ msgid "Progress"
+#~ msgstr "በሂደት ላይ"
+
+#, fuzzy
+#~ msgid "Messages"
+#~ msgstr "መልዕክት ላክ"
+
+#, fuzzy
+#~ msgid "Search"
+#~ msgstr "የፍለጋ ውጤቶች"
+
+#~ msgid "List of"
+#~ msgstr "የጨረታዎች ዝርዝር"
+
+#, fuzzy
+#~ msgid "Email address"
+#~ msgstr "የኢሜል አድራሻ"
+
+#, fuzzy
+#~ msgid "IPv4 address"
+#~ msgstr "አድራሻ"
+
+#, fuzzy
+#~ msgid "IP address"
+#~ msgstr "አድራሻ"
+
+#, fuzzy
+#~ msgid "Image"
+#~ msgstr "ፎቶዎች"
+
+#, fuzzy
+#~ msgid "Mon"
+#~ msgstr "አላማ"
+
+#, fuzzy
+#~ msgid "September"
+#~ msgstr "አስታውሰኝ"
+
+#, fuzzy
+#~ msgid "December"
+#~ msgstr "አስታውሰኝ"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "September"
+#~ msgstr "አስታውሰኝ"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "December"
+#~ msgstr "አስታውሰኝ"
+
+#, fuzzy
+#~ msgid "About"
+#~ msgstr "ስለ እኛ"
+
+#~ msgid "Action successfully completed!"
+#~ msgstr "በሚገባ ተሳክቱል"
+
+#~ msgid "ABOUT BUREAU"
+#~ msgstr "ስለ ቢሯችን"
+
+#~ msgid "home/"
+#~ msgstr "ቤት"

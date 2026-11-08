@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Document Buttons</h5>
+
+        {% for document in documents %}
+        <button type="button" class="btn btn-primary mb-2">
+            <img src="{% static 'assets/pdf.png' %}" alt="PDF Icon" height="25px" width="32px">
+            <a href="{{ document.file.url }}" class="fa fa-file-pdf-o">{{ document.title }}</a>
+        </button>
+        {% endfor %}
+
+    </div>
+</div>
+</body>
+</html>

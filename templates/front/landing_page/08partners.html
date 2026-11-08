@@ -1,0 +1,180 @@
+{% load i18n %} {% load static %} {% block css %}
+<style>
+  .partners-section {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .partners-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        var(--primary-white) 0%,
+        rgba(26, 26, 26, 0.02) 100%);
+    pointer-events: none;
+  }
+
+  .section-title {
+    color: var(--primary-black) !important;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+  }
+
+  .lead {
+    color: var(--primary-black);
+    opacity: 0.7;
+  }
+
+  .partner-card {
+    border-radius: 8px;
+    text-align: center;
+    background: var(--primary-white);
+    box-shadow: 0 4px 15px rgba(26, 26, 26, 0.04);
+    position: relative;
+    overflow: hidden;
+    padding: 15px 10px;
+  }
+
+  .marquee {
+    position: relative;
+    margin: 20px 0;
+    /* Constrain marquee width instead of full screen */
+    max-width: 1300px;
+    margin: 20px auto;
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 20px;
+    /* Remove transition that was causing jerky animation */
+    will-change: transform;
+  }
+
+  .marquee-item {
+    flex: 0 0 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .partner-card img {
+    max-height: 80px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(0.2) opacity(0.9);
+  }
+
+  @media (max-width: 768px) {
+    .partners-section {
+      padding: 60px 0;
+    }
+
+    /* Adjust marquee width for mobile */
+    .marquee {
+      max-width: 100%;
+      margin: 20px 15px;
+    }
+
+    .marquee-item {
+      flex: 0 0 160px;
+    }
+
+    .marquee-track {
+      gap: 15px;
+    }
+
+    .partner-card {
+      padding: 12px 8px;
+    }
+
+    .partner-card img {
+      max-height: 60px;
+    }
+  }
+</style>
+{% endblock %} {% if our_partners %}
+<section class="partners-section">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <h2 class="section-title display-4">Our Partners</h2>
+        <p class="lead">
+          Trusted partnerships that drive innovation and excellence
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" id="partnersMarquee">
+    <div class="marquee-track" id="partnersTrack">
+      {% for partner in our_partners %}
+      <div class="marquee-item">
+        <div class="partner-card text-center">
+          {% if partner.image %}
+          <img src="{{ partner.image.url }}" alt="{{ partner.name|default:'Partner Logo' }}" loading="lazy" />
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %} {% block js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const track = document.getElementById("partnersTrack");
+    const marquee = document.getElementById("partnersMarquee");
+
+    if (!track || !marquee) return;
+
+    // Clone items for seamless loop
+    const items = track.children;
+    const itemsArray = Array.from(items);
+
+    for (let i = 0; i < 4; i++) {
+      itemsArray.forEach((item) => {
+        const clone = item.cloneNode(true);
+        track.appendChild(clone);
+      });
+    }
+
+    let position = 0;
+    const speed = 0.5;
+    const itemWidth = 200 + 20;
+    const totalWidth = itemWidth * itemsArray.length;
+
+    function animate() {
+      position -= speed;
+
+      if (Math.abs(position) >= totalWidth) {
+        position = 0;
+      }
+
+      track.style.transform = `translateX(${position}px)`;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  });
+</script>
+{% endblock %}

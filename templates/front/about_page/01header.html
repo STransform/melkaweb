@@ -1,0 +1,102 @@
+{% load i18n %}
+{% load static %}
+{% block css %}<style>
+  :root {
+    --primary-blue: #0077BE;
+    --light-gray: #f8f9fa;
+    --primary-white: #ffffff;
+    --medium-gray: #6c757d;
+    --primary-black: #212529;
+  }
+
+  .hero-about-section {
+    background: linear-gradient(135deg, var(--primary-white) 0%, var(--light-gray) 100%);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--primary-blue) 0%, transparent 70%);
+    opacity: 0.06;
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+    z-index: 1;
+  }
+
+  .hero-about-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--primary-blue) 0%, transparent 70%);
+    opacity: 0.04;
+    border-radius: 50%;
+    transform: translate(-20%, 20%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .about-title {
+    font-family: "Playfair Display", serif;
+    font-size: 4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-blue), #005a94);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .about-subtitle {
+    font-size: 1.25rem;
+    color: var(--medium-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .hero-about-section {
+      padding: 80px 0;
+    }
+
+    .about-title {
+      font-size: 2.8rem;
+    }
+
+    .about-subtitle {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+{% endblock %}<!-- Hero Section -->
+<!-- <section class="hero-about-section">
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-lg-8 col-12">
+        <div class="hero-content appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="300">
+          <h1 class="about-title">{% trans "About Us" %}</h1>
+          <p class="about-subtitle">
+            {% trans "Discover our story, mission, and commitment to excellence in delivering innovative solutions." %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+

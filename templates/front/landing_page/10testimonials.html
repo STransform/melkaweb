@@ -1,0 +1,115 @@
+{% load i18n %} {% load static %} {% block css %}
+<style>
+  .testimonials-section {
+    padding: 100px 0;
+    background-color: var(--light-gray);
+  }
+
+  .testimonial-card {
+    background: var(--primary-white);
+    border: none;
+    border-radius: 12px;
+    padding: 40px 30px;
+    text-align: left;
+    transition: all 0.4s ease;
+    height: 100%;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg,
+        var(--accent-color),
+        rgba(255, 20, 43, 0.3));
+    transform: scaleY(0);
+    transition: transform 0.4s ease;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .testimonial-card:hover::before {
+    transform: scaleY(1);
+  }
+
+  .testimonial-content {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    margin-bottom: 25px;
+    position: relative;
+  }
+
+  .testimonial-content::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--accent-color);
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-family: "Playfair Display", serif;
+    opacity: 0.3;
+  }
+
+  .testimonial-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--medium-gray);
+    transition: all 0.3s ease;
+  }
+
+  .testimonial-author h5 {
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+  }
+
+  .testimonial-author small {
+    color: var(--medium-gray);
+    font-weight: 500;
+  }
+</style>
+{% endblock %} {% if people_saying %}
+<section class="testimonials-section bg-corporate-light py-5">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <h2 class="section-title display-4 text-corporate-red">
+          {% trans "What People Say" %}
+        </h2>
+        <p class="lead text-muted">
+          {% trans "Hear from our valued clients and partners" %}
+        </p>
+      </div>
+    </div>
+    <div class="row g-4">
+      {% for saying in people_saying %}
+      <div class="col-lg-4 col-md-6">
+        <div class="testimonial-card h-100">
+          <p class="testimonial-content text-justify">{{ saying.content }}</p>
+          <div class="testimonial-author d-flex align-items-center mt-4">
+            <img src="{{ saying.image.url }}" alt="{{ saying.full_name }}" class="testimonial-avatar me-3" />
+            <div>
+              <h5 class="mb-0">{{ saying.full_name }}</h5>
+              <small>{{ saying.position }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,128 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% block announcement %} active {% endblock %}
+{% block announcement_dynamic %} active {% endblock %}
+
+{% block css %}
+<style>
+    .row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 0 75px;
+    }
+
+    .col-md-6 {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .col-lg-7 {
+        flex: 2;
+    }
+
+    .col-lg-5 {
+        flex: 1;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-end {
+        text-align: right;
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: var(--accent-color);
+    }
+
+    .text-danger {
+        color: var(--accent-color);
+    }
+
+    .small {
+        font-size: 0.9rem;
+    }
+
+    .mb-0 {
+        margin-bottom: 0;
+    }
+
+    .mb-5 {
+        margin-bottom: 3rem;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 576px) {
+        .application-form {
+            padding: 30px 20px;
+        }
+
+
+        .row {
+            flex-direction: column;
+            gap: 0;
+            margin: 0 10px;
+        }
+
+        .col-md-6,
+        .col-md-8,
+        .col-md-4 {
+            flex: none;
+            width: 100%;
+        }
+
+        .job-meta {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .job-title {
+            font-size: 2rem;
+        }
+
+        .text-end {
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- HEADER -->
+{% include 'front/announcement_page/01header.html'  %}
+
+<!-- Added main container with new styling -->
+<div class="job-application-container">
+    <div class="py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-12">
+                <!-- Include job description for better context -->
+                {% include 'front/announcement_page/04job_description.html'  %}
+            </div>
+
+            <div class="col-lg-5 col-md-12">
+                {% include 'front/announcement_page/03application_form.html'  %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

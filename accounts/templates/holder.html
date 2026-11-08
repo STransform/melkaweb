@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+</head>
+<body>
+
+  <h2>User Registration</h2>
+
+  <form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+
+    {{ form.username.label_tag }}
+    {{ form.username }}
+    {{ form.username.errors }}
+
+    {{ form.email.label_tag }}
+    {{ form.email }}
+    {{ form.email.errors }}
+
+    {{ form.password1.label_tag }}
+    {{ form.password1 }}
+    {{ form.password1.errors }}
+
+    {{ form.password2.label_tag }}
+    {{ form.password2 }}
+    {{ form.password2.errors }}
+
+    {{ form.role.label_tag }}
+    {{ form.role }}
+    {{ form.role.errors }}
+
+    <button type="submit">Sign Up</button>
+  </form>
+
+</body>
+</html>

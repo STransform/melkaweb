@@ -1,0 +1,131 @@
+{% extends 'staff/admin_base.html' %}
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+{% block main %}
+
+<div class="container-fluid">
+    <!-- Start:: row-4 -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header">
+                    <div class="card-title">List of Archived Blocked Suppliers</div>
+                </div>
+
+                <div class="container mb-5">
+                    <ul class="timeline list-unstyled">
+
+                        {% for supplier in suppliers %}
+
+                        <li>
+                            <div class="timeline-time text-end">
+                                <span class="date">Archived Date</span>
+                                <span class="time d-inline-block">{{supplier.archived_date}}</span>
+                            </div>
+                            <div class="timeline-icon">
+                                <a href="javascript:void(0);"></a>
+                            </div>
+                            <div class="timeline-body" style="background-color: #eee;">
+                                <div class="d-flex align-items-top timeline-main-content flex-wrap mt-0">
+
+
+                                    <div class="accordion accordion-customicon1 accordion-primary accordions-items-seperate w-100"
+                                        id="accordiondesc{{supplier.id}}">
+                                        <div class="accordion-item accordion-header"
+                                            id="headingcustomicon{{supplier.id}}">
+
+                                            <div class="accordion-button collapsed flex-fill" data-bs-toggle="collapse"
+                                                data-bs-target="#collapsecustomicon{{supplier.id}}"
+                                                aria-expanded="false" aria-controls="collapsecustomicon{{supplier.id}}">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="mt-sm-0 mt-2 col-12">
+                                                        <p class="mb-0 fs-14 fw-semibold">{{supplier.company_name}}</p>
+                                                        <p>
+                                                            <span
+                                                                class="float-end badge bg-light text-muted timeline-badge">
+                                                                Blocked On: {{supplier.created_date}}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div id="collapsecustomicon{{supplier.id}}"
+                                                class="accordion-collapse collapse"
+                                                aria-labelledby="headingcustomicon{{supplier.id}}"
+                                                data-bs-parent="#accordiondesc{{supplier.id}}" style="">
+                                                <div class="accordion-body">
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between flex-wrap gap-2">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <p class="mb-3">Tin Number : <span
+                                                                            class="fs-12 mb-1 text-muted">{{supplier.tin}}</span>
+                                                                    </p>
+                                                                    <p class="mb-3">Legal Form : <span
+                                                                            class="fs-12 mb-1 text-muted">{{supplier.legal_form}}</span>
+                                                                    </p>
+                                                                    <p class="mb-3">Nationality: <span
+                                                                            class="fs-12 mb-1 text-muted">{{supplier.nationality}}</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <p class="mb-3">Area of Business : <span
+                                                                            class="fs-12 mb-1 text-muted">{{supplier.area_of_business}}</span>
+                                                                    </p>
+                                                                    <p class="mb-3">Sector : <span
+                                                                            class="fs-12 mb-1 text-muted">{{supplier.sector}}</span>
+                                                                    </p>
+                                                                    <p class="mb-3">Blocked By : <span
+                                                                            class="fs-12 mb-1 text-muted">{{supplier.created_by}}</span>
+                                                                    </p>
+                                                                </div>
+
+                                                                <p class="mb-3">Document: <a
+                                                                        href="{{supplier.document.url}}" download
+                                                                        class="fs-12 mb-1 text-muted badge bg-primary-transparent">Download</a>
+                                                                </p>
+                                                                <p class="mb-3 "> Description : <span
+                                                                        class="fs-12 mb-1 text-muted">{{supplier.description}}
+                                                                    </span></p>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <!-- <div class="flex-fill">
+                                        <div class="d-flex align-items-center">
+                                            <div class="mt-sm-0 mt-2">
+                                                <p class="mb-0 fs-14 fw-semibold">{{supplier.company_name}}</p>
+                                                <p class="mb-0 text-muted">{{supplier.description}}</p>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <p> Created Date: 
+                                                <span class="float-end badge bg-light text-muted timeline-badge">
+                                                    {{supplier.created_date}}
+                                                </span></p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

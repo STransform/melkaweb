@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "User Registration" %}</title>
+    <script src="{% static 'dashboard/js/authentication-main.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link id="style" href="{% static 'dashboard/libs/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" >
+    <!-- Style Css -->
+    <link href="{% static 'dashboard/css/styles.min.css' %}" rel="stylesheet" >
+    <!-- Icons Css -->
+    <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" >
+    <style>
+        /* Add your custom CSS styles here */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-lg">
+    <div class="row justify-content-center align-items-center authentication authentication-basic h-100">
+        <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-6 col-sm-8 col-12">
+            <div class="card custom-card">
+                <div class="card-body p-5">
+                    <p class="h5 fw-semibold mb-2 text-center">{% trans "User Registration" %}</p>
+                    <form method="post" action="{% url 'register' %}" class="my-4">
+                        {% csrf_token %}
+                        <div class="row gy-3">
+                            <div class="col-xl-12 form-group">
+                                <label for="id_username">{% trans "Username" %}</label>
+                                {{ form.username }}
+                                {{ form.username.errors }}
+                            </div>
+                            <div class="col-xl-12 form-group">
+                                <label for="id_email">{% trans "Email" %}</label>
+                                {{ form.email }}
+                                {{ form.email.errors }}
+                            </div>
+                            <div class="col-xl-12 form-group">
+                                <label for="id_password1">{% trans "Password" %}</label>
+                                {{ form.password1 }}
+                                {{ form.password1.errors }}
+                            </div>
+                            <div class="col-xl-12 form-group">
+                                <label for="id_password2">{% trans "Confirm Password" %}</label>
+                                {{ form.password2 }}
+                                {{ form.password2.errors }}
+                            </div>
+                            <div class="col-xl-12 form-group">
+                                <label for="id_role">{% trans "Role" %}</label>
+                                {{ form.role }}
+                                {{ form.role.errors }}
+                            </div>
+                            <div class="col-xl-12 mb-2">
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label text-muted fw-normal" for="defaultCheck1">
+                                        {% trans "By creating an account you agree to our " %}<a href="terms_conditions.html" class="text-success"><u>{% trans "Terms & Conditions" %}</u></a> and <a class="text-success"><u>Privacy Policy</u></a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 d-grid mt-2">
+                                <button class="btn btn-lg btn-primary">Create Account" %}</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-center">
+                        <p class="fs-12 text-muted mt-3">{% trans "Already have an account?" %} <a href="sign-in-basic.html" class="text-primary">{% trans "Sign In" %}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

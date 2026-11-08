@@ -1,0 +1,96 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block gallery %} active {% endblock %}
+{% block gallery_dynamic %} active {% endblock %}
+
+
+{% block content %}
+<!-- Gallery -->
+<section class="section border-0 m-0 pt-4 px-lg-5">
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="d-flex align-items-end justify-content-end">
+                <ul class="breadcrumb d-block text-center">
+                    <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+                    <li class="active">{% trans "Gallery Videos" %}</li>
+                </ul>        
+            </div>
+            
+            <hr class="bg-light" />
+            <div class="col-lg-12">
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="overflow-hidden text-center">
+                        <h2 class="text-color-primary font-weight-semibold line-height-3 text-5 mb-0 appear-animation"
+                            data-appear-animation="maskRight" data-appear-animation-delay="500">{% trans "GALLERY VIDEOS" %}
+                        </h2>
+                        <p  class="appear-animation"  data-appear-animation="maskRight" data-appear-animation-delay="600"> 
+                            {% trans "VIDEOS TAKEN FROM PREVIOUS ACTIVITIES" %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="container py-2">
+                <ul class="nav nav-pills sort-source sort-source-style-3 justify-content-center" data-sort-id="portfolio" data-option-key="filter" data-plugin-options="{'layoutMode': 'masonry', 'filter': '*'}">
+                    <li class="nav-item active" data-option-value="*"><a class="nav-link text-2-5 text-uppercase active" href="#">{% trans "All Categories" %}</a></li>
+                    {% for category in categories %}
+                    <li class="nav-item d-none d-md-block d-lg-block" data-option-value=".{{ category.0 }}"><a class="nav-link text-2-5 text-uppercase" href="#">{{ category.0 }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <div class="sort-destination-loader sort-destination-loader-showing mt-4 pt-2">
+                    <div class="row portfolio-list sort-destination" data-sort-id="portfolio">
+                        {% for video in gallery_videos %}
+                            <div class="col-sm-12 col-lg-6 isotope-item {{ video.category }}">
+                                <div class="ratio ratio-16x9 ratio-borders">
+                                    {{video.link|safe}}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            
+             <!-- pagination -->
+             <div class="row align-items-center text-center">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center align-items-center">
+
+                        {% if gallery_videos.has_previous %}
+                            <li class="page-item"><a href="?page={{gallery_videos.previous_page_number}}" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                        {% endif %}
+
+                            <li class="page-item active"><a href="" class="page-link">{{gallery_videos.number}}</a></li>
+                            <li class="page-item disabled"><a href="" class="page-link">of</a></li>
+                            <li class="page-item"><a href="?page={{gallery_videos.paginator.num_pages}}" class="page-link">{{gallery_videos.paginator.num_pages}}</a></li>
+                        
+                        {% if gallery_videos.has_next %}
+                            <li class="page-item"><a href="?page={{gallery_videos.next_page_number}}" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+            <!-- end pagination -->
+
+
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Set default width and height for images with class "default-resolution" */
+    .default-resolution {
+        width: 300px; /* Set your default width */
+        height: 200px; /* Set your default height */
+    }
+</style>
+{% endblock %}

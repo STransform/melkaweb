@@ -1,0 +1,10 @@
+{% extends 'front/index.html' %}
+{% load i18n %}
+{% load cms_tags %}
+{% block cms_content %}
+<div class="cms_block">
+    {% placeholder "feature" %}
+    {% placeholder "content" %}
+    {% placeholder "splashbox" %}
+</div>
+{% endblock %}

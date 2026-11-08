@@ -1,0 +1,115 @@
+{% load i18n %} {% load static %}
+{% block css %}
+<style>
+    .application-form {
+        background-color: var(--primary-white);
+        border: 1px solid var(--light-gray);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        padding: 45px 0;
+        max-width: 800px;
+        margin: 0;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 35px;
+        padding-bottom: 25px;
+        border-bottom: 2px solid var(--light-gray);
+    }
+
+    .form-header h3 {
+        color: var(--primary-black);
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .form-header p {
+        color: var(--medium-gray);
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--dark-gray);
+        font-weight: 500;
+        margin-bottom: 8px;
+        font-size: 1rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid var(--light-gray);
+        border-radius: 10px;
+        font-size: 1rem;
+        color: var(--dark-gray);
+        background-color: var(--primary-white);
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(237, 36, 42, 0.1);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn-corporate-red {
+        padding: 0.75rem 2rem;
+        border: none;
+    }
+
+
+    /* Responsive Design */
+    @media (max-width: 576px) {
+        .application-form {
+            padding: 30px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+<div class="application-form">
+    <div class="form-header">
+        <h3>{% trans "Job Application Form" %}</h3>
+        <p class="mb-0">{% trans "Please fill out all required fields to apply for this position" %}</p>
+    </div>
+
+    <!-- Form -->
+    <form id="vacancyForm" action="{% url 'jobs_apply' pk=job.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            {% for field in form %}
+            <div class="form-group col-md-6 col-sm-12">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                <div class="text-danger small">{{ field.errors }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 mb-5 text-center">
+                <button type="submit" id="applyFormSubmit" class="btn-corporate-red" data-loading-text="Loading...">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    {% trans "Submit Application" %}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

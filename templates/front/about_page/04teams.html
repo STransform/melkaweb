@@ -1,0 +1,276 @@
+{% load i18n %}
+{% load static %}
+{% block css %}<style>
+  :root {
+    --primary-blue: #0077BE;
+    --primary-white: #ffffff;
+    --medium-gray: #6c757d;
+    --primary-black: #212529;
+    --light-gray: #f8f9fa;
+    --accent-color: #0077BE;
+  }
+
+  .team-section {
+    background: var(--primary-white);
+    padding: 100px 0;
+  }
+
+  .team-title {
+    font-family: "Playfair Display", serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--primary-black);
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .team-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    border-radius: 2px;
+  }
+
+  .team-member {
+    margin-bottom: 3rem;
+  }
+
+  .team-card {
+    background: var(--primary-white);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    height: 100%;
+    border: 1px solid var(--light-gray);
+  }
+
+  .team-card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  }
+
+  .team-card-image {
+    position: relative;
+    overflow: hidden;
+    height: 280px;
+  }
+
+  .team-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .team-card:hover .team-card-image img {
+    transform: scale(1.1);
+  }
+
+  .team-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(255, 20, 43, 0.25),
+        rgba(0, 0, 0, 0.75));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .team-card:hover .team-card-overlay {
+    opacity: 1;
+  }
+
+  .team-social-links {
+    display: flex;
+    gap: 15px;
+  }
+
+  .team-social-link {
+    width: 45px;
+    height: 45px;
+    background: var(--primary-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+    border: 2px solid transparent;
+  }
+
+  .team-card:hover .team-social-link {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .team-social-link:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+
+  .team-social-link:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .team-social-link:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  .team-social-link:hover {
+    background: var(--accent-color);
+    transform: translateY(-5px) scale(1.1);
+    border-color: var(--primary-white);
+  }
+
+  .team-social-link i {
+    font-size: 1.1rem;
+    color: var(--primary-black);
+    transition: color 0.3s ease;
+  }
+
+  .team-social-link:hover i {
+    color: var(--primary-white);
+  }
+
+  .team-card-content {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: var(--primary-white);
+    border-top: 3px solid var(--light-gray);
+  }
+
+  .team-card:hover .team-card-content {
+    border-top-color: var(--accent-color);
+  }
+
+  .team-member-name {
+    font-family: "Playfair Display", serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary-black);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+    position: relative;
+    display: inline-block;
+  }
+
+  .team-member-name::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    border-radius: 2px;
+  }
+
+  .team-card:hover .team-member-name {
+    color: var(--primary-black);
+  }
+
+  .team-member-role {
+    color: var(--accent-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+
+  .team-card:hover .team-member-role {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+  }
+
+  .team-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .team-card:hover::before {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .team-title {
+      font-size: 2.5rem;
+      color: var(--primary-black);
+    }
+
+    .team-card {
+      margin-bottom: 2rem;
+      background: var(--primary-white);
+    }
+
+    .team-card-content {
+      padding: 1.5rem 1rem;
+      background: var(--primary-white);
+    }
+  }
+</style>
+{% endblock %}<!-- Team Section -->
+<section class="team-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="team-title appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="200">
+          {% trans "Our Teams" %}
+        </h2>
+      </div>
+    </div>
+
+<div class="row justify-content-center">
+  {% for member in team_members %}
+  <div class="col-lg-3 col-md-6 team-member appear-animation" data-appear-animation="fadeInUp"
+    data-appear-animation-delay="{% cycle '300' '400' '500' '600' %}">
+    <div class="team-card">
+      <div class="team-card-image">
+        <img src="{{ member.image.url }}" alt="{{ member.name }}" />
+        <div class="team-card-overlay">
+          <div class="team-social-links">
+            <a href="{{ member.social_facebook }}" target="_blank" rel="noopener" class="team-social-link">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="{{ member.social_twitter }}" target="_blank" rel="noopener" class="team-social-link">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="{{ member.social_google_plus }}" target="_blank" rel="noopener" class="team-social-link">
+              <i class="bi bi-google"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card-content">
+        <h4 class="team-member-name">{{ member.name }}</h4>
+        <p class="team-member-role">{{ member.role }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>  </div>
+</section>
+

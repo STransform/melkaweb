@@ -1,0 +1,15 @@
+{% extends 'front/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block services %} active {% endblock %}
+{% block services_dynamic %} active {% endblock %}
+{% block content %}
+
+<!-- Header -->
+{% include 'front/services_page/01header.html'  %}
+
+<!-- Cards -->
+{% include 'front/services_page/02cards.html'  %}
+
+
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+
+<style>
+    /* Desktop-first design with better proportions */
+    .auth-container {
+        background-color: var(--primary-white);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 2rem;
+    }
+
+    .auth-card {
+        background: var(--primary-white);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        width: 100%;
+        max-width: 650px;
+        text-align: center;
+        border: 1px solid var(--light-gray);
+    }
+
+    .auth-logo {
+        height: 100px;
+        margin-bottom: 2.5rem;
+        border-radius: 12px;
+        padding: 8px;
+        background: var(--light-gray);
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .auth-title {
+        color: var(--primary-black);
+        font-size: 2.25rem;
+        font-weight: 600;
+        margin-bottom: 1.25rem;
+        letter-spacing: -0.5px;
+    }
+
+    .auth-message {
+        color: var(--medium-gray);
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .info-badge {
+        background: rgba(237, 36, 42, 0.1);
+        color: var(--accent-color);
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        display: inline-block;
+        border: 1px solid rgba(237, 36, 42, 0.2);
+    }
+
+    .help-section {
+        background: var(--light-gray);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2.5rem;
+        text-align: left;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .help-section h4 {
+        color: var(--primary-black);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .help-section ul {
+        color: var(--dark-gray);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+        padding-left: 1.5rem;
+    }
+
+    .help-section li {
+        margin-bottom: 0.75rem;
+    }
+
+    .auth-links {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .auth-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border: 2px solid var(--accent-color);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        min-width: 140px;
+        text-align: center;
+    }
+
+    .auth-link:hover {
+        background: var(--accent-color);
+        color: var(--primary-white);
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+
+    .secondary-link {
+        color: var(--medium-gray);
+        border-color: var(--medium-gray);
+    }
+
+    .secondary-link:hover {
+        background: var(--medium-gray);
+        color: var(--primary-white);
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+        .auth-container {
+            padding: 2rem 1rem;
+        }
+
+        .auth-card {
+            padding: 2.5rem;
+        }
+
+        .auth-title {
+            font-size: 1.75rem;
+        }
+
+        .auth-links {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .auth-link {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+
+<div class="auth-container">
+    <div class="auth-card">
+        {% if stg.logo %}
+        <img class="auth-logo" src="{{stg.logo.url}}" alt="Logo">
+        {% else %}
+        <img class="auth-logo" src="{% static 'front/imgs/logo/logo-otech.png' %}" alt="Logo">
+        {% endif %}
+
+        <div class="info-badge">✉ Check Your Email</div>
+
+        <h1 class="auth-title">Reset Instructions Sent</h1>
+
+        <p class="auth-message">
+            {% trans "We have mailed you instructions for setting your password. If an account exists with the email you entered, you should receive them shortly." %}
+        </p>
+
+        <div class="help-section">
+            <h4>Didn't receive the email?</h4>
+            <ul>
+                <li>Check your spam or junk folder</li>
+                <li>Make sure you entered the correct email address</li>
+                <li>Wait a few minutes for the email to arrive</li>
+                <li>Contact support if you continue having issues</li>
+            </ul>
+        </div>
+
+        <div class="auth-links">
+            <a href="/accounts/login/" class="auth-link">Back to Login</a>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

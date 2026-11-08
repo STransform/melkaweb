@@ -1,0 +1,231 @@
+{% extends 'staff/admin_base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block main %}
+
+    <div class="container-fluid">
+         <!-- Page Header -->
+         {% if errors %}
+            <p class="errornote">
+            {% if errors|length == 1 %} Please correct the error below. {% else %}Please correct the errors below.{% endif %}
+            </p>
+            {{ .form.non_field_errors }}
+        {% endif %}
+         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+            <h1 class="page-title fw-semibold fs-18 mb-0">
+                {% if not is_single %}
+                    {% if add %} Add New {% else %} Update {% endif %}
+                {% endif %} 
+                {{model_name}}
+            </h1>
+            
+            <strong>N.B. Please note that all fields ending with * are mandatory and should be filled.</strong>
+                            
+        </div>
+        
+        <div class="col-xl-12">
+            <form method="post" enctype="multipart/form-data">
+                <div class="card custom-card">
+
+                    <!-- Only to be displayed on page controller page -->
+                    {% if model_name == 'Pages' %} 
+                    <div class="px-5  pt-3">
+                        <div class="d-md-flex align-items-center justify-content-start gap-5 ">
+                            <h5>Multiple Selector</h5>
+                            <button type="button" onclick="hide_all()" class="btn btn-primary">
+                                Hide All 
+                                <i class="bx bx-hide" style="font-size: 1rem;"></i>
+                            </button>
+                            <button type="button" onclick="show_all()" class="btn btn-outline btn-success">
+                                Show all <i class="bx bx-check-circle" style="font-size: 1rem;"></i>
+                            </button>
+                            
+                        </div>
+                        <hr>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-body  col-md-8 col-sm-12"> 
+
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div    class="form-group mt-2 mb-4" style="padding-left: 2.5em;">
+                                <label class="form-label">{{forloop.counter}}. {{field.label}} </label>
+                                <!-- If field is a checkbox, add a form-switch class -->
+                                {% if field.field.widget.input_type == 'checkbox' %}
+                                    <div class="form-check form-switch" style="display: inline-flex;margin-left: 1rem;">
+                                        {{field}}
+                                    </div>
+                                {% else %}
+                                    {{field}}
+                                {% endif %}
+
+                                {{field.errors}}
+                                <small class="fw-semibold mb-1 text-muted">{{field.help_text}}</small>
+                                    
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    
+                    <div class="card-footer px-5">
+
+                        <button type="submit" class="btn btn-success float-end m-2"
+                            {% if not add %} onclick="return confirm('Are you sure you want to update this {{model_name}}')" {% endif %}>Save
+                        </button>
+                        
+                        <a  class="btn btn-light btn-outline float-end m-2" 
+                            onclick="return confirm('Are you sure you want to cancel?')"
+                            {% if not is_single %}
+                                href="{% url 'list_view' model_name=model_code %}" 
+                            {% else %} 
+                                href="{% url 'admin_dashboard' %}"
+                            {% endif %}
+                            >Cancel
+                        </a>
+                        
+                    </div>
+                    
+                    <!-- For models with related child items, like Job model having Applicants, and Blog model having blog comments -->
+                    {% if not add %}
+                    <div class="card-footer px-5 mt-2 pt-5">
+                        {% if model_name == "Group" %}
+                            <h5 class="text-center my-3 underline">Group Information </h5><hr>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-12">
+                                    <h6>Current Group Permission ({{current_obj.permissions.count}})</h6>
+                                    <table id="file-export" class="table table-bordered table-striped text-nowrap w-100">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Permission Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+        
+                                            {% for obj_perm in current_obj.permissions.all %}
+                                            <tr>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>{{obj_perm.name}}</td>
+                                            </tr>
+                                            {% endfor %}
+        
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <h6>Current Group Users ({{current_obj.user_group.count}})</h6>
+                                    <table id="file-export" class="table table-bordered table-striped text-nowrap w-100">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Full Name</th>
+                                                <th>User Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+        
+                                            {% for user_item in current_obj.user_group.all %}
+                                            <tr>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>{{user_item.first_name}} {{user_item.last_name}}</td>
+                                                <td>{{user.role}}</td>
+                                            </tr>
+                                            {% endfor %}
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        {% elif  model_name == "Job" or model_name == "Blog" %}
+                            <h1 class="page-title fw-semibold fs-18 mb-3 text-center"> 
+                                {% if model_name == "Job" %}  Applicants 
+                                {% elif model_name == "Blog" %} Comments 
+                                {% endif %}
+                            </h1>
+                            <table id="file-export" class="table table-bordered text-nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        {% for field in child_obj_fields %}
+                                        <th>{{field|formalize }}</th>
+                                        {% endfor %}
+
+                                        {% if model_name == "Blog" %}
+                                        <th>Action</th>
+                                        {% endif %}
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for obj in child_obj %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        {% for field in child_obj_fields %}
+                                            {% if field == 'approved'%}
+                                                <td >
+                                                    {% if obj.approved %} <span style="color: green;"> Approved </span>{% else %} <span style="color: red;"> Not Aproved </span> {% endif %}
+                                                </td>
+                                            {% elif field == 'cv'%}
+                                                <td> <a href="{{obj.cv.url}}" download ><span class="text-info">Download CV</span></a> </td>
+                                            {% else %}
+                                                <td>{% get_field_attr obj field %}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                        
+                                        {% if model_name == "Blog" %}
+                                        <td>
+                                            <a onclick="return confirm('Are you sure you want to update this comment?')" 
+                                            href="{% url 'approve_comment' pk=obj.id %}">
+                                                {% if obj.approved %}
+                                                <span class="btn btn-danger"> Hide </span>
+                                                {% else %}
+                                                <span class="btn btn-success"> Show </span>
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        
+                    </div>
+                    {% endif %}
+
+                </div>
+                
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+
+<script>
+    // Add link related styling to all anchor tags
+    $(".form-group>a").attr("style","color:blue; border-bottom:1px blue solid;").attr("target","_blank");
+    
+    // Function to be used on page controller page to display on all pages
+    function show_all(){
+        $('.form-check-input').each(function(){$(this).attr("checked",true)})
+    }
+
+    // Function to be used on page controller page to hide on all pages
+    function hide_all(){
+        $('.form-check-input').each(function(){$(this).removeAttr("checked");})
+    }
+</script>
+<!-- Color Picker JS -->
+<script src="{% static 'dashboard/libs/simonwep/pickr/pickr.es5.min.js' %}"></script>
+<!-- Color Picker JS -->
+<script src="{% static 'dashboard/js/color-picker.js' %}"></script>
+
+{% endblock %}

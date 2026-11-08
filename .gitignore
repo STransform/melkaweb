@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.venv/
+otech-venv/
+__pycache__/
+*.py[cod]
+.agents/
+.codex/
+.aws/
+*.log
+*.zip
+*.sql
+media/
+tmp/

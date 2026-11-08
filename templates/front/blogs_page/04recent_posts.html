@@ -1,0 +1,88 @@
+{% load i18n %} {% load static %}
+
+<!-- CSS -->
+{% block css %}
+<style>
+    .container {
+        padding: 15px 15px;
+    }
+
+    .widget-header {
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .widget-header h3 {
+        color: var(--primary-black);
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .recent-post-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        margin-bottom: 1rem;
+    }
+
+    .recent-post-item:hover {
+        background: var(--light-gray);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .recent-post-image {
+        width: 80px;
+        height: 60px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+
+    .recent-post-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .recent-post-title {
+        font-weight: 600;
+        color: var(--primary-black);
+        margin-bottom: 0.5rem;
+    }
+
+    .recent-post-date {
+        color: var(--medium-gray);
+        font-size: 0.85rem;
+    }
+</style>
+
+{% endblock %}
+
+
+<div class="container">
+    <div class="widget-header">
+        <h3>{% trans "Recent Posts" %}</h3>
+    </div>
+    <div class="recent-posts">
+        {% for recent_blog_item in recent_blogs %}
+        <a href="{% url 'blog_detail' blog_id=recent_blog_item.id %}" class="recent-post-item">
+            <div class="recent-post-image">
+                <img src="{{ recent_blog_item.images.url }}" alt="{{ recent_blog_item.title }}">
+            </div>
+            <div class="recent-post-content">
+                <div class="recent-post-title">{{ recent_blog_item.title|truncatechars:30 }}</div>
+                <div class="recent-post-date">
+                    <i class="far fa-clock"></i> {{ recent_blog_item.created_date|date }}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>

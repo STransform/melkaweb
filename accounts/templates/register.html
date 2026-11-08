@@ -1,0 +1,122 @@
+
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block css %}
+<style>
+    .errorlist li{
+        color:rgb(184, 105, 105);
+    }
+    input{
+        padding-left: 2.5rem;
+    }
+    i{
+        left: 15px !important;
+    }
+    
+</style> 
+{% endblock %}
+{% block content %} 
+
+<section class="section border-0 py-10 m-0 px-lg-5 pt-4 mt-5">
+    <div class="container mt-5">
+        <div class="col-lg-10 order-1 order-lg-2 offset-sm-1">
+                                    
+            <div class="row justify-content-md-center text-center">
+                <div class="col-md-12 text-center">
+                    <div class="featured-box featured-box-primary text-start mt-0">
+                        <div class="box-content">
+                            <div class="text-center">
+                                {% if stg.logo %}
+                                <img class="text-center" style="height:100px" src="{{stg.logo.url}}">
+                                {% else %}
+                                <img class="text-center" style="height:100px" src="{% static 'front/imgs/logo/logo-otech.png' %}">
+                                {% endif %}
+                                <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3 text-center">{% trans "Register" %} </h4>
+                            </div>
+                            <form action="" method="post" class=" form-fields-rounded form-with-icons">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{% trans "First Name" %}</label>
+                                        <div class="position-relative">
+                                            <i class="fa fa-user text-color-primary text-3 position-absolute left-15 top-50pct transform3dy-n50"></i>
+                                            {{form.first_name}}
+                                            {{form.errors.first_name}}
+                                            
+
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{% trans "Last Name" %}</label>
+                                        <div class="position-relative">
+                                            <i class="fa fa-hat-cowboy text-color-primary text-3 position-absolute left-15 top-50pct transform3dy-n50"></i>
+                                            {{form.last_name}}
+                                            {{form.errors.last_name}}
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{% trans "Email" %}</label>
+                                        <div class="position-relative">
+                                            <i class="fa fa-envelope text-color-primary text-3 position-absolute left-15 top-50pct transform3dy-n50"></i>
+                                            {{form.email}}
+                                            {{form.errors.email}}
+                                            </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label">{% trans "User Category" %}</label>
+                                        <div class="position-relative">
+                                            <i class="fa fa-tag text-color-primary text-3 position-absolute left-15 top-50pct transform3dy-n50 z-index-1"></i>
+                                            {{form.role}}
+                                            {{form.errors.role}}
+                                            
+                                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label"> {% trans "Password" %}</label>
+                                        <div class="position-relative">
+                                            <i class="fa fa-lock text-color-primary text-3 position-absolute left-15 top-50pct transform3dy-n50"></i>
+                                            {{form.password}}
+                                            {{form.errors.password}}
+                                            
+                                            <!-- <input type="password" name="Password" value="" class="form-control " required> -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label class="form-label ">{% trans "Reenter Password" %}</label>
+                                        <div class="position-relative">
+                                            <i class="fa fa-lock text-color-primary text-3 position-absolute left-15 top-50pct transform3dy-n50"></i>
+                                            {{form.password2}}
+                                            {{form.errors.password2}}
+                                            
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-9">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="terms" class="custom-control-input" id="terms" required>
+                                            <label class="custom-control-label text-2" for="terms">{% trans "I have read and agree to the " %}<a href="#">{% trans "terms of service" %}</a></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-3">
+                                        <input type="submit" value="Register" class="btn btn-primary btn-modern float-end" data-loading-text="Loading...">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,248 @@
+{% load i18n %} {% load static %}
+
+<!-- CSS -->
+{% block css %}
+<style>
+    .comments-section {
+        background: var(--primary-white);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin: 2rem 0;
+    }
+
+    .comments-header {
+        border-bottom: 2px solid var(--accent-color);
+        margin-bottom: 2rem;
+    }
+
+    .comments-header h4 {
+        color: var(--primary-black);
+        font-weight: 600;
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .comment-item {
+        background: var(--primary-white);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.3s ease;
+        position: relative;
+    }
+
+    .comment-item:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--accent-color);
+        border-radius: 12px 0 0 12px;
+    }
+
+    .comment-header {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        gap: 1rem;
+    }
+
+    .comment-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), #ff6b6b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-white);
+        font-weight: 600;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        text-transform: uppercase;
+    }
+
+    .comment-info {
+        flex: 1;
+    }
+
+    .comment-author {
+        font-weight: 600;
+        color: var(--primary-black);
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .comment-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .comment-email {
+        color: var(--medium-gray);
+        font-size: 0.9rem;
+    }
+
+    .comment-date {
+        color: var(--medium-gray);
+        font-size: 0.9rem;
+    }
+
+    .comment-date::before {
+        content: '•';
+        margin-right: 0.5rem;
+        color: var(--accent-color);
+    }
+
+    .comment-message {
+        color: var(--dark-gray);
+        line-height: 1.6;
+        font-size: 1rem;
+        margin-left: 4rem;
+        padding: 1rem;
+        background: var(--light-gray);
+        border-radius: 8px;
+    }
+
+    .no-comments {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--medium-gray);
+    }
+
+    .no-comments-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .comment-form {
+        background: var(--primary-white);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+    }
+
+    .form-header {
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-header h4 {
+        color: var(--primary-black);
+        font-weight: 600;
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .modern-form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .modern-form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--primary-black);
+        font-weight: 600;
+    }
+
+    .modern-form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .modern-form-control:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(237, 36, 42, 0.1);
+    }
+
+    .btn-corporate-red {
+        padding: 0.75rem 2rem;
+        border: none;
+    }
+</style>
+
+{% endblock %}
+
+<div class="comments-section">
+    <div class="comments-header">
+        <h4>{% trans "Comments" %} ({{blog.comments.count}})</h4>
+    </div>
+
+    <div class="comments-list">
+        {% if comments %}
+        {% for c in comments %}
+        <div class="comment-item">
+            <div class="comment-header">
+                <div class="comment-avatar">
+                    {{ c.author|first }}
+                </div>
+                <div class="comment-info">
+                    <div class="comment-author">{{c.author}}</div>
+                    <div class="comment-meta">
+                        <div class="comment-email">{{c.email}}</div>
+                        <div class="comment-date">{{c.created_at}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-message">{{c.message}}</div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="no-comments">
+            <div class="no-comments-icon">💬</div>
+            <p>{% trans "No comments yet. Be the first to share your thoughts!" %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Comment form -->
+<div class="comment-form">
+    <div class="form-header">
+        <h4>{% trans "Leave a comment" %}</h4>
+    </div>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="modern-form-group">
+                    <label class="modern-form-label">{% trans "Full Name" %}</label>
+                    <input type="text" class="modern-form-control" name="author" required maxlength="100">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="modern-form-group">
+                    <label class="modern-form-label">{% trans "Email Address" %}</label>
+                    <input type="email" class="modern-form-control" name="email" required maxlength="100">
+                </div>
+            </div>
+        </div>
+        <div class="modern-form-group">
+            <label class="modern-form-label">{% trans "Comment" %}</label>
+            <textarea class="modern-form-control" name="message" rows="6" required maxlength="5000"></textarea>
+        </div>
+        <div class="modern-form-group">
+            <button type="submit" class="btn-corporate-red">{% trans "Post Comments" %}</button>
+        </div>
+    </form>
+</div>

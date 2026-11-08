@@ -1,0 +1,331 @@
+{% extends 'staff/admin_base.html' %}
+{% load static %}
+
+{% block main %}
+<!-- Start::app-content -->
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+        <h1 class="page-title fw-semibold fs-18 mb-0">{{title}} Profile</h1>
+        <div class="ms-md-1 ms-0">
+            <nav>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{title}} Profile</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class=" col-xl-12">
+            <div class="card custom-card overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="d-sm-flex align-items-top p-4 border-bottom-0 main-profile-cover" style="background-color: #111c43;">
+                        <div>
+                            <span class="avatar avatar-xxl avatar-rounded online me-3">
+                            {% if user_obj.profile_pic %} 
+                            <img src="{{ user_obj.profile_pic.url }}" alt="Profile Picture">  
+                            {% else %}
+                            <img src="/static/front/imgs/team/user_obj.png" >
+                            {% endif %}
+                            </span>
+                        </div>
+                        <div class="flex-fill main-profile-info">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="fw-semibold mb-1 text-fixed-white">{{ user_obj.first_name }} {{ user_obj.last_name}}</h6>
+                            </div>
+                            <p class="mb-1 text-muted text-fixed-white op-7"> User Category: {{ user_obj.role }}</p>
+                            <div class="d-flex mb-0">
+                                <div class="me-4">
+                                    <p class="mb-0 fs-11 op-5 text-fixed-white">{{user_obj.email}}</p>
+                                    <!-- <p class="mb-0 fs-11 op-5 text-fixed-white">Assigned Tasks</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-xxl-12 col-xl-12">
+            <div class="row">
+                
+                <div class="col-md-3 col-sm-12">
+                    <div class="card custom-card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Account Manager
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="nav flex-column nav-pills me-3 tab-style-7" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <button class="nav-link text-start active" id="main-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#main-profile" type="button" role="tab"
+                                    aria-controls="main-profile" aria-selected="true"> User Info
+                                </button>
+                                <button class="nav-link text-start" id="edit-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#edit-profile" type="button" role="tab"
+                                    aria-controls="edit-profile" aria-selected="false">Edit Profile
+                                </button>
+                                <button class="nav-link text-start" id="change-password-tab" data-bs-toggle="pill"
+                                    data-bs-target="#change-password" type="button" role="tab"
+                                    aria-controls="change-password" aria-selected="false">Change Password
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-9 col-sm-12">
+                    
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane show p-0 active" id="main-profile" role="tabpanel" tabindex="0">
+                            <div class="card custom-card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Personal Info
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" >
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <div class="me-2 fw-semibold">
+                                                    Full Name :
+                                                </div>
+                                                <span class="fs-12 text-muted">{{user_obj.first_name}} {{user_obj.last_name}}</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <div class="me-2 fw-semibold">
+                                                    Email :
+                                                </div>
+                                                <span class="fs-12 text-muted">{{user_obj.email}}</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <div class="me-2 fw-semibold">
+                                                    Phone :
+                                                </div>
+                                                <span class="fs-12 text-muted">{{user_obj.phonenumber}}</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <div class="me-2 fw-semibold">
+                                                    User Category:
+                                                </div>
+                                                <span class="fs-12 text-muted">{{user_obj.role}}</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <div class="me-2 fw-semibold">
+                                                    Account Status:
+                                                </div>
+                                                <span class="fs-12 text-muted">{{user_obj.status}}</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <div class="me-2 fw-semibold">
+                                                    Date Joined:
+                                                </div>
+                                                <span class="fs-12 text-muted">{{user_obj.date_joined}}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane show p-0 " id="edit-profile" role="tabpanel" tabindex="0">
+                            <div class="card custom-card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Edit Profile
+                                    </div>
+                                </div>
+                                <form class="form" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="card-body">
+                                        <div class="row gy-3">
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-firstname" class="form-label">First Name :</label>
+                                                {{form.first_name}}
+                                                <!-- <input type="text" value="{{user.first_name}}" class="form-control form-control-light" id="contact-address-firstname" placeholder="Enter Name"> -->
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-lastname" class="form-label">Last Name :</label>
+                                                {{form.last_name}}
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-email" class="form-label">Email :</label>
+                                                {{form.email}}
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-phone" class="form-label">Phone No :</label>
+                                                {{form.phonenumber}}
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-phone" class="form-label">Profile :</label>
+                                                {{form.profile_pic}}
+                                            </div>
+                                            {% if user != user_obj %} 
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-role" class="form-label">Status :</label>
+                                                {{form.status}}   
+                                            </div>
+                                            <div class="col-xl-6 form-check form-switch">
+                                                <label for="contact-address-role" class="form-label">Is Active :</label>
+                                                <div class="form-check form-switch d-inline-block">{{form.is_active}}</div>
+                                                   
+                                            </div>
+                                            <div class="col-xl-6 ">
+                                                <label for="contact-address-role" class="form-label">Is Superuser :</label>
+                                                <div class="form-check form-switch d-inline-block">{{form.is_superuser}}</div>
+                                                   
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-role" class="form-label">Groups :</label>
+                                                {{form.groups}}   
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-role" class="form-label">Permissions :</label>
+                                                {{form.user_permissions}}   
+                                            </div>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="float-end mb-2">
+                                            <button type="submit" class="btn btn-primary-light btn-wave">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane show p-0 " id="change-password" role="tabpanel" tabindex="0">
+                            <div class="card custom-card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Change Password
+                                    </div>
+                                </div>
+                                <form class="form" action=" {% if user == user_obj %} {% url 'change_pw' id=user_obj.id %} {% else %} {% url 'reset_pw' id=user_obj.id %} {% endif %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="card-body">
+                                        <div class="row gy-3">
+                                            {% if user == user_obj %} 
+                                            <div class="col-xl-9">
+                                                {{password_form.current_password}}
+                                            </div>
+                                            {% endif %}
+                                            <div class="col-xl-9">
+                                                {{password_form.new_password}}
+                                            </div>
+                                            <div class="col-xl-9">
+                                                {{password_form.retype_new_password}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="float-end mb-2">
+                                            <button type="submit" class="btn btn-primary-light btn-wave">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="col-xxl-12 col-xl-12">
+            <div class="row">
+                
+                <div class="col-12">
+                    <div class="card custom-card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="card-title">
+                                Assigned Tasks
+                                <span class="badge bg-secondary-transparent">({{tasks.count}})</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for task in tasks %}
+                                <li class="list-group-item">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="fw-semibold d-flex align-items-center">
+                                            {{ task.task_name }}
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-primary-light">
+                                                {{task.status}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %}
+                {% if title == 'My' and user_sessions %}
+                <div class="col-12">
+                    <div class="card custom-card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="card-title">
+                                Your Active Sessions
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for session in user_sessions %}
+                                <li class="list-group-item">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="fw-semibold d-flex align-items-center">
+                                           {{forloop.counter}}. To be expired on {{ session.expire_date }}
+                                           {% if session.session_key == current_session_key %} 
+                                           <span class="text-success"> (Current Session)</span> 
+                                           {% endif %}
+
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endcomment %}
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>
+    
+{% endblock %}

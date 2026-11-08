@@ -1,0 +1,159 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block css %}
+<style>
+    .hero-header {
+        background: linear-gradient(135deg,
+                var(--primary-white) 0%,
+                var(--light-gray) 100%);
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: var(--accent-color);
+        opacity: 0.05;
+        border-radius: 50%;
+        transform: translate(50%, -50%);
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .header-title {
+        color: #0077BE; /* FIXED: Primary blue (#0077BE) */
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center; /* Centers text */
+        margin: 0 auto 20px; /* Auto margins for perfect centering + space for underline */
+        position: relative; /* For absolute positioning of underline */
+        display: block; /* Block for full centering */
+        width: 100%; /* Full width to span container */
+        z-index: 2;
+    }
+
+    /* FIXED: Underline via pseudo-element (replaces accent line div) */
+    .header-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px; /* Positions below title */
+        left: 50%;
+        transform: translateX(-50%); /* Centers it */
+        width: 80px; /* Fixed width for consistency */
+        height: 3px; /* Matches footer height */
+        background: linear-gradient(90deg, transparent, #0077BE, transparent); /* Blue gradient */
+        border-radius: 2px; /* Rounded */
+        box-shadow: 0 2px 4px rgba(0, 119, 190, 0.2); /* Subtle shadow */
+    }
+
+    /* REMOVED: .header-accent-line CSS (no longer needed) */
+
+    .header-subtitle {
+        color: var(--medium-gray);
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+
+    .values-section {
+        margin: 25px 0;
+    }
+
+    .value-card {
+        background: var(--primary-white);
+        border: 1px solid #e9ecef;
+        border-radius: 0;
+        padding: 40px 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .value-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(220, 53, 69, 0.1);
+    }
+
+    .value-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+    }
+
+    .value-description {
+        color: var(--medium-gray);
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-header {
+            min-height: 250px;
+            padding: 3rem 0;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+        }
+
+        .header-title::after { 
+            bottom: -6px; 
+            height: 2px; 
+            width: 60px; 
+        }
+    }
+</style>
+{% endblock %}
+
+<!-- hello -->
+{% block values %} active {% endblock %}
+{% block values_dynamic %} active {% endblock %}
+{% block content %}
+
+<!-- Header -->
+<section class="hero-header py-5 pb-3 m-0">
+    <div class="container">
+        <div class="row justify-content-center"> <!-- FIXED: Centers row content -->
+            <div class="col-lg-8 text-center"> <!-- FIXED: Centers col content -->
+                <div class="header-content">
+                    <h1 class="display-4 fw-bold mb-3 header-title">Core Values</h1> <!-- FIXED: Blue color, underline, dead-centered -->
+                    <!-- Underline auto-applies via ::after – no extra div -->
+                    <p class="lead mt-4 header-subtitle">The principles that guide everything we do</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if values %}
+<section class="values-section">
+    <div class="container">
+        <div class="row g-4">
+            {% for company in values %}
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card corporate-card">
+                    <h4 class="value-title" style="color: #0077BE;">{{ company.title }}</h4>
+                    <p class="value-description">{{ company.content }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

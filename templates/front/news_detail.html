@@ -1,0 +1,144 @@
+
+
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block news %} active {% endblock %}
+{% block news_dynamic %} active {% endblock %}
+
+{% block content %} 
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<section class="section border-0 py-10 m-0 px-lg-5 pt-4">
+    <div class="row align-items-center text-center pb-3 mb-5 mb-lg-4">
+        <div class="d-flex align-items-end justify-content-end">
+            <ul class="breadcrumb d-block text-center">
+                <li ><a href="{% url 'index' %}" class="text-grey">{% trans "Home" %}</a></li>
+                <li class=" lsdf"><a href="{% url 'news_list_visitor' %}" class="text-grey">{% trans "News List" %}</a></li>
+                <li class="active text-primary" > <a href="">{% trans "News Detail" %}</a></li>
+                
+            </ul>        
+        </div>
+        <hr class="bg-light">
+        <div class="col-12 mb-lg-0 ">
+            <div class="d-flex align-items-center mb-2  justify-content-center">
+                <div class="overflow-hidden text-center">
+                    <h2 class="text-color-primary text-9 text-center font-weight-semibold line-height-3 text-5 mb-0 appear-animation"
+                        data-appear-animation="maskRight" data-appear-animation-delay="300">{% trans "NEWS DETAIL" %}
+                    </h2>
+                </div>
+            </div>
+            <p  class="appear-animation text-center"  data-appear-animation="maskRight" data-appear-animation-delay="400"> 
+                {% trans "News on" %} '{{news_item.title|truncatechars:60}}'
+            </p>
+        </div>
+        
+    </div>
+   
+
+
+    <div class="container py-4">
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog-posts single-post">
+
+                    <article class="post post-medium blog-single-post border-0 m-0 p-0">
+
+                        <!-- multiple imgs -->
+                        <div class="row justify-content-center">
+                            <div class="col mx-auto">
+                                
+                                <div class="thumb-gallery-wrapper">
+                                    <div class="thumb-gallery-detail owl-carousel owl-theme manual nav-inside nav-style-1 nav-dark mb-3" style="max-height: 550px;">
+
+                                        <div>
+                                            <img src="{{news_item.featured_image.url}}" class="img-fluid" style="max-height:550px;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- end -->
+
+                        <div class="post-content ">
+                            
+                            <blockquote class="blockquote-primary">
+                                <h2 class="font-weight-semi-bold"><a href="">{{news_item.title}}</a></h2>
+                                <div class="post-meta">
+                                    <span><i class="far fa-calendar"></i> <a href="javascript:void(0);">{{news_item.created_at|date}}</a></span>
+                                    <span><i class="far fa-user"></i> {% trans "By" %} 
+                                        <a title="Contact: {{news_item.created_by.email}} {% if news_item.created_by.phonenumber %} ,{{news_item.created_by.phonenumber}} {% endif %}" href="javascript:void(0);" >
+                                            {{news_item.created_by|truncatechars:15}} : {{news_item.created_by.email|truncatechars:20}} 
+                                        </a> 
+                                    </span>
+                                    <span><i class="fa fa-tag" style="rotate: 180;"></i> <a href="javascript:void(0);">{{news_item.category}}</a> </span>
+                                    
+                                    
+                                </div>
+                            </blockquote>
+                            <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                                <a class="a2a_button_facebook"></a>
+                                <a class="a2a_button_email"></a>
+                                <a class="a2a_button_linkedin"></a>
+                                <a class="a2a_button_telegram"></a>
+                                <a class="a2a_button_twitter"></a>
+                                <a class="a2a_button_x"></a>
+                            </div>
+                            <script async src="https://static.addtoany.com/menu/page.js"></script>
+                            <p>{{news_item.content|safe}}</p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+                       <!-- Recent News Section (Right 30%) -->
+            <div class="col-lg-4">
+                <div class="widget mb-5 latest-posts border border-transparent p-3" style="border-radius: 10px;">
+                    <header>
+                        <h3 class="h6">{% trans "Recent Posts" %}</h3>
+                    </header>
+                    <div class="blog-posts">
+                        {% for recent_news_item in lastnews %}
+                            <a href="{% url 'news_detail' news_id=recent_news_item.id %}">
+                                <div class="item d-flex align-items-center mb-3">
+                                    <div class="image me-3">
+                                        <img src="{{ recent_news_item.featured_image.url }}" class="img-fluid rounded" style="width: 120px; height: 80px; object-fit: cover;" alt="">
+                                    </div>
+                                    <div class="title">
+                                        <strong>{{ recent_news_item.title|truncatechars:30 }}</strong>
+                                        <div class="d-flex align-items-center">
+                                            <div class="comments"><i class="far fa-clock"></i> {{ recent_news_item.created_at|date }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="widget twitter-feed border border-transparent p-3" style="border-radius: 10px;">
+                    <header>
+                        <h3 class="h6">{% trans "Twitter Feed" %}</h3>
+                    </header>
+                    <div class="tweets">
+                        <a class="twitter-timeline" href="https://twitter.com/PMEthiopia?ref_src=twsrc%5Etfw" data-height="300">{% trans "Tweets by PM Ethiopia" %}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+</section>
+
+{% endblock %}
+
+{% block js %}		
+
+<script src="/static/front/js/examples/examples.gallery.js"></script>	
+
+{% endblock %}

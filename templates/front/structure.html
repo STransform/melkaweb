@@ -1,0 +1,79 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'assets/front/css/custom.css' %}">
+{% endblock %}
+{% block about %} active {% endblock %}
+{% block about_dynamic %} active {% endblock %}
+{% block content %} 
+
+<section class="section border-0 py-10 m-0 px-lg-5  pt-4">
+    <div class="container">
+        <div class="row align-items-end pb-3 ">
+            <div class="d-flex align-items-end justify-content-end">
+                <ul class="breadcrumb d-block text-center">
+                    <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+                    <li class="active">{% trans "Structure" %}</li>
+                </ul>        
+            </div>
+            <hr class="bg-light">
+            <div class="col-12 mb-lg-0 ">
+                <div class="d-flex align-items-center mb-2  justify-content-center">
+                    <div class="overflow-hidden text-center">
+                        <h2 class="text-color-primary text-9 text-center font-weight-semibold line-height-3 text-5 mb-0 appear-animation"
+                            data-appear-animation="maskRight" data-appear-animation-delay="300">{{ structure_data.title }}
+                        </h2>
+                    </div>
+                </div>
+                <p  class="appear-animation text-center"  data-appear-animation="maskRight" data-appear-animation-delay="400"> 
+                    {{ structure_data.content }}
+                </p>
+            </div>
+        </div>
+
+        <div  class="container ">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="float-start img-fluid pe-3" src="{{ structure_data.image.url }}" alt="" style="width: 50%;">
+                    <div class="row pb-2">
+                        <div class="col">
+                            <h4 class="mb-0">{{ structure_data.management_board_title }}</h4>
+                        </div>
+                    </div>
+                    <p>{{ structure_data.management_board_content|truncatechars:2000 }}</p>
+
+                    
+                </div>
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <hr>
+                                <div class="row pb-2 mt-3">
+                                    <div class="col">
+                                        <h4 class="mb-0">{{ structure_data.execution_team_title }}</h4>
+                                    </div>
+                                </div>
+                                <p>{{ structure_data.execution_team_content|truncatechars:1400 }}</p>
+                            </div>
+                            <div class="col-lg-6 position-relative">
+                                <div class="text-center" >
+                                    <img class="float-end img-fluid"  src="{{ structure_data.execution_team_image.url }}" style="width: 100%;" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'front/vendor/gsap/gsap.min.js' %}"></script>
+{% endblock %}

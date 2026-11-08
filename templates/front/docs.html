@@ -1,0 +1,144 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load custom_filters %}
+{% block resource %} active {% endblock %}
+{% block resource_dynamic %} active {% endblock %}
+
+{% block style %} 
+<style>
+    .embed-tag >#document html{
+        overflow: hidden;
+        width: 1000px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Resources -->
+<section class="section border-0 py-10 m-0 px-lg-5">
+    <div class="container">
+        <div class="row align-items-end pb-3">
+            <div class="col-lg-12 text-center mb-4 mb-lg-0 ">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                    <div class="overflow-hidden">
+                        <h2 class="text-color-primary font-weight-semibold line-height-3 text-5 mb-0 appear-animation"
+                            data-appear-animation="maskRight" data-appear-animation-delay="500">{% trans "RESOURCES" %}
+                        </h2>
+                    </div>
+                </div>
+                <p  class="appear-animation"  data-appear-animation="maskRight" data-appear-animation-delay="600"> 
+                    {% trans "YOU CAN FIND ALL THE RESOURCES IN THIS SECTION" %}
+                </p>
+            </div>
+        </div>
+        <div class="row appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
+            <div class="col">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="tabs tabs-vertical tabs-left tabs-navigation bg-light">
+                            <ul class="nav nav-tabs col-sm-3" role="tablist">
+                                {% for category, x in categories %}
+                                <li class="nav-item border-bottom {% if forloop.first %}active{% endif %}" role="presentation">
+                                    <a class="nav-link {% if forloop.first %}active{% endif %}" href="#tabsNavigation{{ forloop.counter }}" 
+                                    data-bs-toggle="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" role="tab">{% trans category %}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                                            
+                    <div class="col-lg-9">
+                        <div class="row">
+                            {% for category, documents in documents_by_category.items %}
+                            <div class="tab-pane tab-pane-navigation {% if forloop.first %}active show{% endif %}" id="tabsNavigation{{ forloop.counter }}" role="tabpanel">
+                                <div class="row">
+                                    {% for document in documents %}
+                                    <div class="col-lg-4 col-md-3 col-sm-6 col-xsm-12 mb-3 p-sm-0">
+                                    <div class="card border-radius-2 bg-color-light box-shadow-3 box-shadow-1-hover">
+                                        {% if document.file   %}
+                                        
+                                        <div class="feature-box py-2 px-1">
+                                            <div class="border-radius-2">
+                                              
+                                                {% with doc=document.file.url|get_file_name %}
+                                                
+                                                    {% if document.file_extension == '.pdf' %}
+                                                        <embed src="/documents/pdf/{{document.file.url|get_file_name}}" type="application/pdf" class="embed-tag" width="60px" height="70px">
+                                                    {% elif document.file_extension == '.csv' or  document.file_extension == '.xlsx' %}
+                                                    <img src="{% static 'front/imgs/docs/excel.png' %}"
+                                                        style="width: 40px; height: 40px;">
+
+                                                    {% elif document.file_extension == '.doc' or document.file_extension == '.docx' %}
+                                                    <img src="{% static 'front/imgs/docs/default.png' %}"
+                                                        style="width: 40px; height: 40px;">
+                                                    {% else %}
+                                                    <!-- Default image if the file extension is not pdf or csv -->
+                                                    <img src="{% static 'default.png' %}" style="width: 40px; height: 40px;">
+                                                    {% endif %}
+                                            
+                                            
+                                                {% endwith %}
+                                            
+
+                                                
+                                            </div>
+                                            <div class="feature-box-info" style="overflow: hidden;">
+                                                <a href="{{ document.file.url }}" class="mb-0 border-bottom">{{ document.title }}</a>
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                        <div class="feature-box py-2 px-1">
+                                            <div class="border-radius-2">
+                                                <p>{% trans "Document not found" %}</p>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+             <!-- pagination -->
+             <div class="row align-items-center text-center">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center align-items-center">
+
+                        {% if documents.has_previous %}
+                            <li class="page-item"><a href="?page={{documents.previous_page_number}}" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                            <li class="page-item"><a href="?page={{documents.previous_page_number}}" class="page-link">{{documents.previous_page_number}}</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                        {% endif %}
+
+                            <li class="page-item active"><a href="" class="page-link">{{documents.number}}</a></li>
+                        
+                        {% if documents.has_next %}
+                            <li class="page-item"><a href="?page={{documents.next_page_number}}" class="page-link">{{documents.next_page_number}}</a></li>
+                            {% if documents.next_page_number != documents.paginator.num_pages %}
+                                <li class="page-item disabled"><a href="" class="page-link">...</a></li>
+                                <li class="page-item"><a href="?page={{documents.paginator.num_pages}}" class="page-link">{{documents.paginator.num_pages}}</a></li>
+                            {% endif %}
+                            <li class="page-item"><a href="?page={{documents.next_page_number}}" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+            <!-- end pagination -->
+            
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

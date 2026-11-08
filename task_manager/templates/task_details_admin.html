@@ -1,0 +1,316 @@
+{% extends 'staff/admin_base.html' %}
+{% load static %}
+{% block main %}
+{% load custom_filters %}
+<!-- Start::app-content -->
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+        <h1 class="page-title fw-semibold fs-18 mb-0">Task Detail for : <strong>{{task.task_name}}</strong></h1>
+        <div class="ms-md-1 ms-0">
+            <nav>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Task</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Task Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header Close -->
+
+    <!-- Start::row-1 -->
+    <!-- task_details_admin.html -->
+
+    <div class=" row">
+        <div class="col-md-8 col-sm-12 ">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                    <div class="card-title">Task Summary</div>
+                        
+                    {% if task.created_by == user %}
+                    <div class="btn-list">
+                        <button class="btn btn-success btn-sm btn-wave me-0" 
+                        data-bs-toggle="modal"
+                            data-bs-target="#create-task">
+                            <i class="ri-edit-line me-1 align-middle"></i>Edit Task
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+
+                
+                <div class="card-body">
+                    <div class=" fs-15 fw-semibold mb-2">Title : <strong style="color: #444;">{{ task.task_name }}</strong></div>
+                    <p class="task-description"></p>
+                    
+                    <div class="fs-15 fw-semibold mb-2">Task Description </div>
+                    <p class=" task-description" style="color:#444">{{ task.task_description }}</p>
+                    
+                    <div class="fs-15 fw-semibold mb-2">Key tasks </div>
+                    <div>
+                        <ul class="task-details-key-tasks mb-0">
+                            {% for key_task in task|get_key_tasks %}
+                            <li style="color:#444">{{ key_task }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                        <div>
+                            <span class="d-block text-muted fs-12">Assigned By</span>
+                            <div class="d-flex align-items-center">
+                                <div class="me-2 lh-1">
+
+                                </div>
+                                <span class="d-block fs-14 fw-semibold">{{ task.created_by }} :{{task.created_by.email}}</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span class="d-block text-muted fs-12">Status</span>
+                            <span class="d-block fs-14 fw-semibold">{{ task.status }}</span>
+                        </div>
+                        <div>
+                            <span class="d-block text-muted fs-12">Assigned Date</span>
+                            <span class="d-block fs-14 fw-semibold">{{ task.assigned_date|date:"F,d Y" }}</span>
+                        </div>
+                        <div>
+                            <span class="d-block text-muted fs-12">Due Date</span>
+                            <span class="d-block fs-14 fw-semibold">{{ task.due_date|date:"F,d Y" }}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card custom-card">
+                <div class="card-header">
+                    <div class="card-title">Assigned Individuals <span class="text-muted task-description">({{task.assigned_to.count}})</span></div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled courses-instructors mb-0">
+                        {% for ass in task.assigned_to.all %}
+                        <li>
+                            <div class="d-flex">
+                                <div class="d-flex flex-fill align-items-center">
+                                    <div class="me-2">
+                                        <span class="avatar avatar-rounded">
+                                            <img src="" alt="">
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-semibold">{{ass}}</span>
+                                        <span class="text-muted">{{ass.email}}</span>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <span class="d-block text-primary fw-semibold">{{ass.role}}</span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                       
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card custom-card">
+                <div class="card-header">
+                    <div class="card-title">Monitoring Individuals <span class="text-muted task-description">({{task.monitoring.count}})</span></div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled courses-instructors mb-0">
+                        {% for mon in task.monitoring.all %}
+                        <li>
+                            <div class="d-flex">
+                                <div class="d-flex flex-fill align-items-center">
+                                    <div class="me-2">
+                                        <span class="avatar avatar-rounded">
+                                            <img src="" alt="">
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-semibold">{{mon}}</span>
+                                        <span class="text-muted">{{mon.email}}</span>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <span class="d-block text-primary fw-semibold">{{mon.role}}</span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                       
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="card custom-card">
+        <div class="card-header">
+            <div class="card-title">Task Discussions</div>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled profile-timeline">
+                {% for comment in comments %}
+                <li>
+                    <div>
+                        <span class="avatar avatar-sm bg-primary-transparent avatar-rounded profile-timeline-avatar">
+                            <img {% if comment.user.profile_pic %} src="{{ comment.user.profile_pic.url }}" {% else %}
+                                src="{% static 'front/imgs/team/user.png' %}" {% endif %} />
+                        </span>
+                        <p class="mb-2">{{ comment.content }}</p>
+                        <p class="text-muted mb-0">
+                            {{ comment.user}}
+                            <span class="float-end fs-11 text-muted">{{ comment.created_at }}</span>
+                        </p>
+                        <!-- Reply Form -->
+                        <button class="btn btn-sm btn-primary toggle-reply-form"
+                            data-target="reply-form-{{ comment.id }}">Reply</button>
+                        <form method="post" action="{% url 'reply_comment' comment.id %}" class="reply-form"
+                            id="reply-form-{{ comment.id }}" style="display: none;">
+                            {% csrf_token %}
+                            <div class="input-group mt-2">
+                                <input type="text" name="comment_content" class="form-control"
+                                    placeholder="Write a reply..." aria-label="Write a reply..." required>
+                                <button class="btn btn-sm btn-primary" type="submit">Post</button>
+                            </div>
+                        </form>
+                        <!-- End Reply Form -->
+
+                        <!-- Display Replies -->
+                        <ul>
+                            {% for reply in comment.replies.all %}
+                            <li>
+                                <div>
+                                    <span
+                                        class="avatar avatar-sm bg-secondary-transparent avatar-rounded profile-timeline-avatar">
+                                        <img {% if comment.user.profile_pic %} src="{{ comment.user.profile_pic.url }}"
+                                            {% else %} src="{% static 'front/imgs/team/user.png' %}" {% endif %} />
+                                    </span>
+                                    <p class="mb-2">
+                                        {{ reply.content }}
+                                        <span class="float-end fs-11 text-muted">{{ reply.created_at }}</span>
+                                    </p>
+                                    <p class="text-muted mb-0">
+                                        {{ reply.user }}
+                                    </p>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <!-- End Display Replies -->
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card-footer">
+            <form method="post" action="{% url 'add_comment' task.id %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="comment_content" class="form-control" placeholder="Write a comment..."
+                        aria-label="Write a comment..." required>
+                    <button class="btn btn-sm btn-primary" type="submit">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal modal-lg fade col-xl-9" id="create-task" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <h6 class="modal-title">Edit Task</h6>                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+
+                </div>
+                <form method="post"  id="task-form">
+                    {% csrf_token %}
+                    <div class="modal-body px-4">
+                        <div class="row gy-2">
+                            <div class="col-md-8 col-sm-12">
+                                <label for="task-name" class="form-label">Task Name</label>
+                                    {{form.task_name}}
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label class="form-label">Priority</label>
+                               {{form.priority}}
+                            </div>
+                            <div class="col-md-6 col-sm-12 mt-4">
+                                <label for="task-name" class="form-label">Task Assigned To</label>
+                                {{form.assigned_to}}
+                            </div>
+                            <div class="col-md-6 col-sm-12 mt-4">
+                                <label for="task-name" class="form-label">Task Monitored by</label>
+                                {{form.monitoring}}
+                            </div>
+                            
+                            <div class="col-md-6 col-sm-12 mt-4">
+                                <label for="task-description" class="form-label">Task
+                                    Description</label>
+                                {{form.task_description}}
+                            </div>
+                            <div class="col-md-6 col-sm-12 mt-4">
+                                <label for="key-tasks" class="form-label">Key Tasks</label>
+                                {{form.key_tasks}}
+                            </div>
+                            <div class="col-md-4 col-sm-12 mt-4">
+                                <label class="form-label">Status</label>
+                                {{form.status}}
+                            </div>
+                            <div class="col-md-4 col-sm-12 mt-4">
+                                <label class="form-label">Start Date</label>
+                                {{form.start_date}}
+                            </div>
+                            <div class="col-md-4 col-sm-12 mt-4">
+                                <label class="form-label">Due Date</label>
+                                {{form.due_date}}
+                            </div>
+                            <script>
+                                // Initialize flatpickr
+                                flatpickr("#assignedDate", { enableTime: true, dateFormat: "Y-m-dTH:i" });
+                                flatpickr("#dueDate", { enableTime: true, dateFormat: "Y-m-dTH:i" });
+                            </script>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure want to update this task?')">Update Task</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.toggle-reply-form').forEach(button => {
+            button.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const replyForm = document.getElementById(targetId);
+                if (replyForm) {
+                    replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+    </script>
+
+</div>
+</div>
+<!--End::row-1 -->
+</div>
+<!-- End::app-content -->
+{% endblock %}

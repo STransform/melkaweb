@@ -1,0 +1,66 @@
+<div class="container mt-2 mb-5 pb-5 px-lg-5 px-md-3" style="background-color: white;">
+    <div class="row align-items-start">
+        
+        
+        
+        <!-- For CEO Message -->
+        <div class="col-lg-7 mb-5 mb-lg-0">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title text-primary font-weight-semibold line-height-3 text-4 mb-0 appear-animation"
+                        data-appear-animation="maskRight" data-appear-animation-delay="500">{% trans "Transforming Futures with Innovative Excellence" %}</h2>
+                    <p class="card-text">{% trans "OTech pioneers innovation, shaping brighter futures for industries and communities through cutting-edge technology solutions." %}</p>
+                </div>
+            </div>
+
+          
+
+            <!-- Card 2 -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex d-sm-none d-md-block d-lg-block align-items-start justify-content-start mb-2 py-4">
+                        <span class="custom-line appear-animation" data-appear-animation="customLineAnimation"
+                            appear-animation-duration="1s"></span>
+                        
+                    </div>
+                    <p class="card-text">{{ excellence.content }}</p>
+                </div>
+            </div>
+            <div class="col-lg-5 col-sm-10">
+                <div class="position-relative">
+                    <div data-plugin-float-element
+                        data-plugin-options="{'startPos': 'top', 'speed': 0.2, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+                        <img src="{{ excellence.image.url }}" style="border-radius: 10px; max-height: 500px; width: 90%;"
+                            class="img-fluid custom-box-shadow-1 appear-animation" data-appear-animation="fadeInLeftShorter"
+                            data-appear-animation-delay="1800" alt="" />
+                    </div>
+                </div>
+                <div class="d-flex d-sm-none d-md-block d-lg-block align-items-start justify-content-start mb-2 py-4">
+                    <span class="custom-line appear-animation" data-appear-animation="customLineAnimation"
+                        appear-animation-duration="1s"></span>
+                    <div class="overflow-hidden ms-3">
+                        <h2 class="card-title text-primary font-weight-semibold line-height-3 text-4 mb-0 appear-animation"
+                            data-appear-animation="maskRight" data-appear-animation-delay="500">{{ excellence.full_name }}</h2>
+                    </div>
+                </div>
+                <div class="d-flex d-sm-none d-md-block d-lg-block align-items-start justify-content-start mb-2 py-4">
+                    <span class="custom-line appear-animation" data-appear-animation="customLineAnimation"
+                        appear-animation-duration="1s"></span>
+                    <div class="overflow-hidden ms-3">
+                        <h2 class="card-title text-primary font-weight-semibold line-height-3 text-4 mb-0 appear-animation"
+                            data-appear-animation="maskRight" data-appear-animation-delay="500">{{ excellence.position }}</h2>
+                    </div>
+                </div>
+            </div>
+           
+
+            <style>
+                .card-text::selection {
+                  background: red;
+                  color: white;
+                }
+            </style>
+        </div>
+
+    </div>
+</div>

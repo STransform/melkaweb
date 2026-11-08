@@ -1,0 +1,379 @@
+{% load i18n %}
+{% block css %}
+<style>
+  .gallery-section {
+    padding: 100px 0;
+    background-color: var(--primary-white);
+    position: relative;
+  }
+
+  .section-title {
+    color: var(--primary-black) !important;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+  }
+
+  .lead {
+    color: var(--primary-black);
+    opacity: 0.7;
+    font-weight: 400;
+  }
+
+  /* Updated carousel styling for responsive image display */
+  .gallery-carousel {
+    position: relative;
+    overflow: visible;
+    /* Changed from hidden to visible */
+    background: transparent;
+    /* Ensure transparent background */
+    min-height: 450px;
+    /* Set minimum height for proper display */
+  }
+
+  .gallery-carousel .carousel-inner {
+    padding: 0 15px;
+    background: transparent;
+    /* Ensure transparent background */
+    height: auto;
+    /* Allow natural height */
+  }
+
+  .gallery-carousel .carousel-item {
+    transition: transform 0.6s ease-in-out;
+    background: transparent;
+    /* Ensure transparent background */
+    height: auto;
+    /* Allow natural height */
+  }
+
+  .gallery-carousel .carousel-control-prev,
+  .gallery-carousel .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-carousel .carousel-control-prev {
+    left: -25px;
+  }
+
+  .gallery-carousel .carousel-control-next {
+    right: -25px;
+  }
+
+  .gallery-carousel .carousel-control-prev:hover,
+  .gallery-carousel .carousel-control-next:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .gallery-carousel .carousel-control-prev-icon,
+  .gallery-carousel .carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Custom indicators styling */
+  .gallery-carousel .carousel-indicators {
+    bottom: -50px;
+    margin-bottom: 0;
+  }
+
+  .gallery-carousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    opacity: 0.5;
+    border: none;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-carousel .carousel-indicators button.active {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  .gallery-link {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--primary-white);
+    box-shadow: 0 8px 25px rgba(26, 26, 26, 0.08);
+    transition: all 0.4s ease;
+    border: 2px solid rgba(26, 26, 26, 0.05);
+    margin: 0 10px;
+    /* Added margin for spacing between carousel items */
+    height: auto;
+    min-height: 400px;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(26, 26, 26, 0.15);
+    border-color: var(--accent-color);
+  }
+
+  .gallery-image {
+    height: 400px !important;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: all 0.4s ease;
+    display: block;
+  }
+
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(26, 26, 26, 0.7) 0%,
+        rgba(231, 76, 60, 0.8) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.4s ease;
+    border-radius: 10px;
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-content {
+    text-align: center;
+    padding: 20px;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-content {
+    transform: translateY(0);
+  }
+
+  .gallery-content h6 {
+    font-weight: 700;
+    color: var(--primary-white);
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .gallery-content small {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(231, 76, 60, 0.3);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Responsive carousel layout */
+  /* Large screens: 4 images per slide */
+  @media (min-width: 992px) {
+    .carousel-item .row>div {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+
+    .gallery-carousel {
+      min-height: 450px;
+    }
+  }
+
+  /* Medium screens: 2 images per slide */
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .carousel-item .row>div {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .gallery-image {
+      height: 300px !important;
+    }
+
+    .gallery-carousel {
+      min-height: 350px;
+    }
+
+    .gallery-item {
+      min-height: 300px;
+    }
+  }
+
+  /* Small screens: 1 image per slide */
+  @media (max-width: 767.98px) {
+    .carousel-item .row>div {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .gallery-section {
+      padding: 60px 0;
+    }
+
+    .gallery-image {
+      height: 220px !important;
+    }
+
+    .section-title {
+      font-size: 2rem !important;
+    }
+
+    .gallery-carousel .carousel-control-prev,
+    .gallery-carousel .carousel-control-next {
+      display: none;
+      /* Hide controls on mobile for better UX */
+    }
+
+    .gallery-carousel {
+      min-height: 270px;
+    }
+
+    .gallery-item {
+      min-height: 220px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .gallery-content h6 {
+      font-size: 1rem;
+    }
+
+    .gallery-content small {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Staggered animation for carousel items */
+  .gallery-item {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .carousel-item.active .gallery-item:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .carousel-item.active .gallery-item:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .carousel-item.active .gallery-item:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .carousel-item.active .gallery-item:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+{% endblock %}
+
+{% if gallery_images %}
+<section class="gallery-section">
+  <div class="container">
+    <div class="row align-items-end mb-5">
+      <div class="col-lg-8">
+        <h2 class="section-title display-4">{% trans "GALLERIES" %}</h2>
+        <p class="lead">
+          {% trans "PICTURES TAKEN FROM PREVIOUS ACTIVITIES" %}
+        </p>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <a href="{% url 'gallery_images' %}" class="btn btn-corporate-red">
+          {% trans "SEE ALL" %}
+        </a>
+      </div>
+    </div>
+
+    <!-- Bootstrap 5 Carousel Implementation -->
+    <div id="galleryCarousel" class="carousel slide gallery-carousel" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for image in gallery_images %}
+        {% if forloop.counter0|divisibleby:4 or forloop.first %}
+        {% if not forloop.first %}</div>
+    </div>{% endif %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <div class="row g-3">
+        {% endif %}
+
+        <div class="col">
+          <div class="gallery-item">
+            <a href="{% url 'gallery_images' %}" class="gallery-link">
+              <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid gallery-image" loading="lazy" />
+              <div class="gallery-overlay">
+                <div class="gallery-content">
+                  <h6 class="mb-2">{{ image.title }}</h6>
+                  <small>{{ image.category }}</small>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        {% if forloop.last %}
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Carousel Controls -->
+  <!-- <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">{% trans "Previous" %}</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">{% trans "Next" %}</span>
+  </button> -->
+
+
+  </div>
+  </div>
+</section>
+{% endif %}

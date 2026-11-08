@@ -1,0 +1,296 @@
+.documents,
+.documents * {
+  box-sizing: border-box;
+}
+.documents {
+  width: 1500px;
+  height: 480px;
+  position: relative;
+  overflow: hidden;
+  margin-left: -100px;
+  margin-top: -120px;
+}
+
+.photo-2023-10-19-21-10-2 {
+  width: 436px;
+  height: 436px;
+  position: absolute;
+  left: -75px;
+  top: calc(50% - 218px);
+  object-fit: cover;
+}
+
+.group-2 {
+  position: absolute;
+  inset: 0;
+}
+.order-button {
+  background: #3a7ce1;
+  border-radius: 4px;
+  padding: 9px 30px 9px 30px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0px;
+  bottom: 10px;
+  overflow: hidden;
+}
+.see-all-resources {
+  color: var(--white, #ffffff);
+  text-align: center;
+  font-family: "OpenSans-Bold", sans-serif;
+  font-size: 14px;
+  line-height: 25px;
+  font-weight: 700;
+  position: relative;
+}
+.resources {
+  color: #000000;
+  text-align: left;
+  font-family: "Poppins-ExtraLight", sans-serif;
+  font-size: 36px;
+  line-height: 25px;
+  font-weight: 200;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1162px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.active-upcoming-events {
+  color: #6e798c;
+  text-align: left;
+  font-family: "Poppins-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 25px;
+  font-weight: 500;
+  text-transform: uppercase;
+  position: absolute;
+  left: 0px;
+  top: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-1000001771 {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 1342px;
+  position: absolute;
+  left: 85px;
+  top: 172px;
+}
+.categories {
+  background: #ffffff;
+  border-radius: 6px;
+  flex-shrink: 0;
+  width: 325px;
+  height: 295px;
+  position: relative;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.category {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #6e798c;
+  border-width: 0px 0px 0.5px 0px;
+  width: 278px;
+  height: 42px;
+  position: absolute;
+  left: calc(50% - 139.5px);
+  top: 15px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.category-one {
+  color: #000000;
+  text-align: left;
+  font-family: "Poppins-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 25px;
+  font-weight: 400;
+  text-transform: uppercase;
+  position: absolute;
+  left: 0px;
+  top: calc(50% - 12px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.dropdown-icon {
+  width: 2.33px;
+  height: 5.33px;
+  position: absolute;
+  left: 263px;
+  top: calc(50% - 5.33px);
+  transform: translate(-5.33px, 0px);
+  overflow: visible;
+}
+.category2 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #6e798c;
+  border-width: 0px 0px 0.5px 0px;
+  width: 278px;
+  height: 42px;
+  position: absolute;
+  left: calc(50% - 139.5px);
+  top: 62px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.dropdown-icon2 {
+  width: 9.33px;
+  height: 5.33px;
+  position: absolute;
+  left: 263px;
+  top: calc(50% - 5.33px);
+  transform: translate(-5.33px, 0px);
+  overflow: visible;
+}
+.category3 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #6e798c;
+  border-width: 0px 0px 0.5px 0px;
+  width: 278px;
+  height: 42px;
+  position: absolute;
+  left: calc(50% - 139.5px);
+  top: 109px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.dropdown-icon3 {
+  width: 9.33px;
+  height: 5.33px;
+  position: absolute;
+  left: 263px;
+  top: calc(50% - 5.33px);
+  transform: translate(-5.33px, 0px);
+  overflow: visible;
+}
+.category4 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #6e798c;
+  border-width: 0px 0px 0.5px 0px;
+  width: 278px;
+  height: 42px;
+  position: absolute;
+  left: calc(50% - 139.5px);
+  top: 156px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.dropdown-icon4 {
+  width: 9.33px;
+  height: 5.33px;
+  position: absolute;
+  left: 263px;
+  top: calc(50% - 5.33px);
+  transform: translate(-5.33px, 0px);
+  overflow: visible;
+}
+.category5 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #6e798c;
+  border-width: 0px 0px 0.5px 0px;
+  width: 278px;
+  height: 42px;
+  position: absolute;
+  left: calc(50% - 139.5px);
+  top: 203px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.dropdown-icon5 {
+  width: 9.33px;
+  height: 5.33px;
+  position: absolute;
+  left: 263px;
+  top: calc(50% - 5.33px);
+  transform: translate(-5.33px, 0px);
+  overflow: visible;
+}
+.author {
+  color: #3a7ce1;
+  text-align: center;
+  font-family: "Poppins-Regular", sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+  font-weight: 400;
+  text-decoration: underline;
+  position: absolute;
+  left: calc(50% - 54.5px);
+  bottom: 12px;
+}
+.frame-8 {
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  width: 1017px;
+  height: 299px;
+  position: relative;
+}
+.resource-card {
+  background: #ffffff;
+  border-radius: 6px;
+  flex-shrink: 0;
+  width: 225px;
+  height: 89px;
+  position: relative;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.import-tax-expenditure-report-fy-2018-19-2020-21 {
+  color: #000000;
+  text-align: left;
+  font-family: "Poppins-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 25px;
+  font-weight: 400;
+  text-decoration: underline;
+  position: absolute;
+  left: 97px;
+  top: 19px;
+  width: 204px;
+}
+.icon {
+  width: 95px;
+  height: 89px;
+  position: absolute;
+  left: 0px;
+  top: calc(50% - 44.5px);
+  overflow: hidden;
+}
+.pdf {
+  width: 45px;
+  height: 56px;
+  position: absolute;
+  left: calc(50% - 22.5px);
+  top: calc(50% - 27.5px);
+  object-fit: cover;
+}
+.microsoft-excel {
+  width: 60.21px;
+  height: 56px;
+  position: absolute;
+  left: calc(50% - 30.5px);
+  top: calc(50% - 27.5px);
+  object-fit: cover;
+}

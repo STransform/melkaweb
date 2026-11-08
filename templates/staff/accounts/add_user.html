@@ -1,0 +1,115 @@
+
+{% extends 'staff/admin_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_filters %}
+{% block main %}
+
+    <div class="container-fluid">
+        
+         <!-- Page Header -->
+         {% if errors %}
+            <p class="errornote">
+            {% if errors|length == 1 %} Please correct the error below. {% else %}Please correct the errors below.{% endif %}
+            </p>
+            {{ .form.non_field_errors }}
+        {% endif %}
+         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+            <h1 class="page-title fw-semibold fs-18 mb-0">
+                
+                     Add New User Account
+                 
+            </h1>
+            
+        </div>
+        <div class="col-xl-12">
+            
+            <form action="" method="post" class=" form-fields-rounded form-with-icons">
+                <div class="card custom-card">
+                    <div class="card-body  col-md-12 col-sm-12">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="form-group col-lg-6 mt-2 mb-4 form-check form-switch">
+                                <label class="form-label">1. {% trans "First Name" %}</label>
+                                <div class="position-relative">
+                                    <i class="fa fa-user text-color-primary text-3 position-absolute left-2 top-50pct transform3dy-n50"></i>
+                                    {{form.first_name}}
+                                    {{form.errors.first_name}}
+                                    
+
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-lg-6 mt-2 mb-4 form-check form-switch">
+                                <label class="form-label">2. {% trans "Last Name" %}</label>
+                                <div class="position-relative">
+                                    <i class="fa fa-hat-cowboy text-color-primary text-3 position-absolute left-2 top-50pct transform3dy-n50"></i>
+                                    {{form.last_name}}
+                                    {{form.errors.last_name}}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 mt-2 mb-4 form-check form-switch">
+                                <label class="form-label">3. {% trans "Email" %}</label>
+                                <div class="position-relative">
+                                    <i class="fa fa-envelope text-color-primary text-3 position-absolute left-2 top-50pct transform3dy-n50"></i>
+                                    {{form.email}}
+                                    {{form.errors.email}}
+                                    </div>
+                            </div>
+                            <div class="form-group col-lg-6 mt-2 mb-4 form-check form-switch">
+                                <label class="form-label">4. {% trans "Role" %}</label>
+                                <div class="position-relative">
+                                    <i class="fa fa-tag text-color-primary text-3 position-absolute left-2 top-50pct transform3dy-n50 z-index-1"></i>
+                                    {{form.role}}
+                                    {{form.errors.role}}
+                                    
+                                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 mt-2 mb-4 form-check form-switch">
+                                <label class="form-label">5. {% trans "Password" %}</label>
+                                <div class="position-relative">
+                                    <i class="fa fa-lock text-color-primary text-3 position-absolute left-2 top-50pct transform3dy-n50"></i>
+                                    {{form.password}}
+                                    {{form.errors.password}}
+                                    
+                                    <!-- <input type="password" name="Password" value="" class="form-control " required> -->
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6 mt-2 mb-4 form-check form-switch">
+                                <label class="form-label ">6. {% trans "Reenter Password" %}</label>
+                                <div class="position-relative">
+                                    <i class="fa fa-lock text-color-primary text-3 position-absolute left-2 top-50pct transform3dy-n50"></i>
+                                    {{form.password2}}
+                                    {{form.errors.password2}}
+                                    
+                                </div>
+                            </div>  
+                        </div>
+                        
+                        <div class="card-footer px-5">
+
+                            <button type="submit" class="btn btn-primary float-end m-2">Submit</button>
+                            <button type="button" class="btn btn-secondary btn-outline float-end m-2" >Cancel</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+       
+    </div>
+
+{% endblock %}
+{% block js %}
+<!-- Color Picker JS -->
+<script src="{% static 'dashboard/libs/simonwep/pickr/pickr.es5.min.js' %}"></script>
+<!-- Color Picker JS -->
+<script src="{% static 'dashboard/js/color-picker.js' %}"></script>
+
+{% endblock %}

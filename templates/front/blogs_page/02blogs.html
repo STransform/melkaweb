@@ -1,0 +1,95 @@
+{% load i18n %} {% load static %}<!-- CSS -->
+{% block css %}<style>
+  .blogs-section {
+    padding: 120px 0;
+    background: linear-gradient(135deg, #f8fcff 0%, #e6f3ff 100%);
+    position: relative;
+  }
+
+  .blogs-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 119, 190, 0.3), transparent);
+  }
+
+  .pagination {
+    margin-top: 80px;
+  }
+
+  .page-link {
+    color: #0066a3;
+    border: 1px solid rgba(0, 119, 190, 0.2);
+    padding: 14px 18px;
+    margin: 0 6px;
+    border-radius: 12px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  .page-link:hover {
+    background: linear-gradient(135deg, #0077BE, rgba(0, 119, 190, 0.8));
+    color: #ffffff;
+    border-color: #0077BE;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 119, 190, 0.2);
+  }
+
+  .page-item.active .page-link {
+    background: linear-gradient(135deg, #0077BE, rgba(0, 119, 190, 0.8));
+    border-color: #0077BE;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 119, 190, 0.2);
+  }
+
+  .page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+{% endblock %}<!-- Blogs -->
+<section class="blogs-section border-0 py-10 m-0 px-lg-5 pt-4">
+  <div class="container">
+    <div class="row appear-animation g-5" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
+      <div class="col">
+        <div class="row g-4">
+          {% for blog in blogs %}
+          {% include 'front/blogs_page/07blog_single.html' %}
+          {% endfor %}
+        </div>
+      </div>
+
+  <!-- Pagination -->
+  <div class="row align-items-center text-center">
+    <div class="col-12">
+      <ul class="pagination justify-content-center align-items-center">
+        {% if blogs.has_previous %}
+        <li class="page-item"><a href="?page={{blogs.previous_page_number}}" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+        <li class="page-item"><a href="?page={{blogs.previous_page_number}}" class="page-link">{{blogs.previous_page_number}}</a></li>
+        {% else %}
+        <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+        {% endif %}
+
+        <li class="page-item active"><a href="" class="page-link">{{blogs.number}}</a></li>
+
+        {% if blogs.has_next %}
+        <li class="page-item"><a href="?page={{blogs.next_page_number}}" class="page-link">{{blogs.next_page_number}}</a></li>
+        {% if blogs.next_page_number != blogs.paginator.num_pages %}
+        <li class="page-item disabled"><a href="" class="page-link">...</a></li>
+        <li class="page-item"><a href="?page={{blogs.paginator.num_pages}}" class="page-link">{{blogs.paginator.num_pages}}</a></li>
+        {% endif %}
+        <li class="page-item"><a href="?page={{blogs.next_page_number}}" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+        {% else %}
+        <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>  </div>
+</section>
+

@@ -1,0 +1,414 @@
+{% load i18n %} {% load static %} {% block css %}<style>
+  .services-section {
+    padding: 140px 0;
+    background: linear-gradient(135deg, #f8fcff 0%, #e6f3ff 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .services-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 119, 190, 0.4), transparent);
+    box-shadow: 0 0 20px rgba(0, 119, 190, 0.1);
+  }
+
+  .service-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 119, 190, 0.15);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 119, 190, 0.08);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #0077BE, rgba(0, 119, 190, 0.6));
+    border-radius: 24px 24px 0 0;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to top, rgba(0, 119, 190, 0.02), transparent);
+    border-radius: 0 0 24px 24px;
+  }
+
+  .service-card:hover {
+    transform: translateY(-12px) rotateX(2deg);
+    box-shadow: 0 20px 60px rgba(0, 119, 190, 0.2);
+    border-color: rgba(0, 119, 190, 0.3);
+  }
+
+  .service-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(0, 119, 190, 0.08);
+    position: relative;
+  }
+
+  .service-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #0077BE, #005a8f);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.25rem;
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 24px rgba(0, 119, 190, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-icon::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+  }
+
+  .service-card:hover .service-icon::before {
+    animation: shine 1.5s ease-in-out;
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  }
+
+  .service-card:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 32px rgba(0, 119, 190, 0.3);
+  }
+
+  .service-icon i {
+    font-size: 1.8rem;
+    color: #ffffff;
+    z-index: 1;
+    position: relative;
+  }
+
+  .service-meta {
+    flex: 1;
+  }
+
+  .service-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #005a8f;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+    position: relative;
+  }
+
+  .service-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.75rem;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: #0077BE;
+    border-radius: 1px;
+  }
+
+  .service-badge {
+    background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(0, 119, 190, 0.05));
+    color: #0077BE;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    display: inline-block;
+    border: 1px solid rgba(0, 119, 190, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover .service-badge {
+    background: rgba(0, 119, 190, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .service-description {
+    color: #0a192f;
+    line-height: 1.7;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+  }
+
+  .service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    font-size: 0.95rem;
+  }
+
+  .service-features li {
+    display: flex;
+    align-items: center;
+    color: #0077BE;
+    margin-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    position: relative;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .service-features li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #0077BE;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover .service-features li::before {
+    transform: translateX(5px);
+  }
+
+  .service-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 119, 190, 0.08);
+  }
+
+  .service-btn {
+    background: linear-gradient(135deg, #0077BE, #005a8f);
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 4px 16px rgba(0, 119, 190, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .service-btn:hover::before {
+    left: 100%;
+  }
+
+  .service-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 119, 190, 0.3);
+  }
+
+  .service-btn i {
+    margin-left: 0.75rem;
+    transition: transform 0.4s ease;
+  }
+
+  .service-btn:hover i {
+    transform: translateX(4px);
+  }
+
+  .service-stats {
+    font-size: 0.9rem;
+    color: #0077BE;
+    font-weight: 600;
+    background: rgba(0, 119, 190, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 119, 190, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover .service-stats {
+    background: rgba(0, 119, 190, 0.1);
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    .services-section {
+      padding: 100px 0;
+    }
+
+    .service-card {
+      padding: 2.5rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .service-header {
+      flex-direction: column;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-icon {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+
+    .service-cta {
+      flex-direction: column;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+
+    .service-btn {
+      justify-content: center;
+    }
+
+    .service-features li {
+      justify-content: flex-start;
+      padding-left: 1.5rem;
+    }
+  }
+
+  .section-title {
+    color: #0077BE;
+  }
+
+  .section-title.display-4 {
+    color: #0077BE !important;
+  }
+
+  .lead.text-muted {
+    color: #0066a3 !important;
+  }
+</style>
+{% endblock %}<section class="services-section">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <h2 class="section-title display-4">Our Services</h2>
+        <p class="lead text-muted">
+          Comprehensive technology solutions tailored to your business needs
+        </p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="service-card corporate-card">
+          <div class="service-header">
+            <div class="service-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <div class="service-meta">
+              <h3 class="service-title">Software Solutions</h3>
+              <span class="service-badge">End-to-End Development</span>
+            </div>
+          </div>
+          <p class="service-description">
+             We build custom software solutions from the ground up — combining innovation, functionality, and scalability to empower organizations with modern digital experiences.
+          </p>
+          <ul class="service-features">
+            <li>Custom Software Development</li>
+            <li>ERP Customization & Integration</li>
+            <li>Web & Mobile Application Development</li>
+          </ul>
+          <div class="service-cta">
+            <a href="{% url 'technology' %}" class="service-btn">
+              Explore Solutions <i class="fas fa-arrow-right"></i>
+            </a>
+            <span class="service-stats">+2 Projects</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="service-card corporate-card">
+          <div class="service-header">
+            <div class="service-icon">
+              <i class="fas fa-server"></i>
+            </div>
+            <div class="service-meta">
+              <h3 class="service-title">Network & Cybersecurity</h3>
+              <span class="service-badge">Secure Network and Software Solutions</span>
+            </div>
+          </div>
+          <p class="service-description">
+           We design and deploy secure, high-performance network infrastructures and protect your systems with advanced cybersecurity solutions.
+          </p>
+          <ul class="service-features">
+            <li>Network Design & Installation</li>
+            <li>Cybersecurity & Threat Protection</li>
+            <li>Security & Compliance</li>
+          </ul>
+          <div class="service-cta">
+            <a href="{% url 'infrastructure' %}" class="service-btn">
+              View Network Solutions <i class="fas fa-arrow-right"></i>
+            </a>
+            <span class="service-stats">2+ Years Experience</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="service-card corporate-card">
+          <div class="service-header">
+            <div class="service-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="service-meta">
+              <h3 class="service-title">Innovation & Quantum Solutions</h3>
+              <span class="service-badge">Consulting & Research</span>
+            </div>
+          </div>
+          <p class="service-description">
+            Strategic consulting and innovative solutions to keep your business ahead of the competition with forward-thinking strategies.
+          </p>
+          <ul class="service-features">
+            <li>AI & Machine Learning Applications</li>
+            <li>Quantum Computing Research</li>
+            <li>Digital Transformation Consulting</li>
+          </ul>
+          <div class="service-cta">
+            <a href="{% url 'innovation' %}" class="service-btn">
+              Discover Innovation <i class="fas fa-arrow-right"></i>
+            </a>
+            <span class="service-stats">2+ Years Experience</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

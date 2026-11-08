@@ -1,0 +1,83 @@
+{% load i18n %} {% load static %}
+
+<!-- CSS -->
+{% block css %}
+<style>
+    .hero-header {
+        background: linear-gradient(135deg,
+                var(--primary-white) 0%,
+                var(--light-gray) 100%);
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: var(--accent-color);
+        opacity: 0.05;
+        border-radius: 50%;
+        transform: translate(50%, -50%);
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .header-title {
+        color: var(--primary-black);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-accent-line {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent-color), #ff4757);
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(255, 20, 43, 0.3);
+    }
+
+    .header-subtitle {
+        color: var(--medium-gray);
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-header {
+            min-height: 250px;
+            padding: 3rem 0;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+
+<!-- Header -->
+<section class="hero-header py-5 pb-3 m-0">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <div class="header-content">
+                    <h1 class="display-4 fw-bold mb-3 header-title">{{ page_title }}</h1>
+                    <div class="header-accent-line mx-auto"></div>
+                    <p class="lead mt-4 header-subtitle">{{ page_subtitle }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

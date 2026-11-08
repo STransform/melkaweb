@@ -1,0 +1,137 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block news %} active {% endblock %}
+{% block news_dynamic %} active {% endblock %}
+{% block css %}
+<style>
+    .row {
+        
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.post {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-content {
+    flex-grow: 1;
+} 
+</style>
+{% endblock %}
+{% block content %}
+
+<!-- Recent News -->
+<section class="section border-0 py-10 m-0 px-lg-5 pt-4">
+    <div class="container">
+        
+        <div class="row align-items-center text-center pb-3 mb-5 mb-lg-4">
+            <div class="d-flex align-items-end justify-content-end">
+                <ul class="breadcrumb d-block text-center">
+                    <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+                    <li class="active">{% trans "News" %}</li>
+                </ul>        
+            </div>
+            <hr class="bg-light">
+            <div class="col-12 mb-lg-0 ">
+                <div class="d-flex align-items-center mb-2  justify-content-center">
+                    <div class="overflow-hidden text-center">
+                        <h2 class="text-color-primary text-9 text-center font-weight-semibold line-height-3 text-5 mb-0 appear-animation"
+                            data-appear-animation="maskRight" data-appear-animation-delay="300">{% trans "Our News" %}
+                        </h2>
+                    </div>
+                </div>
+                <p  class="appear-animation text-center"  data-appear-animation="maskRight" data-appear-animation-delay="400"> 
+                    {% trans "RECENT NEWS DELIVERED FROM US TO YOU" %}
+                </p>
+            </div>
+            
+        </div>
+        <div class="row appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
+            <div class="col">
+                <div class="blog-posts mt-0">
+
+                    <div class="row mt-0 parent">
+
+                        {% for article in news_articles %}
+                        <div class="col-md-4 col-lg-3 child">
+                            <article class="post post-medium border-0 pb-0 mb-5 bg-light pb-4">
+                                <div class="post-image">
+                                    <a href="{% url 'news_detail' news_id=article.id %}">
+                                        <img src="{{ article.featured_image.url }}" style="width: 100%; height:150px; " 
+                                        class="img-fluid img-thumbnail img-thumbnail-no-borders" alt="" />
+                                    </a>
+                                </div>
+                                <div class="post-content  px-lg-3 px-md-2 px-sm-1 pb-3">
+
+                                    <h2 class="font-weight-light text-4 line-height-6 mt-3 mb-2">
+                                        <a href="{% url 'news_detail' news_id=article.id %}" style="overflow: hidden; display: inline-block; height: 50px; ">{{ article.title|truncatechars:50 }}</a></h2>
+                                        <p  style="overflow: hidden; max-height: 150px; height: 150px;">{{ article.content|truncatechars:200 }}</p> <!-- Truncate to 300 characters -->
+
+                                    <div class="post-meta">
+                                        <span><i class="far fa-clock"></i> <a href="#">{{ article.created_at }}</a></span>
+                                        <span class=" float-end"><a href="{% url 'news_detail' news_id=article.id %}" class=" text-uppercase">{% trans "Read More" %}</a></span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+            <!-- pagination -->
+            <div class="row align-items-center text-center">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center align-items-center">
+
+                        {% if news_articles.has_previous %}
+                            <li class="page-item"><a href="?page={{news_articles.previous_page_number}}" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                            <li class="page-item"><a href="?page={{news_articles.previous_page_number}}" class="page-link">{{news_articles.previous_page_number}}</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                        {% endif %}
+
+                            <li class="page-item active"><a href="" class="page-link">{{news_articles.number}}</a></li>
+                        
+                        {% if news_articles.has_next %}
+                            <li class="page-item"><a href="?page={{news_articles.next_page_number}}" class="page-link">{{news_articles.next_page_number}}</a></li>
+                            {% if news_articles.next_page_number != news_articles.paginator.num_pages %}
+                                <li class="page-item disabled"><a href="" class="page-link">...</a></li>
+                                <li class="page-item"><a href="?page={{news_articles.paginator.num_pages}}" class="page-link">{{news_articles.paginator.num_pages}}</a></li>
+                            {% endif %}
+                            <li class="page-item"><a href="?page={{news_articles.next_page_number}}" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+            <!-- end pagination -->
+    </div>
+</section>
+
+{% endblock %}
+{% block js %}
+<script>
+    window.onload = function() {
+        var parent = document.querySelector('.parent');
+        var children = parent.querySelectorAll('.child');
+        var maxHeight = 0;
+        
+        children.forEach(function(child) {
+            maxHeight = Math.max(maxHeight, child.offsetHeight);
+        });
+        
+        children.forEach(function(child) {
+            child.style.height = maxHeight + 'px';
+        });
+};
+</script>
+{% endblock %}

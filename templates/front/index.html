@@ -1,0 +1,90 @@
+{% extends 'front/base.html' %} {% load i18n %} {% load static %} {% load
+custom_filters %}
+
+
+{% block home %} active {% endblock %}
+
+<!-- Content  -->
+{% block content %}
+
+<!-- Hero Carousel  -->
+{% include 'front/landing_page/01hero_carousel.html' %}
+
+<!-- Statistics section -->
+{% include 'front/landing_page/02stats_section.html' %}
+
+<!-- Services section -->
+{% include 'front/landing_page/03our_services.html' %}
+
+<!-- CEO MESSAGE section  -->
+{% include 'front/landing_page/04ceo_message.html' %}
+
+<!-- Core Values  -->
+{% include 'front/landing_page/05core_values.html' %}
+
+<!-- Vision & Mission section  -->
+{% include 'front/landing_page/06vision_mission.html' %}
+
+<!-- OTECH Excellence section  -->
+{% include 'front/landing_page/07otech_excellence.html' %}
+
+<!-- Partners Section -->
+{% include 'front/landing_page/08partners.html' %}
+
+<!-- Elevating Skills Section -->
+{% include 'front/landing_page/elevating_skills.html' %}
+
+<!-- Recent Blogs section -->
+{% include 'front/landing_page/09recent_blogs.html' %}
+
+<!-- Testimonials Section -->
+{% include 'front/landing_page/10testimonials.html' %}
+
+<!-- Resources section -->
+{% include 'front/landing_page/resources.html' %}
+
+<!-- Gallery section -->
+{% include 'front/landing_page/11galleries.html' %}
+
+<!-- FAQ section -->
+{% include 'front/landing_page/12faq.html' %}
+
+
+
+{% endblock %}
+
+<!-- Javascript  -->
+{% block js %}
+<script>
+  $(document).ready(function () {
+    // Smooth scrolling for anchor links
+    $('a[href^="#"]').on("click", function (event) {
+      var target = $(this.getAttribute("href"));
+      if (target.length) {
+        event.preventDefault();
+        $("html, body")
+          .stop()
+          .animate({
+              scrollTop: target.offset().top - 100,
+            },
+            1000
+          );
+      }
+    });
+
+    // Add animation on scroll
+    $(window).scroll(function () {
+      $(".stat-item").each(function () {
+        var elementTop = $(this).offset().top;
+        var elementBottom = elementTop + $(this).outerHeight();
+        var viewportTop = $(window).scrollTop();
+        var viewportBottom = viewportTop + $(window).height();
+
+        if (elementBottom > viewportTop && elementTop < viewportBottom) {
+          $(this).addClass("animate__animated animate__fadeInUp");
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,857 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-30 09:48+0300\n"
+"PO-Revision-Date: 2024-07-04 09:50+0300\n"
+"Last-Translator: Simon Temesgen <stemesgent@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\accounts\password_manager.py:53
+msgid "New password"
+msgstr "Jecha icciitii haaraa"
+
+#: .\accounts\password_manager.py:63
+msgid "New password confirmation"
+msgstr "Mirkaneessa jecha icciitii haaraa"
+
+#: .\accounts\password_manager.py:86
+msgid "Enter new password"
+msgstr "Jecha icciitii haaraa galchi"
+
+#: .\accounts\templates\login.html:21
+msgid "LogIn"
+msgstr "LogIn"
+
+#: .\accounts\templates\login.html:28 .\templates\front\blog_detail.html:173
+#: .\templates\front\contact.html:72 .\templates\front\index.html:614
+msgid "Email Address"
+msgstr "Teessoo Imeelii"
+
+#: .\accounts\templates\login.html:37 .\accounts\templates\register.html:75
+#: .\accounts\templates\signup.html:60
+#: .\templates\staff\accounts\add_user.html:75
+msgid "Password"
+msgstr "Jecha iccitii"
+
+#: .\accounts\templates\login.html:48
+msgid "Remember Me"
+msgstr "Na Yaadadhaa"
+
+#: .\accounts\templates\login.html:52
+msgid "Forgot Password?"
+msgstr "Password dagattaniittuu?"
+
+#: .\accounts\templates\login.html:64
+msgid "Don't have account"
+msgstr "Akkauntii hin qabdan"
+
+#: .\accounts\templates\login.html:64
+#: .\accounts\templates\pw_reset_done.html:34
+msgid "Create Account"
+msgstr "Akkaauntii Uumuu"
+
+#: .\accounts\templates\password_reset.html:25
+msgid "Reset Password"
+msgstr "Jecha Iccitii Irra Deebi'ii haaressi"
+
+#: .\accounts\templates\pw_reset_complete.html:30
+msgid ""
+"Your new password has been set successfully. You need to use this password "
+"to login to your account afterwards."
+msgstr "Jechi icciitii haaraan kee milkaa'inaan saagameera. "
+
+#: .\accounts\templates\pw_reset_complete.html:36
+msgid "Login"
+msgstr "Login"
+
+#: .\accounts\templates\pw_reset_done.html:34
+msgid "Don't have account?"
+msgstr "Akkaauntii hin qabduu?"
+
+#: .\accounts\templates\pw_reset_form.html:23
+msgid "Confirm Your Password"
+msgstr "Password Keessan Mirkaneessaa"
+
+#: .\accounts\templates\register.html:27
+msgid "Register"
+msgstr "Galmeessuu"
+
+#: .\accounts\templates\register.html:33
+#: .\templates\staff\accounts\add_user.html:33
+msgid "First Name"
+msgstr "Maqaa jalqabaa"
+
+#: .\accounts\templates\register.html:44
+#: .\templates\staff\accounts\add_user.html:44
+msgid "Last Name"
+msgstr "Maqaa akaakayyuu"
+
+#: .\accounts\templates\register.html:55 .\accounts\templates\signup.html:55
+#: .\templates\front\footer.html:35
+#: .\templates\staff\accounts\add_user.html:55
+msgid "Email"
+msgstr "Imeelii"
+
+#: .\accounts\templates\register.html:63 .\accounts\templates\signup.html:70
+#: .\templates\staff\accounts\add_user.html:63
+msgid "Role"
+msgstr "Ga'ee"
+
+#: .\accounts\templates\register.html:85
+#: .\templates\staff\accounts\add_user.html:85
+msgid "Reenter Password"
+msgstr "Jecha Iccitii Irra Deebi'ii Galchi"
+
+#: .\accounts\templates\register.html:98
+msgid "I have read and agree to the "
+msgstr "Wantan Dubbise irratti walii gala"
+
+#: .\accounts\templates\register.html:98
+msgid "terms of service"
+msgstr "haala tajaajilaa"
+
+#: .\accounts\templates\signup.html:10 .\accounts\templates\signup.html:45
+msgid "User Registration"
+msgstr "Fayyadamtoota Galmeessuu "
+
+#: .\accounts\templates\signup.html:50
+msgid "Username"
+msgstr "Maqaa fayyadamaa"
+
+#: .\accounts\templates\signup.html:65
+msgid "Confirm Password"
+msgstr "Password Mirkaneessi"
+
+#: .\accounts\templates\signup.html:78
+msgid "By creating an account you agree to our "
+msgstr "Akkaawuntii uumuudhaan"
+
+#: .\accounts\templates\signup.html:78
+msgid "Terms & Conditions"
+msgstr " haala ittiin bulmaata keenyaa irratti walii galta"
+
+#: .\accounts\templates\signup.html:88
+msgid "Already have an account?"
+msgstr "Duraan akkaawuntii qabduu?"
+
+#: .\accounts\templates\signup.html:88
+msgid "Sign In"
+msgstr "Sign In"
+
+#: .\dashboard\models.py:93 .\dashboard\models.py:94
+msgid "Home Page Sliders"
+msgstr "Islaayidii Fuula jalqabaa"
+
+#: .\documents\models.py:11
+msgid "BPR Documentations"
+msgstr "Dokumantarii"
+
+#: .\documents\models.py:12
+msgid "Regulations"
+msgstr "Dambiiwwan"
+
+#: .\documents\models.py:13
+msgid "Declarations"
+msgstr "Labsii"
+
+#: .\documents\models.py:14
+msgid "Annual Report"
+msgstr "Gabaasa Waggaa"
+
+#: .\documents\models.py:15
+msgid "Other"
+msgstr "Kan biraa"
+
+#: .\suppliers\models.py:7
+msgid "Private"
+msgstr "Dhuunfaa"
+
+#: .\suppliers\models.py:8
+msgid "Corporate"
+msgstr "Dhaabbata"
+
+#: .\suppliers\models.py:9
+msgid "Retail"
+msgstr "Qinxaaboo"
+
+#: .\suppliers\models.py:10
+msgid "Merchant"
+msgstr "Daldalaa"
+
+#: .\suppliers\templates\supplier_list.html:13 .\templates\403.html:10
+#: .\templates\404.html:10 .\templates\front\about.html:12
+#: .\templates\front\base.html:249 .\templates\front\base.html:339
+#: .\templates\front\bid.html:13 .\templates\front\blog.html:13
+#: .\templates\front\blog_detail.html:13 .\templates\front\contact.html:13
+#: .\templates\front\event.html:22 .\templates\front\gallery.html:15
+#: .\templates\front\news.html:34 .\templates\front\news_detail.html:17
+#: .\templates\front\search_results.html:14 .\templates\front\services.html:12
+#: .\templates\front\structure.html:17 .\templates\front\vacancy.html:13
+#: .\templates\front\videos.html:15
+msgid "Home"
+msgstr "Fuula jalqabaa"
+
+#: .\suppliers\templates\supplier_list.html:14 .\templates\front\base.html:280
+#: .\templates\front\base.html:355
+msgid "Blocked Suppliers"
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:22
+msgid "No Suppler Found"
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:22
+msgid "BLOCKED SUPPLIERS LIST"
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:27
+msgid ""
+"The following are list of suppliers registered as blocked suppliers by our "
+"bureau."
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:41
+msgid "Search for blocked supplier"
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:56
+msgid "Company Name"
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:57
+msgid "Tin Number"
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:58
+msgid "Sector"
+msgstr ""
+
+#: .\suppliers\templates\supplier_list.html:59
+msgid "Business Area"
+msgstr ""
+
+#: .\task_manager\models.py:10
+msgid "New"
+msgstr ""
+
+#: .\task_manager\models.py:11
+msgid "Completed"
+msgstr ""
+
+#: .\task_manager\models.py:12
+msgid "Inprogress"
+msgstr ""
+
+#: .\task_manager\models.py:13
+msgid "Pending"
+msgstr ""
+
+#: .\task_manager\models.py:18
+msgid "High"
+msgstr ""
+
+#: .\task_manager\models.py:19
+msgid "Medium"
+msgstr ""
+
+#: .\task_manager\models.py:20
+msgid "Low"
+msgstr ""
+
+#: .\templates\403.html:11 .\templates\403.html:19
+msgid "Permission Denied"
+msgstr "Hayyamni Dhorkame"
+
+#: .\templates\404.html:11 .\templates\404.html:19
+msgid "Page Not Found"
+msgstr "Fuulli Hin Argamne"
+
+#: .\templates\front\about.html:13 .\templates\front\about.html:21
+#: .\templates\front\base.html:259 .\templates\front\base.html:344
+msgid "About Us"
+msgstr "Waa'ee Keenya"
+
+#: .\templates\front\about.html:26
+msgid "Detail about our bureau"
+msgstr "Waa'ee biiroo keenyaa bal'inaan"
+
+#: .\templates\front\about.html:61 .\templates\front\about.html:71
+msgid "Mission"
+msgstr "Ergama"
+
+#: .\templates\front\about.html:62 .\templates\front\about.html:93
+msgid "Vision"
+msgstr "Mul'ata"
+
+#: .\templates\front\about.html:63 .\templates\front\about.html:117
+msgid "Values"
+msgstr "Duudhaalee"
+
+#: .\templates\front\about.html:82 .\templates\front\about.html:104
+#: .\templates\front\about.html:129 .\templates\front\bid.html:59
+#: .\templates\front\blog.html:50 .\templates\front\index.html:132
+#: .\templates\front\index.html:190 .\templates\front\index.html:260
+#: .\templates\front\index.html:288 .\templates\front\index.html:315
+#: .\templates\front\index.html:340 .\templates\front\index.html:369
+#: .\templates\front\news.html:76 .\templates\front\search_results.html:68
+#: .\templates\front\services.html:55 .\templates\front\vacancy.html:85
+msgid "Read More"
+msgstr "Dabalata Dubbisaa"
+
+#: .\templates\front\about.html:142
+msgid "Management experts"
+msgstr "Ogeessota bulchiinsaa"
+
+#: .\templates\front\base.html:115 .\templates\front\footer.html:53
+msgid "Success"
+msgstr "Milkaa'ina"
+
+#: .\templates\front\base.html:116
+msgid "Warning"
+msgstr "Akeekkachiisa"
+
+#: .\templates\front\base.html:117
+msgid "Error"
+msgstr "Dogoggora"
+
+#: .\templates\front\base.html:139
+msgid "Bureau of Finance"
+msgstr ""
+
+#: .\templates\front\base.html:255 .\templates\front\base.html:342
+msgid "About Bureau"
+msgstr "Waa'ee Biiroo"
+
+#: .\templates\front\base.html:262 .\templates\front\base.html:345
+#: .\templates\front\structure.html:18
+msgid "Structure"
+msgstr "Caasaa"
+
+#: .\templates\front\base.html:270 .\templates\front\base.html:349
+#: .\templates\front\services.html:13
+msgid "Services"
+msgstr "Tajaajila"
+
+#: .\templates\front\base.html:276 .\templates\front\base.html:352
+msgid "Resources"
+msgstr "Maddeen"
+
+#: .\templates\front\base.html:279 .\templates\front\base.html:354
+msgid "Documents"
+msgstr "Sanadoota"
+
+#: .\templates\front\base.html:289 .\templates\front\base.html:360
+msgid "Announcements"
+msgstr "Beeksisa"
+
+#: .\templates\front\base.html:292 .\templates\front\base.html:362
+#: .\templates\front\bid.html:14 .\templates\front\bid.html:22
+msgid "Bids"
+msgstr "Caalbaasii"
+
+#: .\templates\front\base.html:295 .\templates\front\base.html:363
+#: .\templates\front\event.html:31
+msgid "Events"
+msgstr "Taateewwan"
+
+#: .\templates\front\base.html:298 .\templates\front\base.html:364
+msgid "Vacancies"
+msgstr "Gitoota hojii duwwaa"
+
+#: .\templates\front\base.html:310 .\templates\front\base.html:313
+#: .\templates\front\base.html:371 .\templates\front\base.html:374
+#: .\templates\front\news.html:35
+msgid "News"
+msgstr "Oduu"
+
+#: .\templates\front\base.html:314 .\templates\front\base.html:375
+#: .\templates\front\blog.html:14
+msgid "Blogs"
+msgstr "Biloogota"
+
+#: .\templates\front\base.html:323 .\templates\front\base.html:381
+msgid "Gallery"
+msgstr "Galmee"
+
+#: .\templates\front\base.html:326 .\templates\front\base.html:383
+msgid "Images"
+msgstr "Fakkiiwwan"
+
+#: .\templates\front\base.html:327 .\templates\front\base.html:384
+msgid "Videos"
+msgstr "Viidiyoowwan"
+
+#: .\templates\front\base.html:333 .\templates\front\base.html:387
+#: .\templates\front\contact.html:14 .\templates\front\contact.html:61
+#: .\templates\front\index.html:598
+msgid "Contact Us"
+msgstr "Nu Qunnamaa"
+
+#: .\templates\front\bid.html:27
+msgid "List of Bids"
+msgstr "Tarree Caalbaasii"
+
+#: .\templates\front\bid.html:39
+msgid "Open Date"
+msgstr "Guyyaa Baniinsa"
+
+#: .\templates\front\bid.html:39
+msgid "Closing Date"
+msgstr "Guyyaa cufiinsaa"
+
+#: .\templates\front\blog.html:22
+msgid "BLOGS"
+msgstr "Biloogota"
+
+#: .\templates\front\blog.html:27 .\templates\front\docs.html:31
+#: .\templates\front\index.html:402
+msgid "YOU CAN FIND ALL THE RESOURCES IN THIS SECTION"
+msgstr "KUTAA KANA KEESSATTI QABEENYA HUNDA ARGACHUU NI DANDEESSAA"
+
+#: .\templates\front\blog.html:48 .\templates\front\blog_detail.html:71
+#: .\templates\front\news_detail.html:77
+msgid "By"
+msgstr "Jedhi"
+
+#: .\templates\front\blog.html:49 .\templates\front\blog_detail.html:73
+#: .\templates\front\blog_detail.html:133 .\templates\front\index.html:280
+#: .\templates\front\index.html:307 .\templates\front\search_results.html:110
+msgid "Comments"
+msgstr "Yaada"
+
+#: .\templates\front\blog_detail.html:14
+msgid "Blog List"
+msgstr "Tarree biloogotaa"
+
+#: .\templates\front\blog_detail.html:15
+msgid "Blog Detail"
+msgstr "Bal'ina Biloogotaa"
+
+#: .\templates\front\blog_detail.html:24
+msgid "BLOG DETAIL"
+msgstr "Balína Biloogotaa"
+
+#: .\templates\front\blog_detail.html:29
+msgid "Blog on "
+msgstr "Blogii irratti"
+
+#: .\templates\front\blog_detail.html:60
+msgid "Author"
+msgstr "Barreessaa"
+
+#: .\templates\front\blog_detail.html:97
+#: .\templates\front\news_detail.html:101
+msgid "Recent Posts"
+msgstr "Maxxansa Dhiheenyaa"
+
+#: .\templates\front\blog_detail.html:120
+#: .\templates\front\news_detail.html:124
+msgid "Twitter Feed"
+msgstr "Twitter irratti"
+
+#: .\templates\front\blog_detail.html:123
+#: .\templates\front\news_detail.html:127
+msgid "Tweets by PM Ethiopia"
+msgstr "Twittera Biiroo Muummee Ministeera"
+
+#: .\templates\front\blog_detail.html:162
+msgid "Leave a comment"
+msgstr "Yaada keessan nuuf barreessaa"
+
+#: .\templates\front\blog_detail.html:169 .\templates\front\contact.html:68
+#: .\templates\front\index.html:608
+msgid "Full Name"
+msgstr "Maqaa guutuu"
+
+#: .\templates\front\blog_detail.html:179
+msgid "Comment"
+msgstr "yaada"
+
+#: .\templates\front\blog_detail.html:186
+msgid "Post Comments"
+msgstr "Yaada Maxxansaa"
+
+#: .\templates\front\contact.html:22
+msgid "CONTACT US"
+msgstr "Nu quunnamaa"
+
+#: .\templates\front\contact.html:27
+msgid "Keep in touch and send us your thoughts."
+msgstr "Nu qunnamaa yaada keessan nuuf ergaa."
+
+#: .\templates\front\contact.html:42 .\templates\front\index.html:570
+msgid "Our Office Location"
+msgstr "Bakka Waajjira Keenya"
+
+#: .\templates\front\contact.html:47 .\templates\front\index.html:575
+msgid ""
+"HAVE SOMETHING TO SAY OR NEED ADDITIONAL INFORMATION? DROP BY TO OUR OFFICE"
+msgstr "WAAN JEttan YKN ODEEFFANNOO DABALATAA BARBAADDUU?Nu quunnamaa!. "
+
+#: .\templates\front\contact.html:62
+msgid "WE'RE HERE TO ASSIST YOU!"
+msgstr "ISIN GARGAARUUF AS JIRRA."
+
+#: .\templates\front\contact.html:76 .\templates\front\index.html:621
+msgid "Phone Number"
+msgstr "Lakkofsa bilbilaa"
+
+#: .\templates\front\contact.html:81 .\templates\front\index.html:629
+msgid "Subject"
+msgstr "Mata duree"
+
+#: .\templates\front\contact.html:97 .\templates\front\index.html:650
+msgid "Send Message"
+msgstr "Ergaa keessan ergaa"
+
+#: .\templates\front\docs.html:26 .\templates\front\index.html:397
+msgid "RESOURCES"
+msgstr "MADDEEN"
+
+#: .\templates\front\docs.html:93
+msgid "Document not found"
+msgstr "Sanadni hin jiru"
+
+#: .\templates\front\event.html:23
+msgid "Event"
+msgstr "Taatee"
+
+#: .\templates\front\event.html:36
+msgid "Here are the lists of upcoming events"
+msgstr "Tarreewwan taateewwan dhufanii, kunooti"
+
+#: .\templates\front\event.html:62
+msgid "Date:"
+msgstr "Guyyaa"
+
+#: .\templates\front\event.html:63
+msgid "Time:"
+msgstr "Yeroo"
+
+#: .\templates\front\event.html:64
+msgid "Location:"
+msgstr "Bakka:"
+
+#: .\templates\front\footer.html:15
+msgid "Total visitors"
+msgstr "Daawwattoota waliigalaa"
+
+#: .\templates\front\footer.html:24
+msgid "CONTACTS"
+msgstr "QUUNNAMTII"
+
+#: .\templates\front\footer.html:27
+msgid "Address"
+msgstr "Teessoo"
+
+#: .\templates\front\footer.html:31
+msgid "Phone"
+msgstr "Bilbila"
+
+#: .\templates\front\footer.html:42
+msgid "QUICK LINKS"
+msgstr "LINK SAFFISAA"
+
+#: .\templates\front\footer.html:50
+msgid "NEWSLETTER"
+msgstr "BARREEFFAMA ODUU"
+
+#: .\templates\front\footer.html:53
+msgid "You've been added to our email list."
+msgstr "Tarree email keenya irratti dabalamteetta."
+
+#: .\templates\front\footer.html:60
+msgid "Subscribe"
+msgstr "Subscribe godhaa"
+
+#: .\templates\front\footer.html:65
+msgid "Addis Ababa City Administration Bureau of Finance"
+msgstr ""
+
+#: .\templates\front\footer.html:69
+msgid "Working Days"
+msgstr "Guyyoota Hojii"
+
+#: .\templates\front\footer.html:84
+msgid "All Rights Reserved. Design"
+msgstr "Mirgi Qopheessaa Seeraan Kan Eegame. "
+
+#: .\templates\front\footer.html:84
+msgid "Kanenus Technologies"
+msgstr ""
+
+#: .\templates\front\gallery.html:16
+msgid "Gallery Images"
+msgstr "Galmee Fakkiiwanii"
+
+#: .\templates\front\gallery.html:24
+msgid "GALLERY IMAGES"
+msgstr "Galmee Fakkiiwwanii"
+
+#: .\templates\front\gallery.html:27 .\templates\front\index.html:477
+msgid "PICTURES TAKEN FROM PREVIOUS ACTIVITIES"
+msgstr "SUURAA HOJII DURAA IRRAA FUDHAMAN"
+
+#: .\templates\front\gallery.html:36 .\templates\front\videos.html:37
+msgid "All Categories"
+msgstr "Gosoota Hundaa"
+
+#: .\templates\front\index.html:41 .\templates\front\index.html:74
+msgid "FEATURED WORKS"
+msgstr "HOJII AFAAN OROMOO"
+
+#: .\templates\front\index.html:78
+msgid ""
+"More than 2500 Youths in the Somali Region have been given funding to pursue"
+" their Dreams"
+msgstr ""
+
+#: .\templates\front\index.html:151
+msgid "Recent News"
+msgstr "Oduu hoáa"
+
+#: .\templates\front\index.html:156 .\templates\front\news.html:48
+msgid "RECENT NEWS DELIVERED FROM US TO YOU"
+msgstr "ODUU Hoáa NU IRRAA ISINIIF QAQQABE"
+
+#: .\templates\front\index.html:163
+msgid "See All News"
+msgstr ""
+
+#: .\templates\front\index.html:214
+msgid "Recent Blogs"
+msgstr "Biloogii Hoáa"
+
+#: .\templates\front\index.html:219
+msgid "BLOGS FROM US TO YOU"
+msgstr "Biloogii isiniif dhoobaman"
+
+#: .\templates\front\index.html:227
+msgid "SEE ALL BLOGS"
+msgstr "Biloogota hunda ilaali"
+
+#: .\templates\front\index.html:411
+msgid "SEE ALL RESOURCES"
+msgstr "Madeen hunda ilaali"
+
+#: .\templates\front\index.html:472
+msgid "GALLERIES"
+msgstr "Fakkiiwwan"
+
+#: .\templates\front\index.html:485
+msgid "SEE ALL"
+msgstr "Hunda ilaali"
+
+#: .\templates\front\index.html:537
+msgid "FAQs"
+msgstr "Gaaffiiwwan yeroo baayyee gaafataman"
+
+#: .\templates\front\index.html:542
+msgid "OUR ANSWERS FOR THE MOST QUESTIONS WE GET"
+msgstr "GAAFFIIWWAN JIRANIRRATTI,DEEBII KEENYA."
+
+#: .\templates\front\index.html:599
+msgid "WE'RE HERE TO ASSIST YOU"
+msgstr "Isin gargaaruuf as jirra."
+
+#: .\templates\front\index.html:641
+msgid "Message"
+msgstr "Ergaa"
+
+#: .\templates\front\news.html:43
+msgid "Our News"
+msgstr "Oduu keenya"
+
+#: .\templates\front\news_detail.html:18
+msgid "News List"
+msgstr "Tarree oduu"
+
+#: .\templates\front\news_detail.html:19
+msgid "News Detail"
+msgstr "Oduu hunda"
+
+#: .\templates\front\news_detail.html:28
+msgid "NEWS DETAIL"
+msgstr "Oduu hunda"
+
+#: .\templates\front\news_detail.html:33
+msgid "News on"
+msgstr "Oduu "
+
+#: .\templates\front\search_results.html:15
+msgid "Search Results"
+msgstr "Bu'aa Barbaadi"
+
+#: .\templates\front\search_results.html:25
+msgid "No Result Found"
+msgstr "Bu'aan Hin Argamne"
+
+#: .\templates\front\search_results.html:25
+msgid "Your Search Results"
+msgstr "Bu'aa Barbaacha Keessanii"
+
+#: .\templates\front\search_results.html:30
+msgid "Searched our whole site"
+msgstr "Guutummaa marsariitii keenyaa, sakatta'aman"
+
+#: .\templates\front\search_results.html:46
+msgid "Result in News"
+msgstr "Bu'aa Oduu keessatti"
+
+#: .\templates\front\search_results.html:90
+msgid "Result in Blogs"
+msgstr "Bu'aa Blogii keessaa"
+
+#: .\templates\front\search_results.html:133
+msgid "Result in Vacancies"
+msgstr "Bu'aan Gitoota Hojii Duwwaa"
+
+#: .\templates\front\search_results.html:145 .\templates\front\vacancy.html:73
+msgid "Deadline"
+msgstr "Guyyaa dhumaa"
+
+#: .\templates\front\search_results.html:147
+#: .\templates\front\search_results.html:276 .\templates\front\vacancy.html:90
+msgid "Location"
+msgstr "Argama"
+
+#: .\templates\front\search_results.html:169
+msgid "Result in Gallery"
+msgstr "Bu'aan Galmee keessatti"
+
+#: .\templates\front\search_results.html:207
+msgid "Result in Documents"
+msgstr "Bu'aa Sanadoota keessatti"
+
+#: .\templates\front\search_results.html:250
+msgid "Result in Events"
+msgstr "Bu'aa Taateewwan keessatti"
+
+#: .\templates\front\search_results.html:274
+msgid "Date"
+msgstr "Guyyaa "
+
+#: .\templates\front\search_results.html:275
+msgid "Time"
+msgstr "Yeroo"
+
+#: .\templates\front\services.html:21
+msgid "Our Services"
+msgstr "Tajaajila Keenya"
+
+#: .\templates\front\services.html:26
+msgid "Detail about our services"
+msgstr "Waa'ee tajaajila keenyaa bal'inaan"
+
+#: .\templates\front\vacancy.html:14
+msgid "Vacancy"
+msgstr "Bakka hojii duwwaa"
+
+#: .\templates\front\vacancy.html:23 .\templates\front\vacancy.html:28
+msgid "RELATED"
+msgstr "KAN ITTI DHIYAATU"
+
+#: .\templates\front\vacancy.html:23 .\templates\front\vacancy.html:28
+msgid "RECENT"
+msgstr "DHIYOO"
+
+#: .\templates\front\vacancy.html:23 .\templates\front\vacancy.html:28
+msgid "VACANCIES"
+msgstr "Bakka hojii duwwaa"
+
+#: .\templates\front\vacancy.html:44
+msgid "Search for vacancies"
+msgstr "Gitoota hojii duwwaa barbaadi"
+
+#: .\templates\front\vacancy.html:54
+msgid "All"
+msgstr "Hunda"
+
+#: .\templates\front\vacancy.html:55 .\vacancies\models.py:17
+msgid "Active"
+msgstr "Si'aawaa"
+
+#: .\templates\front\vacancy.html:56
+msgid "Closed"
+msgstr "Cufameera"
+
+#: .\templates\front\vacancy.html:65
+msgid "No related vacancies related with keyword"
+msgstr ""
+"Gitoota hojii duwwaa walqabatan kan keyword wajjin walqabatan hin jiran"
+
+#: .\templates\front\vacancy.html:93 .\templates\front\vacancy_apply.html:29
+msgid "Apply"
+msgstr "Hojiirra oolchi"
+
+#: .\templates\front\vacancy_apply.html:12
+msgid "Apply for Vacancy"
+msgstr "Gitoota Duwwaa argachuuf galmaaí"
+
+#: .\templates\front\vacancy_apply.html:13
+msgid "Fill in the details to apply for the vacancy"
+msgstr "Gitoota hojii duwwaa kana galmaaúuf ibsa bal'aa guutaa"
+
+#: .\templates\front\videos.html:16
+msgid "Gallery Videos"
+msgstr "Viidiyoowwan Galmeewwanii"
+
+#: .\templates\front\videos.html:25
+msgid "GALLERY VIDEOS"
+msgstr "VIDIYOO GALLERY"
+
+#: .\templates\front\videos.html:28
+msgid "VIDEOS TAKEN FROM PREVIOUS ACTIVITIES"
+msgstr "VIDIYOOTA HOJII DURAA IRRAA FUDHATAMAN"
+
+#: .\vacancies\models.py:7
+msgid "Contract"
+msgstr "Waliigaltee"
+
+#: .\vacancies\models.py:8
+msgid "Freelance"
+msgstr "Hojii bilisaa"
+
+#: .\vacancies\models.py:9
+msgid "Full Time"
+msgstr "Yeroo Guutuu"
+
+#: .\vacancies\models.py:10
+msgid "Part Time"
+msgstr "Paartaayimii"
+
+#: .\vacancies\models.py:11
+msgid "Internship"
+msgstr "Turtii shakalaa"
+
+#: .\vacancies\models.py:18
+msgid "CLosed"
+msgstr "Cufameera"
+
+#: .\vacancies\models.py:26
+msgid "Junior"
+msgstr "Sadarkaa jalqabaa"
+
+#: .\vacancies\models.py:27
+msgid "Mid-Level"
+msgstr "Sadarkaa Giddugaleessaa"
+
+#: .\vacancies\models.py:28
+msgid "Senior"
+msgstr "Angafa"
+
+#: .\vacancies\models.py:29
+msgid "Expert"
+msgstr "Ogeessa"

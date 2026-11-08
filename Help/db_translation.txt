@@ -1,0 +1,74 @@
+! make sure django-modeltranslation is installed and configured properly
+https://django-modeltranslation.readthedocs.io/en/
+
+
+# Add translatable fields to an app model Eg. News
+
+1. create translation.py file 
+
+2.  Add the following
+
+from .models import NewsArticle, News
+from modeltranslation.translator import TranslationOptions, register
+
+class NewsArticleTranslationOptions(TranslationOptions):
+    fields = ("title", )
+
+translator.register(NewsArticle, NewsArticleTranslationOptions)
+
+
+3.  run makemigrations on the app 
+django-admin makemessages --all --ignore=env
+
+
+python manage.py makemigrations about_us accounts blogs core dashboard documents news suppliers task_manager vacancies visit_counter
+
+4.  migrate the app 
+5.  If the database had data prior to translation, in order to copy the existing data to
+    the default language,  
+    run python manage.py update_translation_fields
+
+6. Inside news.admin.py, register the translation admin 
+
+from django.contrib import admin
+from .models import *
+from modeltranslation.admin import TranslationAdmin
+
+# admin.site.register(NewsArticle)
+
+@admin.register(NewsArticle)
+class NewsArticleAdmin(TranslationAdmin):
+    list_display = ("title",)
+
+_______
+At this stage, u should have translatable fields for each field u wanted
+
+
+Advanced
+1. Required fields, 
+Model translation does not support to set translated fields like field_en or field_ax to be required even if 
+the original field is set to null=False. To over come this just use one of the fields, example _en as default
+
+- settings.py 
+# Django settings
+LANGUAGE_CODE = 'en'
+LANGUAGES = (
+    ('en', ('English')),
+    ('ax', ('Amharic')),
+    ('tx', ('Tigrigna')),
+)
+
+# modeltranslation setting
+MODELTRANSLATION_LANGUAGES = ('ax', 'tx')
+
+* with the above setting, only the Amharic and Tigrigna translations will be auto-generated will be generated,
+and the original field will be considered as the default language which is en. 
+
+original field can be set as required.
+
+1. Not having field_en fields 
+
+
+
+
+

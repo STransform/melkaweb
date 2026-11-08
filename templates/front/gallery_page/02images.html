@@ -1,0 +1,307 @@
+{% load i18n %} {% load static %} {% block css %}
+<style>
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+    }
+
+    .gallery-item {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .gallery-item.filter-hidden {
+        display: none;
+    }
+
+    .gallery-item.filter-visible {
+        display: block;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* New minimal filter tab design with only specified colors and no big padding */
+    .category-filter-container {
+        margin-bottom: 3rem;
+    }
+
+    .category-filter-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2px;
+        border: 1px solid rgba(26, 26, 26, 0.1);
+        border-radius: 8px;
+        padding: 4px;
+        background: var(--primary-white);
+        box-shadow: 0 2px 8px rgba(26, 26, 26, 0.05);
+        max-width: fit-content;
+        margin: 0 auto;
+    }
+
+    .category-filter-btn {
+        background: transparent;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--primary-black);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .category-filter-btn:hover {
+        background: rgba(26, 26, 26, 0.05);
+        color: var(--accent-color);
+    }
+
+    .category-filter-btn.active-filter {
+        background: var(--accent-color);
+        color: var(--primary-white);
+    }
+
+    .category-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(26, 26, 26, 0.1);
+        color: var(--primary-black);
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 4px;
+        min-width: 18px;
+        height: 18px;
+        line-height: 1;
+    }
+
+    .category-filter-btn.active-filter .category-count {
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--primary-white);
+    }
+
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+        .gallery-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2rem !important;
+        }
+
+        .gallery-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .category-filter-container {
+            margin-bottom: 2rem;
+        }
+
+        .category-filter-btn {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+
+        .category-filter-nav {
+            gap: 1px;
+            padding: 3px;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .category-filter-btn {
+            padding: 6px 10px;
+            font-size: 0.75rem;
+        }
+
+        .category-count {
+            font-size: 0.7rem;
+            padding: 1px 4px;
+            min-width: 16px;
+            height: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+<!-- Gallery -->
+<section class="section border-0 m-0 pt-4">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="container py-2">
+                <!-- Redesigned minimal filter tabs with new class names -->
+                <div class="category-filter-container">
+                    <nav class="category-filter-nav" id="categoryFilters" style="overflow-x:auto;">
+                        <button class="category-filter-btn active-filter" data-filter="*" type="button">
+                            {% trans "All Categories" %}
+                            <span class="category-count" id="count-all">{{ images|length }}</span>
+                        </button>
+                        {% for category in categories %}
+                        <button class="category-filter-btn d-inline-flex" data-filter="{{ category }}" type="button">
+                            {{ category }}
+                            <span class="category-count" id="count-{{ category }}">0</span>
+                        </button>
+                        {% endfor %}
+                    </nav>
+                </div>
+
+                <div class="gallery-grid mt-4 pt-2" id="galleryGrid">
+                    {% for image in images %}
+                    {% include 'front/gallery_page/03image_card.html'  %}
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <!-- pagination -->
+            <div class="row align-items-center text-center">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center align-items-center">
+
+                        {% if images.has_previous %}
+                        <li class="page-item"><a href="?page={{images.previous_page_number}}" class="page-link"><i
+                                    class="fas fa-angle-left"></i></a></li>
+                        <li class="page-item"><a href="?page={{images.previous_page_number}}"
+                                class="page-link">{{images.previous_page_number}}</a></li>
+                        {% else %}
+                        <li class="page-item disabled"><a href="" class="page-link"><i
+                                    class="fas fa-angle-left"></i></a></li>
+                        {% endif %}
+
+                        <li class="page-item active"><a href="" class="page-link">{{images.number}}</a></li>
+
+                        {% if images.has_next %}
+                        <li class="page-item"><a href="?page={{images.next_page_number}}"
+                                class="page-link">{{images.next_page_number}}</a></li>
+                        {% if images.next_page_number != images.paginator.num_pages %}
+                        <li class="page-item disabled"><a href="" class="page-link">...</a></li>
+                        <li class="page-item"><a href="?page={{images.paginator.num_pages}}"
+                                class="page-link">{{images.paginator.num_pages}}</a></li>
+                        {% endif %}
+                        <li class="page-item"><a href="?page={{images.next_page_number}}" class="page-link"><i
+                                    class="fas fa-angle-right"></i></a></li>
+                        {% else %}
+                        <li class="page-item disabled"><a href="" class="page-link"><i
+                                    class="fas fa-angle-right"></i></a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+            <!-- end pagination -->
+
+        </div>
+    </div>
+</section>
+
+<!-- Updated JavaScript with new class names -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterButtons = document.querySelectorAll('.category-filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        // Count items per category on page load
+        function updateCategoryCounts() {
+            const categoryCounts = {};
+
+            galleryItems.forEach(item => {
+                const category = item.dataset.category;
+                categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+            });
+
+            // Update count badges
+            filterButtons.forEach(button => {
+                const filter = button.dataset.filter;
+                const countBadge = button.querySelector('.category-count');
+
+                if (filter === '*') {
+                    countBadge.textContent = galleryItems.length;
+                } else {
+                    countBadge.textContent = categoryCounts[filter] || 0;
+                }
+            });
+        }
+
+        // Filter functionality
+        function filterGallery(activeFilter) {
+            let visibleCount = 0;
+
+            galleryItems.forEach((item, index) => {
+                const category = item.dataset.category;
+                const shouldShow = activeFilter === '*' || category === activeFilter;
+
+                if (shouldShow) {
+                    item.classList.remove('filter-hidden');
+                    item.classList.add('filter-visible');
+                    // Stagger animation
+                    item.style.animationDelay = `${index * 0.1}s`;
+                    visibleCount++;
+                } else {
+                    item.classList.add('filter-hidden');
+                    item.classList.remove('filter-visible');
+                }
+            });
+
+            // Update active button
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active-filter');
+            });
+
+            const activeButton = document.querySelector(`[data-filter="${activeFilter}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active-filter');
+            }
+
+            // Show/hide "no results" message if needed
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (visibleCount === 0) {
+                if (!document.querySelector('.no-results-message')) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results-message text-center py-5';
+                    noResults.innerHTML = `
+                    <div class="text-muted">
+                        <i class="fas fa-search fa-3x mb-3"></i>
+                        <h5>No items found</h5>
+                        <p>Try selecting a different category.</p>
+                    </div>
+                `;
+                    galleryGrid.appendChild(noResults);
+                }
+            } else {
+                const noResults = document.querySelector('.no-results-message');
+                if (noResults) {
+                    noResults.remove();
+                }
+            }
+        }
+
+        // Add click event listeners to filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const filter = this.dataset.filter;
+                filterGallery(filter);
+            });
+        });
+
+        // Initialize counts
+        updateCategoryCounts();
+    });
+</script>

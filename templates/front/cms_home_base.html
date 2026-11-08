@@ -1,0 +1,25 @@
+{% extends 'front/index.html' %}
+{% load i18n %}
+{% block css %}
+<style>
+    .cms_block{
+        padding: 7rem 3rem;
+    }
+    @media(max-width:500px){
+        .cms_block{
+            padding: 5rem 1rem;
+        }
+    }
+</style> 
+{% endblock %}
+{% load cms_tags %}
+
+{% block cms_content %}
+<div class="cms_block">
+    {% placeholder "feature" %}
+    {% placeholder "content" %}
+    {% placeholder "splashbox" %}
+</div>
+
+
+{% endblock %}

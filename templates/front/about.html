@@ -1,0 +1,103 @@
+{% extends 'front/base.html' %} {% load i18n %} {% load static %} {% load
+custom_filters %}
+
+<!--  CSS    -->
+{% block css %}
+
+<style>
+  .otech-font {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: var(--primary-black);
+    text-align: justify;
+    line-height: 1.7;
+    margin: 0 0 1.5em;
+    padding: 0;
+    font-size: 1.1rem;
+  }
+
+  /* Animation */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+
+  .fade-in-up.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Custom Divider */
+  .section-divider-custom {
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--accent-color),
+      transparent
+    );
+    margin: 0 auto;
+    width: 150px;
+    border-radius: 2px;
+  }
+</style>
+{% endblock %}
+
+<!-- About -->
+{% block about %} active {% endblock %}
+
+<!-- About Dynamic -->
+{% block about_dynamic %} active {% endblock %}
+
+<!-- Content -->
+{% block content %}
+
+<!-- Hero -->
+{% include 'front/about_page/01header.html' %}
+
+<!-- Hero -->
+{% include 'front/about_page/02purpose.html' %}
+
+<!-- Hero -->
+{% include 'front/about_page/03mission_vision.html' %}
+
+<!-- Hero -->
+{% include 'front/about_page/04teams.html' %} {% endblock %}
+
+<!-- Javascript -->
+{% block js %}
+<script>
+  // Enhanced card height alignment
+  $(document).ready(function () {
+    function alignCardHeights() {
+      var maxHeight = 0;
+      $(".mvv-card").each(function () {
+        $(this).height("auto");
+        if ($(this).height() > maxHeight) {
+          maxHeight = $(this).height();
+        }
+      });
+      $(".mvv-card").height(maxHeight);
+    }
+
+    alignCardHeights();
+    $(window).resize(alignCardHeights);
+
+    // Smooth scroll animations
+    $(window).scroll(function () {
+      $(".fade-in-up").each(function () {
+        var elementTop = $(this).offset().top;
+        var elementBottom = elementTop + $(this).outerHeight();
+        var viewportTop = $(window).scrollTop();
+        var viewportBottom = viewportTop + $(window).height();
+
+        if (elementBottom > viewportTop && elementTop < viewportBottom) {
+          $(this).addClass("animate");
+        }
+      });
+    });
+  });
+</script>
+<script src="{% static 'front/vendor/gsap/gsap.min.js' %}"></script>
+{% endblock %}

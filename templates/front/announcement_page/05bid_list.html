@@ -1,0 +1,409 @@
+{% load i18n %} {% load static %}
+
+{% block css %}
+<style>
+    /* Professional bid card styling */
+    .professional-bid-card {
+        background: var(--primary-white);
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 0;
+        margin-bottom: 20px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        overflow: hidden;
+    }
+
+    .professional-bid-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Bid card header */
+    .bid-card-header {
+        background: var(--light-gray);
+        padding: 20px 25px;
+        border-bottom: 2px solid var(--accent-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .bid-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--primary-black);
+        margin: 0;
+        flex: 1;
+    }
+
+    .bid-status-badge {
+        background: var(--green-color);
+        color: var(--primary-white);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Bid info grid */
+    .bid-info-grid {
+        padding: 25px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        background: var(--primary-white);
+    }
+
+    .bid-info-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: var(--light-gray);
+        border-radius: 8px;
+        border-left: 4px solid var(--accent-color);
+    }
+
+    .bid-icon {
+        color: var(--accent-color);
+        font-size: 1.2rem;
+        width: 20px;
+        text-align: center;
+    }
+
+    .bid-info-content {
+        flex: 1;
+    }
+
+    .bid-info-label {
+        display: block;
+        font-weight: 600;
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .bid-info-value {
+        display: block;
+        color: var(--medium-gray);
+        font-size: 1rem;
+    }
+
+    .bid-download-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .bid-download-link:hover {
+        text-decoration: underline;
+    }
+
+    .bid-no-document {
+        color: var(--medium-gray);
+        font-style: italic;
+    }
+
+    /* Bid description section */
+    .bid-description-section {
+        padding: 25px;
+        background: var(--primary-white);
+        border-top: 1px solid #e9ecef;
+        position: relative;
+    }
+
+    .bid-description-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primary-black);
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--accent-color);
+        display: inline-block;
+    }
+
+    .bid-description-content {
+        position: relative;
+    }
+
+    .bid-description-text {
+        color: var(--dark-gray);
+        line-height: 1.6;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .bid-readmore-btn {
+        z-index: 5;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        float: right;
+        margin-top: 10px;
+    }
+
+
+    /* Professional pagination */
+    .professional-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 40px 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .pagination-item {
+        margin: 0;
+    }
+
+    .pagination-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        color: var(--dark-gray);
+        text-decoration: none;
+        font-weight: 500;
+        background: var(--primary-white);
+        transition: all 0.2s ease;
+    }
+
+    .pagination-link:hover {
+        background: var(--accent-color);
+        color: var(--primary-white);
+        border-color: var(--accent-color);
+        text-decoration: none;
+    }
+
+    .pagination-item.active .pagination-link {
+        background: var(--accent-color);
+        color: var(--primary-white);
+        border-color: var(--accent-color);
+    }
+
+    .pagination-item.disabled .pagination-link {
+        background: var(--light-gray);
+        color: var(--medium-gray);
+        cursor: not-allowed;
+        border-color: #e9ecef;
+    }
+
+    .pagination-item.disabled .pagination-link:hover {
+        background: var(--light-gray);
+        color: var(--medium-gray);
+        border-color: #e9ecef;
+    }
+
+    /* Responsive design */
+    @media (min-width: 768px) {
+        .bid-info-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 992px) {
+        .bid-info-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 767px) {
+        .professional-title {
+            font-size: 2rem;
+        }
+
+        .bid-card-header {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .bid-title {
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+
+<div class="container">
+    {% if bids %}
+    <div class="row mb-2 pb-2">
+        {% for bid in bids %}
+        <!-- Updated card styling to match professional design -->
+        <div class="col-lg-12 col-md-6 mb-4">
+            <div class="professional-bid-card">
+                <div class="bid-card-header">
+                    <h4 class="bid-title">{{bid.title}}</h4>
+                    <div class="bid-status-badge">
+                        <i class="fas fa-calendar-alt"></i>
+                        Active
+                    </div>
+                </div>
+
+                <div class="bid-info-grid">
+                    <div class="bid-info-item">
+                        <i class="fas fa-calendar-check bid-icon"></i>
+                        <div class="bid-info-content">
+                            <span class="bid-info-label">{% trans "Open Date" %}</span>
+                            <span class="bid-info-value">{{bid.bid_open_date}}</span>
+                        </div>
+                    </div>
+
+                    <div class="bid-info-item">
+                        <i class="fas fa-calendar-times bid-icon"></i>
+                        <div class="bid-info-content">
+                            <span class="bid-info-label">{% trans "Closing Date" %}</span>
+                            <span class="bid-info-value">{{bid.bid_close_date}}</span>
+                        </div>
+                    </div>
+
+                    <div class="bid-info-item">
+                        <i class="fas fa-file-download bid-icon"></i>
+                        <div class="bid-info-content">
+                            <span class="bid-info-label">{% trans "Bid Document" %}</span>
+                            {% if bid.bid_document %}
+                            <a href="{{bid.bid_document.url}}" class="bid-download-link" download="">
+                                <i class="fas fa-download"></i> Download Document
+                            </a>
+                            {% else %}
+                            <span class="bid-no-document">No Document Available</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced description section with better styling -->
+                <div class="bid-description-section">
+                    <h5 class="bid-description-title">Description</h5>
+                    <div class="bid-description-content" data-plugin-readmore="" data-plugin-options="{
+                                'buttonOpenLabel': 'Read More <i class=\'fas fa-chevron-down text-2 ms-1\'></i>',
+                                'buttonCloseLabel': 'Read Less <i class=\'fas fa-chevron-up text-2 ms-1\'></i>',
+                                'align': 'end'
+                                }" style="height: 150px; overflow: hidden; max-height: none;">
+
+                        <div class="bid-description-text text-justify">{{ bid.description }}</div>
+
+                        <div class="readmore-button-wrapper"
+                            style="position: absolute; bottom: 0px; left: 0px; width: 100%; z-index: 2;">
+                            <a href="#" class="bid-readmore-btn btn-corporate-red">{% trans "Read More" %} <i
+                                    class="fas fa-chevron-down"></i></a>
+                        </div>;
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Updated pagination styling -->
+    <div class="row align-items-center text-center">
+        <div class="col-12">
+            <ul class="professional-pagination">
+                {% if bids.has_previous %}
+                <li class="pagination-item">
+                    <a href="?page={{bids.previous_page_number}}" class="pagination-link">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+                <li class="pagination-item">
+                    <a href="?page={{bids.previous_page_number}}" class="pagination-link">
+                        {{bids.previous_page_number}}
+                    </a>
+                </li>
+                {% else %}
+                <li class="pagination-item disabled">
+                    <span class="pagination-link">
+                        <i class="fas fa-angle-left"></i>
+                    </span>
+                </li>
+                {% endif %}
+
+                <li class="pagination-item active">
+                    <span class="pagination-link">{{bids.number}}</span>
+                </li>
+
+                {% if bids.has_next %}
+                <li class="pagination-item">
+                    <a href="?page={{bids.next_page_number}}" class="pagination-link">
+                        {{bids.next_page_number}}
+                    </a>
+                </li>
+                {% if bids.next_page_number != bids.paginator.num_pages %}
+                <li class="pagination-item disabled">
+                    <span class="pagination-link">...</span>
+                </li>
+                <li class="pagination-item">
+                    <a href="?page={{bids.paginator.num_pages}}" class="pagination-link">
+                        {{bids.paginator.num_pages}}
+                    </a>
+                </li>
+                {% endif %}
+                <li class="pagination-item">
+                    <a href="?page={{bids.next_page_number}}" class="pagination-link">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+                {% else %}
+                <li class="pagination-item disabled">
+                    <span class="pagination-link">
+                        <i class="fas fa-angle-right"></i>
+                    </span>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="text-center py-5">
+            <i class="fas fa-briefcase fa-3x text-muted mb-3"></i>
+            <h5>{% trans "No bids available at the moment" %}</h5>
+            <p class="text-muted">
+                {% trans "Please check back later or contact us directly." %}</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Convert all bid description elements to plain text with structure preserved
+        const bidDescriptions = document.querySelectorAll(".bid-description-text");
+
+        bidDescriptions.forEach(el => {
+            // Remove <br> tags if needed
+            let html = el.innerHTML.replace(/<br\s*\/?>/gi, "");
+
+            // Use a temporary div to get plain text with natural line breaks
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+
+            // Get structured plain text
+            const plainText = tempDiv.innerText;
+
+            // Replace inner HTML with structured plain text
+            el.innerHTML = plainText;
+        });
+
+    });
+</script>
+{% endblock %}

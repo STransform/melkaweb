@@ -1,0 +1,129 @@
+{% load i18n %} {% load static %}
+
+{% block css %}
+<style>
+    .gallery-link {
+        display: block;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        background: var(--primary-white);
+        box-shadow: 0 8px 25px rgba(26, 26, 26, 0.08);
+        transition: all 0.4s ease;
+        border: 2px solid rgba(26, 26, 26, 0.05);
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(26, 26, 26, 0.15);
+        border-color: var(--accent-color);
+    }
+
+    .gallery-image {
+        height: 400px !important;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: all 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-image {
+        transform: scale(1.05);
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg,
+                rgba(26, 26, 26, 0.7) 0%,
+                rgba(231, 76, 60, 0.8) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.4s ease;
+        border-radius: 10px;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+    }
+
+    .gallery-content {
+        text-align: center;
+        padding: 20px;
+        transform: translateY(20px);
+        transition: all 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-content {
+        transform: translateY(0);
+    }
+
+    .gallery-content h6 {
+        font-weight: 700;
+        color: var(--primary-white);
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .gallery-content small {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 400;
+        display: inline-block;
+        padding: 4px 12px;
+        background: rgba(231, 76, 60, 0.3);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+
+    @media (max-width: 768px) {
+        .gallery-section {
+            padding: 60px 0;
+        }
+
+        .gallery-image {
+            height: 220px !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .gallery-content h6 {
+            font-size: 1rem;
+        }
+
+        .gallery-content small {
+            font-size: 0.8rem;
+        }
+
+    }
+</style>
+{% endblock %}
+
+
+{% if image %}
+<div class="gallery-item filter-visible" data-category="{{ image.category }}">
+    <a href="{{ image.image.url }}" class="gallery-link" target="_blank">
+        <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid gallery-image" loading="lazy" />
+        <div class="gallery-overlay">
+            <div class="gallery-content">
+                <h6 class="mb-2">{{ image.title }}</h6>
+                <small>{{ image.category }}</small>
+            </div>
+        </div>
+    </a>
+</div>
+{% endif %}

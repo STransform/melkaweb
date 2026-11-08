@@ -1,0 +1,125 @@
+
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block resource_dynamic %} active {% endblock %}
+{% block content %} 
+
+<section class="section border-0 m-0 px-lg-5 pt-4 mt-5">
+    <div class="container">
+        <div class="row align-items-end mb-5 mb-lg-4">
+            <div class="d-flex align-items-end justify-content-end">
+                <ul class="breadcrumb d-block text-center">
+                    <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+                    <li class="active">{% trans "Blocked Suppliers" %}</li>
+                </ul>        
+            </div>
+            <hr class="bg-light">
+            <div class="col-12 mb-lg-0 ">
+                <div class="d-flex align-items-center mb-2  justify-content-center">
+                    <div class="overflow-hidden text-center">
+                        <h2 class="text-color-primary text-9 text-center font-weight-semibold line-height-3 text-5 mb-0 appear-animation"
+                            data-appear-animation="maskRight" data-appear-animation-delay="300"> {% if not result %} {% trans "No Suppler Found" %} {% else %} {% trans "BLOCKED SUPPLIERS LIST" %} {% endif %}
+                        </h2>
+                    </div>
+                </div>
+                <p  class="appear-animation text-center"  data-appear-animation="maskRight" data-appear-animation-delay="400"> 
+                    {% trans "The following are list of suppliers registered as blocked suppliers by our bureau." %} 
+                </p>
+            </div>
+        </div>
+        
+        <div id="examples" class="container ">
+
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <h2 class="font-weight-normal text-7 mb-2 "> </h2>
+                </div>
+                <div class="col-lg-5 col-md-8 ">
+                    <form role="search" action="{% url 'search_supplier' %}" method="get">
+                        <div class="input-group">
+                            <input class="form-control text-1"  name="searched_term" type="search" value="" placeholder="{% trans 'Search for blocked supplier' %}">
+                            <button class="btn bg-light" type="submit" aria-label="Search">
+                                <i class="fas fa-search header-nav-top-icon"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive col-12 mt-3">
+                       
+                <table id="file-export" class="table table-bordered text-nowrap w-100">
+                <!-- <table class="table table-striped"> -->
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{% trans "Company Name" %}</th>
+                            <th>{% trans "Tin Number" %}</th>
+                            <th>{% trans "Sector" %}</th>
+                            <th>{% trans "Business Area" %}</th>    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for supplier in suppliers %}
+                        <tr>
+                            <td>{{forloop.counter}}.</td>
+                            <td>{{ supplier.company_name }}</td>
+                            <td>{{ supplier.tin }}</td>
+                            <td>{{ supplier.sector }}</td>
+                            <td>{{ supplier.area_of_business }}</td>
+                        </tr>
+                        {% endfor %}
+                    
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- pagination -->
+            <div class="row align-items-center text-center">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center align-items-center">
+
+                        {% if suppliers.has_previous %}
+                            <li class="page-item"><a href="?page={{suppliers.previous_page_number}}" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+                        {% endif %}
+
+                            <li class="page-item active"><a href="" class="page-link">{{suppliers.number}}</a></li>
+                            <li class="page-item disabled"><a href="" class="page-link">of</a></li>
+                            <li class="page-item"><a href="?page={{suppliers.paginator.num_pages}}" class="page-link">{{suppliers.paginator.num_pages}}</a></li>
+                        
+                        {% if suppliers.has_next %}
+                            <li class="page-item"><a href="?page={{suppliers.next_page_number}}" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a href="" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+            <!-- end pagination -->
+        
+
+            
+
+            
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'dashboard/js/datatables.js' %}"></script>
+    <!-- Datatables Cdn -->
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.6/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script> 
+{% endblock %}

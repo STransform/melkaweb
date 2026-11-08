@@ -1,0 +1,250 @@
+{% load static %}
+{% load menu_tags %}
+{% load static cms_tags sekizai_tags  %}
+{% render_block "css" %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en"
+    data-style-switcher-options="{'showBordersStyle': true, 'showLayoutStyle': false, 'showBackgroundColor': false, 'changeLogo': false, 'colorPrimary': '#dc3545', 'colorSecondary': '#000000', 'colorTertiary': '#ffffff', 'colorQuaternary': '#f8f9fa', 'borderRadius': 4}">
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}Melka{% endblock %}</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Keep existing static files for compatibility -->
+    <link rel="stylesheet" href="{% static 'front/vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/animate/animate.compat.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/simple-line-icons/css/simple-line-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/magnific-popup/magnific-popup.min.css' %}">
+
+    <!-- Add website title to meta tags -->
+    <meta name="keywords" content="{{stg.title}} Website, OTech Engineering" />
+    <meta name="description" content="Official website of {{stg.title}}">
+    <meta name="author" content="OTECH Engineering">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" {% if stg.logo %} href="{{stg.logo.url}}" {% else %}
+        href="/static/front/imgs/logo/logo-otech.png" {% endif %} type="image/x-icon" />
+
+    <link rel="apple-touch-icon" {% if stg.logo %} href="{{stg.logo.url}}" {% else %}
+        href="/static/front/imgs/logo/logo-otech.png" {% endif %}>
+
+    <!-- Mobile Metas -->
+    <meta name="google-translate-customization" content="2a346d14a229c668-7e7397a8cc152430-g725eaceb7864f0fd-12">
+    
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'front/vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/animate/animate.compat.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/simple-line-icons/css/simple-line-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/owl.carousel/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/owl.carousel/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'front/vendor/magnific-popup/magnific-popup.min.css' %}">
+
+    <!-- Added comprehensive corporate styling with 60-30-10 color scheme -->
+    <style>
+        :root {
+            --primary-white: #ffffff;
+            --primary-black: #000000;
+            --accent-color: #ed242a;
+            --light-gray: #f8f9fa;
+            --medium-gray: #6c757d;
+            --dark-gray: #343a40;
+            --green-color: #28a745;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-white);
+            color: var(--primary-black);
+            line-height: 1.6;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .bg-corporate-dark {
+            background-color: var(--primary-black) !important;
+        }
+
+        .bg-corporate-light {
+            background-color: var(--light-gray) !important;
+        }
+
+        .text-corporate-red {
+            color: var(--accent-color) !important;
+        }
+
+        .btn-corporate-red {
+            background-color: var(--accent-color);
+            color: var(--primary-white);
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-corporate-red:hover {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-outline-corporate-red {
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            background: transparent;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline-corporate-red:hover {
+            background: var(--accent-color);
+            color: var(--primary-white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 20, 43, 0.3);
+        }
+
+        .corporate-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .corporate-card {
+            border: none;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .corporate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            margin: 60px auto;
+            width: 100px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+    </style>
+
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'front/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'front/css/theme-elements.css' %}">
+    <link rel="stylesheet" href="{% static 'front/css/theme-blog.css' %}">
+    <link rel="stylesheet" href="{% static 'front/css/theme-shop.css' %}">
+
+    <!-- Demo CSS -->
+    <link rel="stylesheet" href="{% static 'front/css/demos/demo-business-consulting-3.css' %}">
+
+    <!-- Skin CSS -->
+    <link id="skinCSS" rel="stylesheet" href="{% static 'front/css/skins/skin-business-consulting-3.css' %}">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="{% static 'front/css/custom.css' %}">
+
+    {% block css %}{% endblock %}
+
+</head>
+
+<body data-plugin-page-transition>
+   
+
+    <div class="body">
+        <!-- Navigation Bar -->
+        {% include  'front/navbar.html'  %}
+
+        <div role="main" class="main ">
+            <!-- Main Content area to be used by Django templates -->
+            {% block content %}
+            {% endblock %}
+
+            <!-- Extra space to extend django template pages using cms -->
+            {% block cms_extended_content %}
+            {% endblock %}
+
+        </div>
+
+        <!-- Add footer  -->
+        {% include 'front/footer.html' %}
+
+    </div>
+
+
+    <!-- Vendor -->
+    <script src="{% static 'front/vendor/plugins/js/plugins.min.js' %}"></script>
+
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="{% static 'front/js/theme.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    </script>
+
+    <!-- Current Page Vendor and Views -->
+    <script src="{% static 'front/js/views/view.contact.js' %}"></script>
+
+    <!-- Theme Initialization Files -->
+    <script src="{% static 'front/js/theme.init.js' %}"></script>
+
+    {% block js %}{% endblock %}
+
+</body>
+
+
+</html>

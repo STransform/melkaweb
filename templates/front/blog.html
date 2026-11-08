@@ -1,0 +1,17 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block news %} active {% endblock %}
+{% block blogs_dynamic %} active {% endblock %}
+
+
+{% block content %}
+
+<!-- HEADER -->
+{% include 'front/blogs_page/01header.html'  %}
+
+
+<!-- Blogs -->
+{% include 'front/blogs_page/02blogs.html'  %}
+
+{% endblock %}
