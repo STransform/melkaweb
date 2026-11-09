@@ -1,49 +1,48 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [csrfToken, setCsrfToken] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const params = useSearchParams();
-
-  useEffect(() => {
-    fetch('/api/frontend/csrf/')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.csrfToken) {
-          setCsrfToken(data.csrfToken);
-        }
-      })
-      .catch(() => {});
-  }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (loading) return;
     setError(''); setLoading(true);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
     try {
       const body = new FormData(event.currentTarget);
-      const csrf = await fetch('/api/frontend/csrf/', { cache: 'no-store' }).then(response => response.json());
+      const csrfResponse = await fetch('/api/frontend/csrf/', { cache: 'no-store', credentials: 'same-origin', signal: controller.signal });
+      if (!csrfResponse.ok) throw new Error('Unable to start a secure sign-in session. Please try again.');
+      const csrf = await csrfResponse.json();
+      if (!csrf.csrfToken) throw new Error('Unable to start a secure sign-in session. Please try again.');
       body.set('csrfmiddlewaretoken', csrf.csrfToken);
       const response = await fetch('/api/frontend/auth/login/', {
         method: 'POST', headers: { 'X-CSRFToken': csrf.csrfToken }, body,
+        credentials: 'same-origin', cache: 'no-store', signal: controller.signal,
       });
       const payload = await response.json();
       if (!response.ok) {
         setError(Object.values(payload.errors || {}).flat().join(' ') || 'Unable to sign in.');
         return;
       }
-      router.replace(payload.redirect || '/'); router.refresh();
-    } catch { setError('Unable to contact the server. Please try again.'); }
-    finally { setLoading(false); }
+      // Load a fresh document with the session cookie set by the login response.
+      // Public pages use document routes rather than the App Router's RSC stream.
+      const destination = new URL(payload.redirect || '/', window.location.origin);
+      window.location.replace(destination.origin === window.location.origin ? destination.href : '/');
+    } catch (error) {
+      setError(controller.signal.aborted ? 'Sign-in timed out. Please try again.' : error instanceof Error && ! (error instanceof TypeError) && ! (error instanceof SyntaxError) ? error.message : 'Unable to contact the server. Please try again.');
+    }
+    finally { clearTimeout(timeout); setLoading(false); }
   }
 
   return (
@@ -87,12 +86,11 @@ export default function LoginPage() {
             fontSize: '0.85rem',
             marginBottom: '20px',
           }}>
-            {error}
+            <span role="alert">{error}</span>
           </div>
         )}
 
-        <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken} />
+        <form method="post" onSubmit={submit} aria-busy={loading} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           <input type="hidden" name="next" value={params.get('next') || ''} />
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -103,6 +101,7 @@ export default function LoginPage() {
               id="id_email"
               name="email"
               type="email"
+              autoComplete="username"
               required
               autoFocus
               value={email}
@@ -131,6 +130,7 @@ export default function LoginPage() {
               id="id_password"
               name="password"
               type="password"
+              autoComplete="current-password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}

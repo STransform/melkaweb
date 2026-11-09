@@ -5,6 +5,10 @@
  * the site. There is no Django template rendering in this frontend path.
  */
 import trees from '../../ui/presentation.json' with { type: 'json' };
+import { homeHero } from './home-hero.mjs';
+
+const heroTemplate = 'front/landing_page/01hero_carousel.html';
+const heroNodes = homeHero(trees[heroTemplate]);
 
 const safe = html => ({ $safe: String(html ?? '') });
 const isSafe = value => value && typeof value === 'object' && '$safe' in value;
@@ -150,7 +154,7 @@ export function renderPresentation(payload) {
   const state = { cycle: 0 };
   const t = value => translations[value] ?? value;
   function renderTemplate(name, ctx, overrides = {}) {
-    const nodes = trees[name];
+    const nodes = name === heroTemplate ? heroNodes : trees[name];
     if (!nodes) throw new Error(`Unknown presentation: ${name}`);
     const parent = nodes.find(node => node.op === 'extends');
     if (parent) {

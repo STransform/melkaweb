@@ -14,7 +14,7 @@ from django.urls import reverse
 from blogs.models import Blog, BlogComment
 from core.models import Pages, Settings
 from core.presentation import MEDIA_TYPE
-from dashboard.models import FAQ, GalleryImage
+from dashboard.models import FAQ, GalleryImage, FeaturedWork
 from documents.models import Document
 from task_manager.models import Comment, Task
 from vacancies.models import Application, Job
@@ -104,6 +104,58 @@ class PresentationTests(TestCase):
         self.assertNotIn(self.client.session.session_key,raw)
         for field in data['context']['password_form']['$form']:
             self.assertIsNone(field['value'])
+
+    def test_admin_home_slider_populates_public_hero_and_updates(self):
+        import io
+        from PIL import Image
+
+        image = io.BytesIO()
+        Image.new('RGB', (720, 400), 'blue').save(image, format='PNG')
+        self.client.force_login(self.staff)
+        response = self.client.post('/api/frontend/admin/FeaturedWork/', {
+            'title_en': 'Software built for your business',
+            'description_en': 'Full description from the administration portal. ' * 5,
+            'background_image': SimpleUploadedFile('hero.png', image.getvalue(), content_type='image/png'),
+        })
+        self.assertEqual(response.status_code, 201, response.content)
+        work = FeaturedWork.objects.get(pk=response.json()['id'])
+        self.client.logout()
+        page = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser')
+        self.assertEqual(page.select_one('.hero-title').get_text(), work.title)
+        self.assertEqual(page.select_one('.hero-subtitle').get_text(), work.description)
+        self.assertEqual(page.select_one('.hero-mockup')['src'], work.background_image.url)
+        self.assertIsNone(page.select_one('.managed-hero-pause'))
+
+        self.client.force_login(self.staff)
+        response = self.client.post(f'/api/frontend/admin/FeaturedWork/{work.pk}/', {
+            'title_en': 'Updated hero heading', 'description_en': 'Updated public description.',
+        })
+        self.assertEqual(response.status_code, 200, response.content)
+        self.client.logout()
+        FeaturedWork.objects.create(title='Second slide', description='Another project', background_image=work.background_image.name)
+        page = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser')
+        self.assertEqual(len(page.select('.managed-hero .hero-section')), 2)
+        self.assertEqual(len(page.select('.managed-hero .carousel-item.active')), 1)
+        self.assertEqual(len(page.select('.managed-hero .carousel-indicators button')), 2)
+        self.assertIsNotNone(page.select_one('.managed-hero-pause'))
+        self.assertIn('Updated hero heading', page.get_text())
+        self.assertIn('Updated public description.', page.get_text())
+        self.assertNotIn('Transformation — for a better tomorrow.', page.get_text())
+
+    def test_home_slider_can_be_created_without_image(self):
+        self.client.force_login(self.staff)
+        schema = self.client.get('/api/frontend/admin/FeaturedWork/?schema=create').json()
+        image_field = next(field for field in schema['fields'] if field['name'] == 'background_image')
+        self.assertFalse(image_field['required'])
+        response = self.client.post('/api/frontend/admin/FeaturedWork/', {
+            'title_en': 'A hero without an image', 'description_en': 'Text is enough.',
+        })
+        self.assertEqual(response.status_code, 201, response.content)
+        self.client.logout()
+        page = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser')
+        self.assertEqual(page.select_one('.hero-title').get_text(), 'A hero without an image')
+        self.assertIsNotNone(page.select_one('.hero-without-image'))
+        self.assertIsNone(page.select_one('.hero-mockup'))
 
     def test_session_login_invalid_form_and_permissions(self):
         denied=self.client.get('/dashboard/',HTTP_ACCEPT=MEDIA_TYPE)

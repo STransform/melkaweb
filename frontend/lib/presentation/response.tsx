@@ -25,6 +25,9 @@ export function presentationDocument(payload: Parameters<typeof renderPresentati
     },
   });
   let html = '<!DOCTYPE html>' + renderToStaticMarkup(React.createElement(React.Fragment, null, tree));
+  if (payload.template === 'front/index.html') {
+    html = html.replace('</body>', '<link rel="stylesheet" href="/static/front/css/hero-refresh.css"></body>');
+  }
   const bootstrap = `<script data-melka-runtime>
 (function(){
   function bind(){

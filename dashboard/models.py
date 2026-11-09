@@ -84,8 +84,8 @@ class DirectorateMessage(models.Model):
 class FeaturedWork(models.Model):
     # Slider contents displayed at the home page
     title = models.CharField(max_length=150,help_text="Make sure to submit a max of 150 characters.")
-    background_image = models.ImageField(upload_to='featured_work_backgrounds/',
-                                         help_text="Make sure to submit an image of 720 X 400.")
+    background_image = models.ImageField(upload_to='featured_work_backgrounds/', blank=True,
+                                         help_text="Optional. Recommended image size: 720 × 400.")
     description = models.TextField(help_text="Make sure to submit a max of 255 characters.")
 
     class Meta:
