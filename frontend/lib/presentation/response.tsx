@@ -25,6 +25,12 @@ export function presentationDocument(payload: Parameters<typeof renderPresentati
     },
   });
   let html = '<!DOCTYPE html>' + renderToStaticMarkup(React.createElement(React.Fragment, null, tree));
+  if (payload.template === 'front/about.html') {
+    html = html.replace('</body>', `<style>
+      .about-content .about-row:not(:has(.gallery-image)) > .col-lg-6:has(.image-gallery-container){display:none}
+      .about-content .about-row:not(:has(.gallery-image)) > .about-text-section{width:100%;padding-right:0}
+    </style></body>`);
+  }
   if (payload.template === 'front/index.html') {
     html = html.replace('</body>', '<link rel="stylesheet" href="/static/front/css/hero-refresh.css"></body>');
   }

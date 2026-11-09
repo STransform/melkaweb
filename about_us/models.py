@@ -9,9 +9,9 @@ class About(models.Model):
     mission = models.TextField(help_text= "Make sure that the has a max of 100 words.")
     vision = models.TextField(help_text= "Make sure that the has a max of 100 words.")
     values = models.TextField(help_text= "Make sure that the has a max of 100 words.")
-    image_one = models.ImageField(upload_to='about_images/', blank=False, help_text="Make sure to submit 200 X 300 images.")
-    image_two = models.ImageField(upload_to='about_images/', blank=False, help_text="Make sure to submit 200 X 300 images.")
-    image_three = models.ImageField(upload_to='about_images/', blank=False, help_text="Make sure to submit 200 X 300 images.")
+    image_one = models.ImageField(upload_to='about_images/', blank=True, help_text="Optional. Recommended image size: 200 × 300.")
+    image_two = models.ImageField(upload_to='about_images/', blank=True, help_text="Optional. Recommended image size: 200 × 300.")
+    image_three = models.ImageField(upload_to='about_images/', blank=True, help_text="Optional. Recommended image size: 200 × 300.")
     
     class Meta:
         ordering = ('-id',)

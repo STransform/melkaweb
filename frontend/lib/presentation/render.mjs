@@ -6,9 +6,12 @@
  */
 import trees from '../../ui/presentation.json' with { type: 'json' };
 import { homeHero } from './home-hero.mjs';
+import { homeAbout } from './home-about.mjs';
 
 const heroTemplate = 'front/landing_page/01hero_carousel.html';
 const heroNodes = homeHero(trees[heroTemplate]);
+const aboutTemplate = 'front/landing_page/02stats_section.html';
+const aboutNodes = homeAbout(trees[aboutTemplate]);
 
 const safe = html => ({ $safe: String(html ?? '') });
 const isSafe = value => value && typeof value === 'object' && '$safe' in value;
@@ -154,7 +157,7 @@ export function renderPresentation(payload) {
   const state = { cycle: 0 };
   const t = value => translations[value] ?? value;
   function renderTemplate(name, ctx, overrides = {}) {
-    const nodes = name === heroTemplate ? heroNodes : trees[name];
+    const nodes = name === heroTemplate ? heroNodes : name === aboutTemplate ? aboutNodes : trees[name];
     if (!nodes) throw new Error(`Unknown presentation: ${name}`);
     const parent = nodes.find(node => node.op === 'extends');
     if (parent) {

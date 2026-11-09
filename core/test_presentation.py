@@ -157,6 +157,65 @@ class PresentationTests(TestCase):
         self.assertIsNotNone(page.select_one('.hero-without-image'))
         self.assertIsNone(page.select_one('.hero-mockup'))
 
+    def test_admin_about_and_services_populate_homepage(self):
+        import io
+        from PIL import Image
+        image = io.BytesIO()
+        Image.new('RGB', (20, 30), 'blue').save(image, format='PNG')
+        self.client.force_login(self.staff)
+        response = self.client.post('/api/frontend/admin/About/', {
+            'title_en': 'About our company', 'content_en': 'Our story.\n\nOur next chapter.',
+            'mission_en': 'Our mission', 'vision_en': 'Our vision', 'values_en': 'Our values',
+            **{name: SimpleUploadedFile(name + '.png', image.getvalue(), content_type='image/png')
+               for name in ['image_one', 'image_two', 'image_three']},
+        })
+        self.assertEqual(response.status_code, 201, response.content)
+        about_id = response.json()['id']
+        response = self.client.post('/api/frontend/admin/Service/', {
+            'title_en': 'Custom engineering', 'content_en': 'Services from the admin portal.',
+        })
+        self.assertEqual(response.status_code, 201, response.content)
+        service_id = response.json()['id']
+        self.client.logout()
+        page = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser')
+        section = page.select_one('.about-section')
+        self.assertEqual(section.select_one('.about-title').get_text(), 'About our company')
+        self.assertIn('Our next chapter.', section.get_text())
+        self.assertEqual(section.select_one('.feature-title').get_text(), 'Custom engineering')
+        self.assertNotIn('MelkaTech derives', section.get_text())
+        self.client.force_login(self.staff)
+        response = self.client.post(f'/api/frontend/admin/About/{about_id}/', {
+            'title_en': 'Updated company', 'content_en': 'Updated story',
+            'mission_en': 'Mission', 'vision_en': 'Vision', 'values_en': 'Values',
+        })
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertEqual(self.client.delete(f'/api/frontend/admin/Service/{service_id}/').status_code, 200)
+        self.client.logout()
+        section = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser').select_one('.about-section')
+        self.assertEqual(section.select_one('.about-title').get_text(), 'Updated company')
+        self.assertIn('Updated story', section.get_text())
+        self.assertIsNone(section.select_one('.feature-item'))
+
+    def test_about_can_be_created_and_edited_without_images(self):
+        self.client.force_login(self.staff)
+        schema = self.client.get('/api/frontend/admin/About/?schema=create').json()
+        fields = [field for field in schema['fields'] if field['name'] in ['image_one', 'image_two', 'image_three']]
+        self.assertEqual(len(fields), 3)
+        self.assertTrue(all(not field['required'] for field in fields))
+        data = {'title_en': 'About without images', 'content_en': 'Our story',
+                'mission_en': 'Mission', 'vision_en': 'Vision', 'values_en': 'Values'}
+        response = self.client.post('/api/frontend/admin/About/', data)
+        self.assertEqual(response.status_code, 201, response.content)
+        pk = response.json()['id']
+        data['title_en'] = 'Updated About without images'
+        response = self.client.post(f'/api/frontend/admin/About/{pk}/', data)
+        self.assertEqual(response.status_code, 200, response.content)
+        self.client.logout()
+        for path in ['/', '/about-us/about/']:
+            page = BeautifulSoup(self.render_frontend(self.payload(path)), 'html.parser')
+            self.assertIn('Updated About without images', page.get_text())
+            self.assertIsNone(page.select_one('.about-content .gallery-image'))
+
     def test_session_login_invalid_form_and_permissions(self):
         denied=self.client.get('/dashboard/',HTTP_ACCEPT=MEDIA_TYPE)
         self.assertEqual(denied.status_code,302)

@@ -23,6 +23,7 @@ from vacancies.models import Job
 from vacancies.models import Application
 from news.models import NewsArticle
 from about_us.models import CompanyValues
+from about_us.models import About, Service
 from about_us.models import VisionMission
 from about_us.models import Vision
 from about_us.models import OtechExcellence
@@ -80,6 +81,8 @@ def index(request):
         'about_us': about_us,
         'paragraphs': paragraphs,  # Pass preprocessed paragraphs to template context
         'featured_works': featured_works,  # Add Featured Works data to context
+        'homepage_about': About.objects.first(),
+        'homepage_services': Service.objects.order_by('pk'),
         #'technology_service':technology_service,
         'company_values':company_values,
         'vision_mission':vision_mission,
