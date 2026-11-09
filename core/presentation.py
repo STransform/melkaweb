@@ -91,9 +91,11 @@ def requirements(name):
     expressions = re.sub(r'''"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*' ''', '', text, flags=re.X)
     names = set(re.findall(r'\b[a-zA-Z_][a-zA-Z_0-9]*\b', expressions))
     names.update(node['op'] for node in nodes)
+    if name in {'front/blog.html', 'front/blog_detail.html'}:
+        names.update({'tutorial', 'tutorial_library'})
     # The homepage About presentation is maintained as a frontend override.
     if name == 'front/index.html':
-        names.update({'homepage_about', 'homepage_services', 'title', 'content'})
+        names.update({'homepage_about', 'homepage_services', 'title', 'content', 'recent_tutorials'})
     translations = set()
     for node in nodes:
         if node['op'] in ('trans', 'translate'):

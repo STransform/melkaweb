@@ -8,6 +8,7 @@ import trees from '../../ui/presentation.json' with { type: 'json' };
 import { homeHero } from './home-hero.mjs';
 import { homeAbout } from './home-about.mjs';
 import { serviceCards } from './services.mjs';
+import { tutorialNodes, recentTutorialNodes } from './tutorials.mjs';
 
 const heroTemplate = 'front/landing_page/01hero_carousel.html';
 const heroNodes = homeHero(trees[heroTemplate]);
@@ -163,7 +164,10 @@ export function renderPresentation(payload) {
   const state = { cycle: 0 };
   const t = value => translations[value] ?? value;
   function renderTemplate(name, ctx, overrides = {}) {
-    const nodes = serviceOverrides[name] || (name === heroTemplate ? heroNodes : name === aboutTemplate ? aboutNodes : trees[name]);
+    const nodes = ['front/blog.html', 'front/blog_detail.html'].includes(name) && (ctx.tutorial || ctx.tutorial_library)
+      ? tutorialNodes(ctx, csrfToken)
+      : name === 'front/landing_page/09recent_blogs.html' ? recentTutorialNodes(ctx)
+      : serviceOverrides[name] || (name === heroTemplate ? heroNodes : name === aboutTemplate ? aboutNodes : trees[name]);
     if (!nodes) throw new Error(`Unknown presentation: ${name}`);
     const parent = nodes.find(node => node.op === 'extends');
     if (parent) {

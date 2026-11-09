@@ -26,6 +26,7 @@ from core.task_api import tasks as task_list, detail as task_detail, comment as 
 
 from about_us import models as about
 from blogs.models import Blog, BlogComment
+from blogs.tutorials import engagement, add_comment, upload_image, tutorial_analytics
 from core.models import ContactUs, Pages, Settings
 from dashboard import models as dashboard
 from documents.models import Document
@@ -81,6 +82,8 @@ def serialize(obj, fields):
 def collection(name, limit=None):
     model, fields, _title = RESOURCES[name]
     queryset = model.objects.all().order_by('-pk')
+    if model is Blog:
+        queryset = queryset.filter(published_status='Published')
     if limit is not None:
         queryset = queryset[:limit]
     return [serialize(obj, fields) for obj in queryset]
@@ -134,12 +137,14 @@ def resource(request, name, pk=None):
         return JsonResponse({'error': 'Not found'}, status=404)
     model, fields, title = RESOURCES[name]
     if pk is not None:
-        obj = get_object_or_404(model, pk=pk)
+        obj = get_object_or_404(model, pk=pk, **({'published_status': 'Published'} if model is Blog else {}))
         data = serialize(obj, fields)
         if name == 'blogs':
             data['comments'] = [serialize(comment, 'author message created_at') for comment in obj.comments()]
         return JsonResponse({'title': _(title), 'item': data})
     queryset = model.objects.all().order_by('-pk')
+    if model is Blog:
+        queryset = queryset.filter(published_status='Published')
     term = request.GET.get('q', '').strip()
     if term:
         searchable = [field for field in fields.split() if 'title' in field or field in ('description', 'content')]
@@ -176,7 +181,10 @@ def search(request):
                 filters |= Q(gallery_category__name__icontains=term)
             elif name == 'events':
                 filters |= Q(location__icontains=term)
-            queryset = model.objects.filter(filters).order_by('-pk')[:30]
+            queryset = model.objects.filter(filters)
+            if model is Blog:
+                queryset = queryset.filter(published_status='Published')
+            queryset = queryset.order_by('-pk')[:30]
             groups[name] = {'title': _(title), 'items': [serialize(obj, fields) for obj in queryset]}
         jobs = Job.objects.filter(Q(job_title__icontains=term) | Q(job_type__icontains=term) | Q(Status__icontains=term), Status='Active')[:30]
         groups['jobs'] = {'title': _('Careers'), 'items': [
@@ -230,18 +238,14 @@ def contact(request):
 @never_cache
 @require_POST
 def comment(request, pk):
-    blog = get_object_or_404(Blog, pk=pk)
-    form = CommentForm(request.POST)
-    if not form.is_valid():
-        return JsonResponse({'errors': form.errors}, status=400)
-    obj = form.save(commit=False)
-    obj.blog = blog
-    obj.approved = False
-    obj.save()
-    return JsonResponse({'message': _('Your comment will be visible once approved by our web managers.')}, status=201)
+    return add_comment(request, pk)
 
 
 urlpatterns = [
+    path('tutorial-analytics/', tutorial_analytics),
+    path('tutorial-images/', upload_image),
+    path('blogs/<int:pk>/like/', engagement, {'action': 'like'}),
+    path('blogs/<int:pk>/visit/', engagement, {'action': 'visit'}),
     path('site/', site), path('home/', home), path('search/', search),
     path('csrf/', csrf), path('contact/', contact), path('blogs/<int:pk>/comments/', comment),
     path('content/<str:name>/', resource), path('content/<str:name>/<int:pk>/', resource),

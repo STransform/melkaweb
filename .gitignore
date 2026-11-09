@@ -15,4 +15,5 @@ media/
 tmp/
 node_modules/
 .next/
+.next-publish-check/
 *.tsbuildinfo

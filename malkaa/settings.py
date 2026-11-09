@@ -194,6 +194,9 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD', default=''),
         'HOST': config('DB_HOST', default='127.0.0.1'),
         'PORT': config('DB_PORT', default='3306'),
+        # MySQL's legacy utf8/utf8mb3 connection encoding rejects emoji even
+        # when the database and content columns already use utf8mb4.
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 

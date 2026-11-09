@@ -49,6 +49,7 @@ export default async function CreatePage({ params }: Props) {
 
   return (
     <ModelForm
+      key={`${model}-new`}
       model={data.model || model}
       title={data.title || model}
       fields={fields}

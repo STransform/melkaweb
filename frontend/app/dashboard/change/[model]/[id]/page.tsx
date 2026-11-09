@@ -50,6 +50,7 @@ export default async function ChangePage({ params }: Props) {
 
   return (
     <ModelForm
+      key={`${model}-${id}`}
       model={data.model || model}
       title={data.title || model}
       id={data.id ?? Number(id)}

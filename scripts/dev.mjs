@@ -12,17 +12,28 @@ if (!existsSync(next)) {
   process.exit(1);
 }
 const origins = [process.env.FRONTEND_ORIGINS, `http://localhost:${frontendPort}`, `http://127.0.0.1:${frontendPort}`].filter(Boolean).join(',');
-const backend = spawn(python, ['manage.py', 'runserver', `127.0.0.1:${backendPort}`, '--noreload'], {
-  cwd: root, stdio: 'inherit', env: { ...process.env, FRONTEND_ORIGINS: origins },
+const grouped = process.platform !== 'win32';
+const backend = spawn(python, ['manage.py', 'runserver', `127.0.0.1:${backendPort}`], {
+  cwd: root, stdio: 'inherit', detached: grouped, env: { ...process.env, FRONTEND_ORIGINS: origins },
 });
 const frontend = spawn(process.execPath, [next, 'dev', '--hostname', '127.0.0.1', '--port', frontendPort], {
-  cwd: `${root}frontend`, stdio: 'inherit', env: { ...process.env, DJANGO_ORIGIN: `http://127.0.0.1:${backendPort}` },
+  cwd: `${root}frontend`, stdio: 'inherit', detached: grouped, env: { ...process.env, DJANGO_ORIGIN: `http://127.0.0.1:${backendPort}` },
 });
 let stopping = false;
 function stop(code = 0) {
   if (stopping) return;
   stopping = true;
-  backend.kill('SIGTERM'); frontend.kill('SIGTERM');
+  for (const child of [backend, frontend]) {
+    if (!child.pid) continue;
+    try {
+      // Django's reloader and Next.js both spawn children. Stop only the
+      // process groups started here, including those children.
+      if (grouped) process.kill(-child.pid, 'SIGTERM');
+      else child.kill('SIGTERM');
+    } catch (error) {
+      if (error.code !== 'ESRCH') console.error(error.message);
+    }
+  }
   process.exitCode = code;
 }
 for (const child of [backend, frontend]) {

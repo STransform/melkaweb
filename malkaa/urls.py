@@ -9,10 +9,15 @@ from django.views.i18n import JavaScriptCatalog
 from django.utils.translation import gettext_lazy as _
 from django.conf.urls.i18n import i18n_patterns
 from about_us.urls import ServicesPage,TechnologyPage
+from blogs.public_views import TutorialList, TutorialDetail, TutorialFeed, tutorial_sitemap
 
 admin.site.site_header = 'Super Administrator'
 
 urlpatterns = [
+    path('tutorials/', TutorialList.as_view(), name='tutorial_list'),
+    path('tutorials/feed.xml', TutorialFeed(), name='tutorial_feed'),
+    path('tutorials/sitemap.xml', tutorial_sitemap, name='tutorial_sitemap'),
+    path('tutorials/<slug:slug>/', TutorialDetail.as_view(), name='tutorial_detail'),
     path('api/frontend/', include('core.frontend_api')),
     path('internalAdmin/', admin.site.urls),
     path('', index, name="index"),#for homage page

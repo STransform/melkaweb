@@ -48,7 +48,8 @@ def paginate(object, number, request):
 
 
 def index(request):
-    recent_blogs = Blog.objects.order_by('-created_date')[:4]
+    from blogs.tutorials import published, article_data
+    recent_blogs = Blog.objects.filter(published_status='Published').order_by('-created_date')[:4]
     recent_news = NewsArticle.objects.order_by('-created_at')[:4]
     map = Settings.objects.first().map_link if Settings.objects.first() else ''
     recent_documents = Document.objects.order_by('-upload_date')[:9]
@@ -74,6 +75,7 @@ def index(request):
     context = {
         'index':True,
         'recent_blogs': recent_blogs,
+        'recent_tutorials': [article_data(blog, request, False) for blog in published()[:3]],
         'recent_news': recent_news,
         'recent_documents': recent_documents,
         'gallery_images': gallery_images,
@@ -104,7 +106,7 @@ def search(request):
         searched_term = request.GET["searched_item"]
 
         news = NewsArticle.objects.filter(Q(title__icontains=searched_term) | Q(news_category__name__icontains=searched_term) | Q(created_by__first_name__icontains=searched_term))
-        blogs = Blog.objects.filter(Q(title__icontains=searched_term) | Q(blog_category__name__icontains=searched_term) | Q(created_by__first_name__icontains=searched_term))
+        blogs = Blog.objects.filter(Q(title__icontains=searched_term) | Q(blog_category__name__icontains=searched_term) | Q(created_by__first_name__icontains=searched_term), published_status='Published')
         jobs = Job.objects.filter(Q(job_title__icontains=searched_term) | Q(job_type__icontains=searched_term) | Q(Status__icontains=searched_term), Status='Active')
         gallery = GalleryImage.objects.filter(Q(title__icontains=searched_term) | Q(gallery_category__name__icontains=searched_term))
         documents = Document.objects.filter(Q(title__icontains=searched_term) | Q(category__icontains=searched_term))

@@ -1,0 +1,25 @@
+/* Explicit colours keep dashboard themes from making code unreadable. */
+.tutorial-portal .tutorial-prose .tutorial-code-block{margin:26px 0;border:1px solid #2c4057;border-radius:12px;overflow:hidden;background:#101c2c;box-shadow:0 8px 22px #0b182c12;max-width:100%;min-width:0;color:#e6edf3}
+.tutorial-portal .tutorial-code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:49px;padding:10px 16px;background:#1a2a3e;border-bottom:1px solid #304158}
+.tutorial-portal .tutorial-code-info{display:flex;align-items:center;gap:10px;min-width:0;font:500 12px/1.5 Inter,system-ui,sans-serif;color:#d0e0ef}
+.tutorial-portal .tutorial-code-symbol{color:#82b7e8;font:600 14px/1.5 ui-monospace,monospace}
+.tutorial-portal .tutorial-code-language{font-weight:700;color:#e4eef9}
+.tutorial-portal .tutorial-code-lines{color:#9db0c6;font-size:11px;border-left:1px solid #425169;padding-left:10px;white-space:nowrap}
+.tutorial-portal .tutorial-code-toolbar .tutorial-copy-code{position:static;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:4px 11px;border:1px solid #4b6078;border-radius:6px;background:#243b55;color:#e8f2fc!important;font:600 11px/1.5 Inter,system-ui,sans-serif;box-shadow:none;cursor:pointer;transition:background .15s,border-color .15s}
+.tutorial-portal .tutorial-code-toolbar .tutorial-copy-code:hover{background:#304e6b;border-color:#8bb7dc}
+.tutorial-portal .tutorial-code-toolbar .tutorial-copy-code:focus-visible{outline:2px solid #77cfff;outline-offset:3px}
+.tutorial-portal .tutorial-prose .tutorial-code-block pre{margin:0!important;padding:20px 22px!important;background:#101c2c!important;color:#e6edf3!important;border:0;border-radius:0;box-shadow:none;max-width:100%;overflow-x:auto;font-size:14px!important;line-height:1.85!important;tab-size:4;scrollbar-width:thin;scrollbar-color:#536b85 #101c2c}
+.tutorial-portal .tutorial-prose pre code{display:block;padding:0!important;margin:0;background:transparent!important;color:#e6edf3!important;font:400 14px/1.85 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace!important;white-space:pre!important;word-break:normal!important;overflow-wrap:normal!important;opacity:1!important;text-shadow:none!important;-webkit-text-fill-color:currentColor}
+.tutorial-portal .tutorial-prose pre code .hljs-keyword,.tutorial-portal .tutorial-prose pre code .hljs-selector-tag,.tutorial-portal .tutorial-prose pre code .hljs-literal{color:#d7a8ff!important}
+.tutorial-portal .tutorial-prose pre code .hljs-string,.tutorial-portal .tutorial-prose pre code .hljs-attr,.tutorial-portal .tutorial-prose pre code .hljs-addition{color:#a5e6bb!important}
+.tutorial-portal .tutorial-prose pre code .hljs-number,.tutorial-portal .tutorial-prose pre code .hljs-symbol,.tutorial-portal .tutorial-prose pre code .hljs-type{color:#ffd299!important}
+.tutorial-portal .tutorial-prose pre code .hljs-comment,.tutorial-portal .tutorial-prose pre code .hljs-quote{color:#9aaec4!important;font-style:italic}
+.tutorial-portal .tutorial-prose pre code .hljs-title,.tutorial-portal .tutorial-prose pre code .hljs-built_in,.tutorial-portal .tutorial-prose pre code .hljs-function{color:#8ed8ff!important}
+.tutorial-portal .tutorial-prose pre code .hljs-variable,.tutorial-portal .tutorial-prose pre code .hljs-params,.tutorial-portal .tutorial-prose pre code .hljs-subst{color:#e6edf3!important}
+.tutorial-portal .tutorial-prose pre code .hljs-meta{color:#ffce8c!important}
+.tutorial-editor .tutorial-editor-preview{padding:26px;margin-top:20px;background:white;border:1px solid #dce6ee;border-radius:14px;box-shadow:0 4px 18px #19385206}
+.tutorial-portal .tutorial-preview-header{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #e3eaf1;padding-bottom:18px;margin-bottom:24px}
+.tutorial-portal .tutorial-preview-header h3{font-size:19px;margin:4px 0 0;letter-spacing:-.02em;color:#17324e}
+.tutorial-portal .tutorial-preview-eyebrow{font:750 10px/1.4 Inter,system-ui,sans-serif;letter-spacing:.14em;color:#60819b}
+.tutorial-portal .tutorial-preview-status{font:650 11px/1.5 Inter,system-ui,sans-serif;background:#eaf8f3;color:#1d7560;border:1px solid #ccebdd;border-radius:99px;padding:4px 10px;white-space:nowrap}
+@media(max-width:575px){.tutorial-editor .tutorial-editor-preview{padding:16px}.tutorial-portal .tutorial-code-toolbar{padding:9px 12px}.tutorial-portal .tutorial-prose .tutorial-code-block pre{padding:16px!important}.tutorial-portal .tutorial-prose pre code{font-size:12px!important;line-height:1.9!important}.tutorial-portal .tutorial-code-lines{display:none}}

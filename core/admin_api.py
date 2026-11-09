@@ -148,7 +148,12 @@ def model(request, model_name, pk=None):
         instance = Model.objects.get(pk=pk)
     elif config['single']:
         instance = Model.objects.first()
-    form = Form(request.POST, request.FILES, instance=instance)
+    data = request.POST.copy()
+    if Model._meta.label_lower == 'blogs.blog' and 'publish_action' in data:
+        if data['publish_action'] not in {'Published', 'Hold'}:
+            return JsonResponse({'errors': {'__all__': ['Choose Publish tutorial or Save draft.']}}, status=400)
+        data['published_status'] = data['publish_action']
+    form = Form(data, request.FILES, instance=instance)
     if not form.is_valid():
         return JsonResponse({'errors': form.errors, 'fields': [_field(field) for field in form]}, status=400)
     obj = form.save(commit=False)
@@ -156,7 +161,11 @@ def model(request, model_name, pk=None):
         obj.created_by = request.user
     obj.save()
     form.save_m2m()
-    return JsonResponse({'id': obj.pk, 'message': 'Updated.' if instance else 'Created.', 'single': config['single']}, status=200 if instance else 201)
+    payload = {'id': obj.pk, 'message': 'Updated.' if instance else 'Created.', 'single': config['single']}
+    if Model._meta.label_lower == 'blogs.blog':
+        payload.update({'published_status': obj.published_status,
+                        'public_url': obj.get_absolute_url() if obj.published_status == 'Published' else None})
+    return JsonResponse(payload, status=200 if instance else 201)
 
 
 @login_required

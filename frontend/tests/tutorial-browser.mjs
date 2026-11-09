@@ -1,0 +1,53 @@
+import { chromium, expect } from '@playwright/test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { tutorialNodes } from '../lib/presentation/tutorials.mjs';
+
+const browser = await chromium.launch({executablePath:process.env.MELKA_BROWSER_EXECUTABLE || undefined,headless:true,args:['--no-sandbox']});
+try {
+  const page=await browser.newPage({viewport:{width:1440,height:1000}});
+  const errors=[];page.on('pageerror',error=>errors.push(error.message));
+  const post={id:1,title:'Deploy Django with Docker',summary:'A practical guide from your first image to a repeatable deployment.',content:'## What we will build\n\nBuild a repeatable deployment with **Docker**.\n\n## Configure the application\n\n```python\nprint("Hello, Melka!")\n```\n\n> **Note:** Keep your secrets outside your image.\n\n| Setting | Value |\n| --- | --- |\n| PORT | 8000 |',format:'markdown',canonical:'https://melka.test/tutorials/docker/',url:'/tutorials/docker/',category:'DevOps',difficulty:'Beginner',tags:['Docker','Django'],minutes:5,author:'Simon Temesgen',author_bio:'Software engineer sharing practical lessons.',published:'2026-11-09T10:00:00Z',updated:'2026-11-09T10:00:00Z',prerequisites:'Python basics and Docker installed.',likes:0,views:0,lessons:[],comments:[],related:[]};
+  post.content+='\n\n## Working with queues\n\n```java\nQueue<String> applications = new LinkedList<>();\n\napplications.offer("APP-001");\napplications.offer("APP-002");\napplications.offer("APP-003");\n\nSystem.out.println(applications.poll());\n```';
+  let content=tutorialNodes({tutorial:post},'test-csrf').find(n=>n.args==='content').body[0].text;
+  await page.route('https://melka.test/**',async route=>{
+    const url=new URL(route.request().url());
+    if(url.pathname==='/static/front/css/tutorials.css')return route.fulfill({contentType:'text/css',body:await readFile(new URL('../../static/front/css/tutorials.css',import.meta.url),'utf8')});
+    if(url.pathname==='/static/front/css/tutorial-code.css')return route.fulfill({contentType:'text/css',body:await readFile(new URL('../../static/front/css/tutorial-code.css',import.meta.url),'utf8')});
+    if(url.pathname==='/static/front/js/tutorials.js')return route.fulfill({contentType:'text/javascript',body:await readFile(new URL('../../static/front/js/tutorials.js',import.meta.url),'utf8')});
+    if(url.pathname.includes('/visit/'))return route.fulfill({json:{views:1,likes:0,liked:false}});
+    if(url.pathname.includes('/like/'))return route.fulfill({json:{likes:1,liked:true}});
+    if(url.pathname.includes('/comments/'))return route.fulfill({status:201,json:{message:'Thank you! Your comment will appear after approval.'}});
+    return route.fulfill({contentType:'text/html; charset=utf-8',body:'<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}</style></head><body>'+content+'</body></html>'});
+  });
+  await page.goto('https://melka.test/tutorials/docker/');
+  await expect(page.getByRole('heading',{name:'Deploy Django with Docker'})).toBeVisible();
+  await expect(page.getByRole('button',{name:'Copy code'}).first()).toBeVisible();
+  await expect(page.locator('.tutorial-code-language').first()).toHaveText('Python');
+  await page.addStyleTag({content:'.tutorial-prose code.hljs{color:#212529;background:#fff}'});
+  assert.equal(await page.locator('.tutorial-prose pre code').first().evaluate(el=>getComputedStyle(el).color),'rgb(230, 237, 243)','Readable code colour survives theme overrides');
+  await page.context().grantPermissions(['clipboard-read','clipboard-write']);
+  await page.getByRole('button',{name:'Copy code'}).first().click();
+  assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),'print("Hello, Melka!")');
+  await page.locator('.tutorial-code-block').last().screenshot({path:'/tmp/melka-code-preview.png'});
+  await page.getByRole('button',{name:/Like/}).click();
+  await expect(page.locator('[data-like]')).toHaveAttribute('aria-pressed','true');
+  await page.locator('[name=author]').fill('Reader');await page.locator('[name=email]').fill('reader@example.com');await page.locator('[name=message]').fill('This helped!');
+  await page.getByRole('button',{name:'Submit comment'}).click();
+  await expect(page.locator('[data-comment-status]')).toContainText('after approval');
+  await page.evaluate(()=>scrollTo(0,0));
+  await page.screenshot({path:'/tmp/melka-tutorial-desktop.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'No mobile horizontal overflow');
+  await page.screenshot({path:'/tmp/melka-tutorial-mobile.png',fullPage:true});
+  content=tutorialNodes({tutorial_library:{items:[post,{...post,id:2,title:'Understanding cloud security',difficulty:'Intermediate',category:'Security'}],categories:['DevOps','Security'],q:'',category:'',difficulty:'',page:1,pages:1,total:2}},'').find(n=>n.args==='content').body[0].text;
+  await page.goto('https://melka.test/tutorials/');
+  await expect(page.getByRole('heading',{name:'Learn. Build. Go further.'})).toBeVisible();
+  assert.equal(await page.locator('.tutorial-card').count(),2);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  await page.screenshot({path:'/tmp/melka-library-mobile.png',fullPage:true});
+  await page.setViewportSize({width:1440,height:1000});
+  await page.screenshot({path:'/tmp/melka-library-desktop.png',fullPage:true});
+  assert.deepEqual(errors,[]);
+  console.log('PASS desktop/mobile layout, code copy control, likes and moderated-comment feedback (mocked network; real backend covered by Django tests).');
+} finally { await browser.close(); }

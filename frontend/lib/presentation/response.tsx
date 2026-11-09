@@ -2,6 +2,7 @@ import { createRequire } from 'node:module';
 import React from 'react';
 import parse, { Element } from 'html-react-parser';
 import { renderPresentation } from './render.mjs';
+import { tutorialHead } from './tutorials.mjs';
 
 // Route handlers return a complete React-rendered document, which also permits
 // exact propagation of Django's status, redirects, session and CSRF cookies.
@@ -25,6 +26,10 @@ export function presentationDocument(payload: Parameters<typeof renderPresentati
     },
   });
   let html = '<!DOCTYPE html>' + renderToStaticMarkup(React.createElement(React.Fragment, null, tree));
+  if (payload.context.tutorial || payload.context.tutorial_library) {
+    html = html.replace(/<title[^>]*>[\s\S]*?<\/title>/gi, '').replace(/<meta\b[^>]*name="description"[^>]*>/gi, '');
+    html = html.replace('</head>', tutorialHead(payload.context) + '</head>');
+  }
   if (payload.template === 'front/about.html') {
     html = html.replace('</body>', `<style>
       .about-content .about-row:not(:has(.gallery-image)) > .col-lg-6:has(.image-gallery-container){display:none}
