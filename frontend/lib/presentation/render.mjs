@@ -7,11 +7,16 @@
 import trees from '../../ui/presentation.json' with { type: 'json' };
 import { homeHero } from './home-hero.mjs';
 import { homeAbout } from './home-about.mjs';
+import { serviceCards } from './services.mjs';
 
 const heroTemplate = 'front/landing_page/01hero_carousel.html';
 const heroNodes = homeHero(trees[heroTemplate]);
 const aboutTemplate = 'front/landing_page/02stats_section.html';
 const aboutNodes = homeAbout(trees[aboutTemplate]);
+const serviceOverrides = {
+  'front/landing_page/03our_services.html': serviceCards(),
+  'front/services_page/02cards.html': serviceCards('services', false),
+};
 
 const safe = html => ({ $safe: String(html ?? '') });
 const isSafe = value => value && typeof value === 'object' && '$safe' in value;
@@ -107,6 +112,7 @@ export function evaluate(expr, ctx) {
       case 'first': value = items(value)[0]; break;
       case 'lower': value = label(value).toLowerCase(); break;
       case 'upper': value = label(value).toUpperCase(); break;
+      case 'urlencode': value = encodeURIComponent(label(value)); break;
       case 'formalize': value = label(value).replaceAll('_', ' ').replace(/^./, ch => ch.toUpperCase()); break;
       case 'truncatechars': { const string = label(value); value = string.length > Number(arg) ? string.slice(0, Math.max(0, Number(arg)-1))+'…' : string; break; }
       case 'date': value = djangoDate(value, arg); break;
@@ -157,7 +163,7 @@ export function renderPresentation(payload) {
   const state = { cycle: 0 };
   const t = value => translations[value] ?? value;
   function renderTemplate(name, ctx, overrides = {}) {
-    const nodes = name === heroTemplate ? heroNodes : name === aboutTemplate ? aboutNodes : trees[name];
+    const nodes = serviceOverrides[name] || (name === heroTemplate ? heroNodes : name === aboutTemplate ? aboutNodes : trees[name]);
     if (!nodes) throw new Error(`Unknown presentation: ${name}`);
     const parent = nodes.find(node => node.op === 'extends');
     if (parent) {

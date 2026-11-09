@@ -182,6 +182,13 @@ class PresentationTests(TestCase):
         self.assertEqual(section.select_one('.about-title').get_text(), 'About our company')
         self.assertIn('Our next chapter.', section.get_text())
         self.assertEqual(section.select_one('.feature-title').get_text(), 'Custom engineering')
+        services = page.select_one('.managed-services')
+        self.assertEqual(services.select_one('h3').get_text(), 'Custom engineering')
+        self.assertIn('Services from the admin portal.', services.get_text())
+        self.assertIn('subject=Custom%20engineering', services.select_one('.managed-service-link')['href'])
+        self.assertNotIn('Quantum Solutions', page.get_text())
+        service_page = BeautifulSoup(self.render_frontend(self.payload('/about-us/services/')), 'html.parser')
+        self.assertEqual(service_page.select_one('.managed-service h3').get_text(), 'Custom engineering')
         self.assertNotIn('MelkaTech derives', section.get_text())
         self.client.force_login(self.staff)
         response = self.client.post(f'/api/frontend/admin/About/{about_id}/', {
@@ -189,12 +196,24 @@ class PresentationTests(TestCase):
             'mission_en': 'Mission', 'vision_en': 'Vision', 'values_en': 'Values',
         })
         self.assertEqual(response.status_code, 200, response.content)
+        response = self.client.post(f'/api/frontend/admin/Service/{service_id}/', {
+            'title_en': 'Updated engineering', 'content_en': 'Updated service description.',
+        })
+        self.assertEqual(response.status_code, 200, response.content)
+        self.client.logout()
+        for path in ['/', '/about-us/services/']:
+            services = BeautifulSoup(self.render_frontend(self.payload(path)), 'html.parser').select_one('.managed-services')
+            self.assertEqual(services.select_one('h3').get_text(), 'Updated engineering')
+            self.assertIn('Updated service description.', services.get_text())
+        self.client.force_login(self.staff)
         self.assertEqual(self.client.delete(f'/api/frontend/admin/Service/{service_id}/').status_code, 200)
         self.client.logout()
         section = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser').select_one('.about-section')
         self.assertEqual(section.select_one('.about-title').get_text(), 'Updated company')
         self.assertIn('Updated story', section.get_text())
         self.assertIsNone(section.select_one('.feature-item'))
+        page = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser')
+        self.assertIsNone(page.select_one('.managed-services'))
 
     def test_about_can_be_created_and_edited_without_images(self):
         self.client.force_login(self.staff)
