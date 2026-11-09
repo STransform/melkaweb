@@ -71,13 +71,20 @@ def compile_source(source):
 
 def main():
     templates = {}
+    found_any = False
     for folder in [ROOT / 'templates', *sorted(ROOT.glob('*/templates'))]:
+        if not folder.exists():
+            continue
+        found_any = True
         for source in sorted(folder.rglob('*.html')):
             name = source.relative_to(folder).as_posix()
             if name in templates:
                 raise ValueError(f'Duplicate presentation name: {name}')
             templates[name] = compile_source(source.read_text())
     out = ROOT / 'frontend/ui/presentation.json'
+    if not found_any or not templates:
+        print(f'Legacy templates have been retired. Retaining existing {out.relative_to(ROOT)}')
+        return
     out.write_text(json.dumps(templates, ensure_ascii=False, separators=(',', ':')) + '\n')
     print(f'Compiled {len(templates)} presentations into {out.relative_to(ROOT)}')
 

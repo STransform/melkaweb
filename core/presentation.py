@@ -21,7 +21,9 @@ from django.forms.boundfield import BoundField
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import render as django_render
+from django.template import Origin
 from django.template.context import make_context
+from django.template.loaders.base import Loader as BaseLoader
 from django.urls import URLPattern, URLResolver, get_resolver, reverse
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.functional import Promise
@@ -35,6 +37,17 @@ PRIVATE_FIELDS = {'password', 'session_data', 'email_for_contact_us'}
 @lru_cache(maxsize=1)
 def presentations():
     return json.loads((Path(settings.BASE_DIR) / 'frontend/ui/presentation.json').read_text())
+
+
+class PresentationTemplateLoader(BaseLoader):
+    """Virtual template loader so Django/Django-CMS template resolution succeeds without legacy templates on disk."""
+    def get_template_sources(self, template_name):
+        if template_name in presentations():
+            yield Origin(name=template_name, template_name=template_name, loader=self)
+
+    def get_contents(self, origin):
+        placeholders = "{% placeholder 'feature' %}{% placeholder 'content' %}{% placeholder 'splashbox' %}" if 'cms_base' in origin.template_name else ""
+        return f"{{% load cms_tags sekizai_tags %}}{{% block title %}}{{% endblock %}}{{% block css %}}{{% endblock %}}{{% block content %}}{{% endblock %}}{{% block cms_extended_content %}}{{% endblock %}}{{% block js %}}{{% endblock %}}{placeholders}"
 
 
 def tokens(value):

@@ -49,7 +49,9 @@ export default function ModelForm({
     });
     const payload = await response.json();
     if (response.ok) {
-      if (single) {
+      if (single && payload.id) {
+        router.push(`/dashboard/change/${model}/${payload.id}/`);
+      } else if (single) {
         router.push('/dashboard/');
       } else {
         router.push(`/dashboard/list/${model}/`);

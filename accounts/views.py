@@ -60,6 +60,21 @@ class Login(View):
         user = authenticate(request, email=identifier, username=identifier, password=password)
         
         # account validation
+        if user is None:
+            from django.contrib.auth import get_user_model
+            from django.db.models import Q
+            UserModel = get_user_model()
+            concrete_fields = {field.name for field in UserModel._meta.concrete_fields}
+            lookup = Q()
+            if UserModel.USERNAME_FIELD in concrete_fields:
+                lookup |= Q(**{f"{UserModel.USERNAME_FIELD}__iexact": identifier})
+            if "email" in concrete_fields:
+                lookup |= Q(email__iexact=identifier)
+            candidate = UserModel.objects.filter(lookup).first() if lookup else None
+            if candidate and candidate.check_password(password) and not candidate.is_active:
+                messages.warning(request, "Your account is inactive. Please contact an administrator.")
+                return render(request, 'login.html', {'form': form})
+
         if user is not None:
             if not user.is_active:
                 messages.warning(request, "Your account is inactive. Please contact an administrator.")

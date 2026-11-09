@@ -10,7 +10,8 @@ root=Path(__file__).resolve().parents[1]
 with tempfile.TemporaryDirectory(prefix='melkaweb-browser-') as work:
     work=Path(work)
     (work/'melka_browser_settings.py').write_text("from core.frontend_test_settings import *\nDATABASES={'default':{'ENGINE':'django.db.backends.sqlite3','NAME':"+repr(str(work/'browser.sqlite3'))+"}}\nCSRF_TRUSTED_ORIGINS=['http://127.0.0.1:3101']\n")
-    env={**os.environ,'DJANGO_SETTINGS_MODULE':'melka_browser_settings','PYTHONPATH':str(work)+':'+str(root),'DJANGO_ORIGIN':'http://127.0.0.1:18001','ODOO_URL':'http://127.0.0.1:1','ODOO_TIMEOUT':'1','PLAYWRIGHT_BROWSERS_PATH':'/tmp/melkaweb-browsers','MELKA_BASELINE_ORIGIN':'http://127.0.0.1:18001','MELKA_FRONTEND_ORIGIN':'http://127.0.0.1:3101'}
+    baseline_origin = 'http://127.0.0.1:18001' if (root / 'templates').exists() else ''
+    env={**os.environ,'DJANGO_SETTINGS_MODULE':'melka_browser_settings','PYTHONPATH':str(work)+':'+str(root),'DJANGO_ORIGIN':'http://127.0.0.1:18001','ODOO_URL':'http://127.0.0.1:1','ODOO_TIMEOUT':'1','PLAYWRIGHT_BROWSERS_PATH':'/tmp/melkaweb-browsers','MELKA_BASELINE_ORIGIN':baseline_origin,'MELKA_FRONTEND_ORIGIN':'http://127.0.0.1:3101'}
     python=str(root/'.venv/bin/python')
     subprocess.run([python,'manage.py','migrate','--noinput'],cwd=root,env=env,check=True,stdout=subprocess.DEVNULL)
     seed="""

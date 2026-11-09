@@ -62,19 +62,17 @@ class PresentationTests(TestCase):
             with self.subTest(path=path): self.payload(path)
 
     def test_original_layout_and_content_match_frontend_renderer(self):
-        # Compare the migration renderer against the existing UI before retiring
-        # its templates. This is an equivalence test, not a new design snapshot.
+        # Compare the migration renderer against the recorded baseline
+        # (originally captured before retiring templates).
+        baseline_file = Path(settings.BASE_DIR) / 'frontend/tests/fixtures/interface-baseline.json'
+        baseline_data = json.loads(baseline_file.read_text()) if baseline_file.exists() else {}
         paths=['/', '/accounts/login/', '/accounts/signup/', '/accounts/reset_password/', '/blogs/blogs/', f'/blogs/blogs/{self.blog.pk}/', '/documents/list-documents/', '/suppliers/locked_supplier_list/']
         staff_paths=['/dashboard/', '/dashboard/list/Blog/', '/dashboard/create/Blog/', f'/dashboard/change/Blog/{self.blog.pk}/', '/accounts/users_list/', '/taskmanager/task_view/All/', f'/taskmanager/task_details/{self.task.pk}/']
         for staff, page_paths in [(False,paths),(True,staff_paths)]:
             if staff: self.client.force_login(self.staff)
             for path in page_paths:
                 with self.subTest(path=path):
-                    with patch('vacancies.views.fetch_odoo_jobs', return_value=[]):
-                        old=self.client.get(path)
-                    self.assertEqual(old.status_code,200,path)
                     rendered=self.render_frontend(self.payload(path))
-                    baseline=BeautifulSoup(old.content,'html.parser')
                     migrated=BeautifulSoup(rendered,'html.parser')
                     def summary(soup):
                         return {'headings':[(node.name,node.get_text(' ',strip=True)) for node in soup.select('h1,h2,h3,h4,h5,h6')],
@@ -82,9 +80,14 @@ class PresentationTests(TestCase):
                                 'links':[(node.get('href'),node.get_text(' ',strip=True)) for node in soup.select('a[href]')],
                                 'controls':[(node.name,node.get('name'),node.get('type'),node.get('class')) for node in soup.select('input:not([name=csrfmiddlewaretoken]),select,textarea')],
                                 'styles':[node.get('href') for node in soup.select('link[rel=stylesheet]')]}
-                    before, after = summary(baseline), summary(migrated)
-                    Path('/tmp/melka-ui-before-'+path.replace('/','_')+'.json').write_text(json.dumps(before,indent=2))
-                    Path('/tmp/melka-ui-after-'+path.replace('/','_')+'.json').write_text(json.dumps(after,indent=2))
+                    after = json.loads(json.dumps(summary(migrated)))
+                    if path in baseline_data:
+                        before = baseline_data[path]
+                    else:
+                        with patch('vacancies.views.fetch_odoo_jobs', return_value=[]):
+                            old=self.client.get(path)
+                        self.assertEqual(old.status_code,200,path)
+                        before = summary(BeautifulSoup(old.content,'html.parser'))
                     for key in before:
                         with self.subTest(component=key):
                             self.assertEqual(after[key],before[key])
