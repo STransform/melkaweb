@@ -7,16 +7,19 @@ type Props = {
 };
 
 type SchemaResponse = {
-  model: string;
-  title: string;
+  model?: string;
+  title?: string;
+  fields?: FieldDefinition[];
   formFields?: FieldDefinition[];
   csrfToken?: string;
+  redirect?: string;
+  single?: boolean;
 };
 
 async function getSchema(model: string): Promise<SchemaResponse | null> {
   try {
     const incoming = await headers();
-    const res = await fetch(`${process.env.DJANGO_ORIGIN || 'http://127.0.0.1:8000'}/api/frontend/admin/${model}/`, {
+    const res = await fetch(`${process.env.DJANGO_ORIGIN || 'http://127.0.0.1:8000'}/api/frontend/admin/${model}/?action=create`, {
       cache: 'no-store',
       headers: {
         cookie: incoming.get('cookie') || '',
@@ -38,12 +41,19 @@ export default async function CreatePage({ params }: Props) {
   const data = await getSchema(model);
   if (!data) notFound();
 
+  if (data.redirect) {
+    redirect(data.redirect);
+  }
+
+  const fields = data.formFields || data.fields || [];
+
   return (
     <ModelForm
-      model={data.model}
-      title={data.title}
-      fields={data.formFields || []}
+      model={data.model || model}
+      title={data.title || model}
+      fields={fields}
       csrfToken={data.csrfToken}
+      single={data.single}
     />
   );
 }

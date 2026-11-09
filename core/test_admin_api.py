@@ -75,6 +75,77 @@ class AdminApiTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertFalse(CompanyValues.objects.filter(pk=pk).exists())
 
+    def test_ceo_message_single_model_lifecycle(self):
+        from dashboard.models import DirectorateMessage
+        from django.core.files.uploadedfile import SimpleUploadedFile
+
+        # 1. When no DirectorateMessage exists, list view redirects to create view
+        res = self.client.get('/api/frontend/admin/DirectorateMessage/')
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data.get('single'))
+        self.assertEqual(data.get('redirect'), '/dashboard/create/DirectorateMessage/')
+
+        # 2. When creating, ?action=create returns the full form fields schema
+        res = self.client.get('/api/frontend/admin/DirectorateMessage/?action=create')
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data.get('single'))
+        self.assertIn('fields', data)
+        self.assertTrue(len(data['fields']) > 0)
+        field_names = [f['name'] for f in data['fields']]
+        self.assertIn('title_en', field_names)
+        self.assertIn('content_en', field_names)
+        self.assertIn('image', field_names)
+
+        # 3. POST to create DirectorateMessage
+        from io import BytesIO
+        from PIL import Image
+        img = BytesIO()
+        Image.new('RGB', (100, 100), color='blue').save(img, format='JPEG')
+        image = SimpleUploadedFile('ceo.jpg', img.getvalue(), content_type='image/jpeg')
+        res = self.client.post('/api/frontend/admin/DirectorateMessage/', {
+            'title_en': 'CEO Message from Director',
+            'content_en': 'Welcome to our platform.',
+            'image': image,
+        })
+        if res.status_code != 201:
+            print('DEBUG CREATE ERRORS:', res.json().get('errors'))
+        self.assertEqual(res.status_code, 201)
+        dm = DirectorateMessage.objects.first()
+        self.assertIsNotNone(dm)
+        self.assertEqual(dm.title_en, 'CEO Message from Director')
+
+        # 4. Once it exists, list view redirects to change view
+        res = self.client.get('/api/frontend/admin/DirectorateMessage/')
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data.get('single'))
+        self.assertEqual(data.get('redirect'), f'/dashboard/change/DirectorateMessage/{dm.pk}/')
+
+        # 5. Accessing create view when already exists also redirects to change view
+        res = self.client.get('/api/frontend/admin/DirectorateMessage/?action=create')
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertEqual(data.get('redirect'), f'/dashboard/change/DirectorateMessage/{dm.pk}/')
+
+        # 6. Detail GET view returns prefilled fields
+        res = self.client.get(f'/api/frontend/admin/DirectorateMessage/{dm.pk}/')
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data.get('single'))
+        title_field = next(f for f in data['fields'] if f['name'] == 'title_en')
+        self.assertEqual(title_field['value'], 'CEO Message from Director')
+
+        # 7. Detail POST view updates the instance
+        res = self.client.post(f'/api/frontend/admin/DirectorateMessage/{dm.pk}/', {
+            'title_en': 'Updated CEO Message',
+            'content_en': 'Updated platform content.',
+        })
+        self.assertEqual(res.status_code, 200)
+        dm.refresh_from_db()
+        self.assertEqual(dm.title_en, 'Updated CEO Message')
+
     def test_next_auth_api_uses_django_session_and_form_validation(self):
         from django.contrib.auth import get_user_model
         client = Client(enforce_csrf_checks=True)
@@ -96,5 +167,7 @@ class AdminApiTests(TestCase):
         }, HTTP_X_CSRFTOKEN=token)
         self.assertEqual(response.status_code, 201)
         self.assertTrue(get_user_model().objects.filter(email='new@example.com').exists())
+
+
 
 

@@ -7,11 +7,14 @@ type Props = {
 };
 
 type ItemResponse = {
-  model: string;
-  title: string;
-  id: number;
-  fields: FieldDefinition[];
+  model?: string;
+  title?: string;
+  id?: number;
+  fields?: FieldDefinition[];
+  formFields?: FieldDefinition[];
   csrfToken?: string;
+  redirect?: string;
+  single?: boolean;
 };
 
 async function getItemData(model: string, id: string): Promise<ItemResponse | null> {
@@ -39,13 +42,20 @@ export default async function ChangePage({ params }: Props) {
   const data = await getItemData(model, id);
   if (!data) notFound();
 
+  if (data.redirect) {
+    redirect(data.redirect);
+  }
+
+  const fields = data.fields || data.formFields || [];
+
   return (
     <ModelForm
-      model={data.model}
-      title={data.title}
-      id={data.id}
-      fields={data.fields}
+      model={data.model || model}
+      title={data.title || model}
+      id={data.id ?? Number(id)}
+      fields={fields}
       csrfToken={data.csrfToken}
+      single={data.single}
     />
   );
 }

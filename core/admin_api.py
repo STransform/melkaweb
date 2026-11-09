@@ -44,8 +44,8 @@ def _field(bound):
     return {
         'name': bound.html_name, 'id': bound.auto_id, 'label': str(bound.label),
         'helpText': str(bound.help_text), 'required': field.required,
-        'type': getattr(widget, 'input_type', 'text'),
-        'textarea': widget.__class__.__name__ == 'Textarea',
+        'type': getattr(widget, 'input_type', 'textarea' if isinstance(widget, forms.Textarea) else 'text'),
+        'textarea': isinstance(widget, forms.Textarea) or widget.__class__.__name__ == 'Textarea',
         'multiple': bool(getattr(widget, 'allow_multiple_selected', False)),
         'disabled': field.disabled,
         'choices': [[str(key), str(label)] for key, label in getattr(field, 'choices', [])],
@@ -81,41 +81,82 @@ def model(request, model_name, pk=None):
     if error:
         return error
     Model, Form = config['model'], config['form']
+    is_create = request.GET.get('action') == 'create' or request.GET.get('schema') == 'create'
+
     if request.method == 'GET' and pk is None:
         if config['single']:
             obj = Model.objects.first()
+            if is_create:
+                if obj:
+                    return JsonResponse({
+                        'single': True,
+                        'redirect': f'/dashboard/change/{model_name}/{obj.pk}/'
+                    })
+                form = Form()
+                fields = [_field(field) for field in form]
+                return JsonResponse({
+                    'model': model_name,
+                    'title': str(config['model_name']).capitalize(),
+                    'fields': fields,
+                    'formFields': fields,
+                    'csrfToken': get_token(request),
+                    'single': True,
+                })
             return JsonResponse({
                 'single': True,
-                'redirect': f'/dashboard/{"change" if obj else "create"}/{model_name}/{obj.pk if obj else ""}/'
+                'redirect': f'/dashboard/change/{model_name}/{obj.pk}/' if obj else f'/dashboard/create/{model_name}/'
             })
-        fields = list(getattr(Model, 'list_fields', []))
         form = Form()
+        form_fields = [_field(field) for field in form]
+        fields = list(getattr(Model, 'list_fields', []))
+        if is_create:
+            return JsonResponse({
+                'model': model_name,
+                'title': str(config['model_name']).capitalize(),
+                'fields': form_fields,
+                'formFields': form_fields,
+                'csrfToken': get_token(request),
+                'single': False,
+            })
         return JsonResponse({
             'model': model_name,
             'title': str(config['model_name']).capitalize(),
             'fields': fields or ['__str__'],
-            'formFields': [_field(field) for field in form],
+            'formFields': form_fields,
             'csrfToken': get_token(request),
-            'items': [_object(obj, fields) for obj in Model.objects.all()]
+            'items': [_object(obj, fields) for obj in Model.objects.all()],
+            'single': False,
         })
     if request.method == 'GET':
         obj = Model.objects.get(pk=pk)
         form = Form(instance=obj)
-        return JsonResponse({'model': model_name, 'title': str(config['model_name']).capitalize(),
-                             'id': obj.pk, 'fields': [_field(field) for field in form],
-                             'csrfToken': get_token(request)})
+        fields = [_field(field) for field in form]
+        return JsonResponse({
+            'model': model_name,
+            'title': str(config['model_name']).capitalize(),
+            'id': obj.pk,
+            'fields': fields,
+            'formFields': fields,
+            'csrfToken': get_token(request),
+            'single': config['single'],
+        })
     if request.method == 'DELETE':
         Model.objects.get(pk=pk).delete()
         return JsonResponse({'message': 'Deleted.'})
-    instance = Model.objects.get(pk=pk) if pk else None
+    instance = None
+    if pk:
+        instance = Model.objects.get(pk=pk)
+    elif config['single']:
+        instance = Model.objects.first()
     form = Form(request.POST, request.FILES, instance=instance)
     if not form.is_valid():
         return JsonResponse({'errors': form.errors, 'fields': [_field(field) for field in form]}, status=400)
     obj = form.save(commit=False)
     if not instance and hasattr(Model, 'created_by'):
         obj.created_by = request.user
-    obj.save(); form.save_m2m()
-    return JsonResponse({'id': obj.pk, 'message': 'Updated.' if instance else 'Created.'}, status=200 if instance else 201)
+    obj.save()
+    form.save_m2m()
+    return JsonResponse({'id': obj.pk, 'message': 'Updated.' if instance else 'Created.', 'single': config['single']}, status=200 if instance else 201)
 
 
 @login_required
@@ -156,4 +197,3 @@ def stats(request):
         },
         'messages': list(ContactUs.objects.values('id', 'full_name', 'email', 'phone', 'subject', 'sent_date')[:5]),
     })
-

@@ -42,6 +42,29 @@ try {
     const edit=page.locator('a[href*="/dashboard/change/CompanyValues/"]').last();
     await edit.click();
     assert.equal(await page.locator('[name=title_en]').inputValue(),`${version} browser value`);
+
+    // CEO Message (DirectorateMessage) - verify form fields render and can be created & edited
+    await page.goto(origin+'/dashboard/create/DirectorateMessage/',{waitUntil:'load'});
+    assert.ok(await page.locator('[name=title_en]').isVisible(), `${version} CEO Message title field visible`);
+    assert.ok(await page.locator('[name=content_en]').isVisible(), `${version} CEO Message content field visible`);
+    assert.ok(await page.locator('[name=image]').isVisible(), `${version} CEO Message image field visible`);
+    await page.locator('[name=title_en]').fill(`${version} CEO Message`);
+    await page.locator('[name=content_en]').fill('Welcome to MelkaTech - empowering innovation.');
+    await page.locator('[name=image]').setInputFiles({
+      name: 'ceo.png',
+      mimeType: 'image/png',
+      buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64'),
+    });
+    await Promise.all([
+      page.waitForURL('**/dashboard/**', { timeout: 30000 }),
+      page.locator('form:has([name=title_en]) button[type=submit]').click(),
+    ]);
+    // After creating a single model, going to list redirects to change
+    await page.goto(origin+'/dashboard/list/DirectorateMessage/',{waitUntil:'load'});
+    await page.waitForURL('**/dashboard/change/DirectorateMessage/**', { timeout: 30000 });
+    assert.equal(await page.locator('[name=title_en]').inputValue(), `${version} CEO Message`);
+
+
     results[version].errors=errors;
     await context.close();
     process.stdout.write(`PASS ${version}: desktop/mobile UI, navigation, login, dashboard and CRUD\n`);
