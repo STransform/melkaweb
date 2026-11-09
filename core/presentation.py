@@ -47,7 +47,15 @@ class PresentationTemplateLoader(BaseLoader):
 
     def get_contents(self, origin):
         placeholders = "{% placeholder 'feature' %}{% placeholder 'content' %}{% placeholder 'splashbox' %}" if 'cms_base' in origin.template_name else ""
-        return f"{{% load cms_tags sekizai_tags %}}{{% block title %}}{{% endblock %}}{{% block css %}}{{% endblock %}}{{% block content %}}{{% endblock %}}{{% block cms_extended_content %}}{{% endblock %}}{{% block js %}}{{% endblock %}}{placeholders}"
+        return (
+            "{% load cms_tags sekizai_tags %}"
+            "{% for message in messages %}{{ message }} {{ message.tags }}{% endfor %}"
+            "{% if form.errors %}{{ form.errors }}{% endif %}"
+            "{% block title %}{% endblock %}{% block css %}{% endblock %}"
+            "{% block content %}{% endblock %}{% block cms_extended_content %}{% endblock %}"
+            "{% block js %}{% endblock %}"
+            f"{placeholders}"
+        )
 
 
 def tokens(value):
