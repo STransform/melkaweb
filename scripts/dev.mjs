@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const backendPort = process.env.DJANGO_PORT || '8000';
-const frontendPort = process.env.PORT || '3000';
+const frontendPort = process.env.PORT || '8001';
 const python = process.env.PYTHON || (existsSync(`${root}.venv/bin/python`) ? `${root}.venv/bin/python` : 'python3');
 const next = `${root}frontend/node_modules/next/dist/bin/next`;
 if (!existsSync(next)) {

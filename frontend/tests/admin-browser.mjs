@@ -1,0 +1,32 @@
+import { chromium } from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser = await chromium.launch({ executablePath: process.env.MELKA_BROWSER_EXECUTABLE || undefined, headless: true, args: ['--no-sandbox'] });
+try {
+  const page = await browser.newPage({ viewport: { width: 1917, height: 960 } });
+  page.setDefaultTimeout(8000);
+  await page.route(/https:\/\/(fonts.googleapis.com|fonts.gstatic.com)\//, route => route.abort());
+  const origin = process.env.MELKA_FRONTEND_ORIGIN;
+  await page.goto(origin + '/accounts/login/');
+  await page.locator('[name=email]').fill('browser@example.com');
+  await page.locator('[name=password]').fill('Browser-example-password-42');
+  await page.locator('button[type=submit]').click();
+  await page.waitForURL('**/dashboard/');
+  await page.locator('.admin-toolbar').waitFor();
+  await page.waitForFunction(() => document.documentElement.getAttribute('data-menu-styles') === 'dark');
+  await page.waitForFunction(() => getComputedStyle(document.querySelector('.app-sidebar')).position === 'fixed');
+  const background = await page.locator('.app-sidebar').evaluate(node => getComputedStyle(node).backgroundColor);
+  assert.notEqual(background, 'rgb(255, 255, 255)');
+  assert.equal((await page.locator('.admin-profile').innerText()).replace(/\s+/g, ' ').trim(), 'Browser admin');
+  await page.screenshot({ path: '/tmp/melka-admin-dashboard.png', fullPage: true });
+  await page.locator('button.side-menu__item').filter({ has: page.locator('.side-menu__label', { hasText: /^About Us$/ }) }).click();
+  await page.getByRole('link', { name: 'Services', exact: true }).click();
+  await page.waitForURL('**/dashboard/list/Service/');
+  await page.screenshot({ path: '/tmp/melka-admin-services.png', fullPage: true });
+  assert.ok(await page.locator('.side-menu__item.active').count());
+  await page.goto(origin + '/dashboard/');
+  await page.getByText('Latest Messages From Visitor', { exact: true }).waitFor();
+  await page.screenshot({ path: '/tmp/melka-admin-dashboard.png', fullPage: true });
+  await page.getByRole('button', { name: 'Toggle sidebar' }).click();
+  assert.ok(await page.locator('.sidebar-collapsed').count());
+  console.log('PASS admin login, dark sidebar, nested navigation, active route, dashboard content and sidebar toggle');
+} finally { await browser.close(); }

@@ -38,7 +38,7 @@ Settings.objects.create(title='Melka tech',working_hours='9–5')
                     if response.status==200:break
             except OSError:time.sleep(.5)
         else:raise RuntimeError('Preview servers did not start')
-        subprocess.run(['node','tests/browser.mjs'],cwd=root/'frontend',env=env,check=True)
+        subprocess.run(['node',env.get('MELKA_BROWSER_TEST', 'tests/browser.mjs')],cwd=root/'frontend',env=env,check=True)
     finally:
         for process in processes:
             if process.poll() is None:process.terminate()

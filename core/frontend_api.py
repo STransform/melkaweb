@@ -18,6 +18,11 @@ from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
+from core.admin_api import model as admin_model, stats as admin_stats
+from core.auth_api import login_view as auth_login, logout_view as auth_logout, signup as auth_signup
+from core.auth_api import password_reset, password_confirm
+from core.account_api import profile as account_profile, password as account_password, users as account_users, delete_user
+from core.task_api import tasks as task_list, detail as task_detail, comment as task_comment
 
 from about_us import models as about
 from blogs.models import Blog, BlogComment
@@ -240,4 +245,14 @@ urlpatterns = [
     path('site/', site), path('home/', home), path('search/', search),
     path('csrf/', csrf), path('contact/', contact), path('blogs/<int:pk>/comments/', comment),
     path('content/<str:name>/', resource), path('content/<str:name>/<int:pk>/', resource),
+    path('admin-stats/', admin_stats),
+    path('admin/<str:model_name>/', admin_model),
+    path('admin/<str:model_name>/<int:pk>/', admin_model),
+    path('auth/login/', auth_login), path('auth/logout/', auth_logout), path('auth/signup/', auth_signup),
+    path('auth/password-reset/', password_reset),
+    path('auth/password-reset/<str:uidb64>/<str:token>/', password_confirm),
+    path('accounts/users/', account_users), path('accounts/users/<int:pk>/', delete_user),
+    path('accounts/profile/<int:pk>/', account_profile), path('accounts/password/<int:pk>/', account_password),
+    path('tasks/<str:scope>/', task_list), path('tasks/detail/<int:pk>/', task_detail),
+    path('tasks/<int:pk>/comments/', task_comment), path('tasks/<int:pk>/comments/<int:parent>/', task_comment),
 ]

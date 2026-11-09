@@ -1,0 +1,35 @@
+/* Layout offsets previously supplied by the Django CMS toolbar and theme JS. */
+.legacy-admin { --admin-toolbar-height: 54px; min-height: 100vh; }
+.legacy-admin .admin-toolbar { position: fixed; inset: 0 0 auto; height: var(--admin-toolbar-height); z-index: 1050; background: #fff; color: #000; border-bottom: 1px solid #d8d8d8; box-shadow: 0 2px 4px #0001; display: flex; align-items: center; gap: 24px; padding: 0 3.8% 0 2.6%; font: 16px Arial, sans-serif; }
+.admin-toolbar > a { font-weight: 700; }
+.admin-toolbar details, .admin-profile { position: relative; }
+.admin-toolbar summary, .admin-profile summary { list-style: none; cursor: pointer; }
+.admin-toolbar summary::-webkit-details-marker, .admin-profile summary::-webkit-details-marker { display: none; }
+.admin-toolbar button { border: 0; background: transparent; color: inherit; }
+.admin-toolbar-menu { position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; min-width: 180px; padding: 8px; box-shadow: 0 4px 16px #0002; }
+.admin-toolbar-menu a { display: block; padding: 8px; }
+.legacy-admin .app-sidebar { top: var(--admin-toolbar-height); height: calc(100vh - var(--admin-toolbar-height)); background: #111c43; border-inline-end-color: #ffffff1a; }
+.legacy-admin .main-sidebar { height: 100%; padding-top: 16px; overflow-y: auto; }
+.legacy-admin .app-header { top: var(--admin-toolbar-height); position: fixed; }
+.legacy-admin .app-content { margin-block-start: calc(var(--admin-toolbar-height) + 4.5rem); min-height: calc(100vh - 180px); }
+.legacy-admin .main-menu, .legacy-admin .admin-menu-section > ul { padding: 0; margin: 0; list-style: none; }
+.legacy-admin button.side-menu__item { width: 100%; border: 0; background: transparent; font: inherit; text-align: start; }
+.legacy-admin .side-menu__item { color: #a3aed1; }
+.legacy-admin .side-menu__item.active { background: #ffffff0d; color: #fff; }
+.legacy-admin .slide__category { color: #ffffff4d; }
+.legacy-admin .side-menu__angle { margin-inline-start: auto; }
+.legacy-admin .admin-profile .dropdown-menu { right: 0; top: 100%; }
+.legacy-admin .custom-alert-icon { margin: 16px 8px 0; border: 0; border-inline-start: 5px solid #26bf94; background: #fff; color: #8c9097; }
+.legacy-admin .footer { margin-inline-start: 15rem; }
+.legacy-admin .side-menu__item { text-decoration: none; }
+.legacy-admin .category-link { text-decoration: none; }
+.legacy-admin .sidemenu-toggle { border: 0; background: transparent; }
+.legacy-admin .main-sidebar { padding-top: 0; }
+.legacy-admin .category-link { border-color: #f0f0f0; border-radius: 8px; padding-block: 24px; }
+.legacy-admin .category-link i.category-svg { display: block; width: auto; height: 48px; line-height: 48px; margin: 0 auto 8px; }
+.legacy-admin .category-link.primary i.category-svg { color: #845adf; }
+.legacy-admin .category-link.secondary i.category-svg { color: #23b7e5; }
+.legacy-admin .category-link.warning i.category-svg { color: #f5b849; }
+.legacy-admin .category-link.success i.category-svg { color: #26bf94; }
+@media (min-width: 992px) { .legacy-admin.sidebar-collapsed .app-sidebar { transform: translateX(-100%); } .legacy-admin.sidebar-collapsed .app-header, .legacy-admin.sidebar-collapsed .app-content, .legacy-admin.sidebar-collapsed .footer { margin-inline-start: 0; } }
+@media (max-width: 991px) { .legacy-admin .app-sidebar { transform: translateX(-100%); } .legacy-admin.sidebar-collapsed .app-sidebar { transform: translateX(0); } .legacy-admin .footer { margin-inline-start: 0; } }

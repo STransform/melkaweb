@@ -18,11 +18,11 @@ npm --prefix frontend ci
 npm run dev
 ```
 
-Open http://127.0.0.1:3000/. Both processes stop on Ctrl+C. If the default ports
+Open http://127.0.0.1:8001/. Both processes stop on Ctrl+C. If the default ports
 are occupied, stop your old servers or choose ports explicitly:
 
 ```bash
-PORT=3100 DJANGO_PORT=18000 npm run dev
+PORT=8001 DJANGO_PORT=8000 npm run dev
 ```
 
 To run the processes separately:
@@ -44,30 +44,32 @@ Copy `frontend/.env.example` to `frontend/.env.local` to customize it. The root
 
 ## Migration coverage
 
-React components now render the homepage, about pages, services, technology,
-infrastructure, innovation, company values, vision/mission, structure, partners,
-testimonials, training, news and blog lists/details, documents, image/video
-galleries, events, bids, search, and contact. Database content, files, page
-visibility settings, pagination, approved blog comments, and contact submissions
-are connected to Django. Contact notifications use the configured SMTP service.
+The project is an in-progress migration. Next.js is the browser entry point and
+Django remains the backend; it is not yet a component-for-component React
+replacement of every legacy screen.
 
-**Still rendered by Django:** account login/signup/password reset/profile,
-staff dashboards and task management, Django CMS pages/editing, supplier lookup,
-and careers/application forms with their Odoo integration. Next.js forwards
-these original routes, requests, cookies, redirects, and multipart uploads to
-Django. They have not been converted to React. Retaining the original workflow
-is a compatibility step, not a claim that the whole frontend is migrated.
+1. **Public Portal**:
+   - Public URLs are served by the Next.js catch-all route, which currently
+     evaluates a compiled representation of the existing Django templates.
+   - The visual structure and workflows are preserved, but these pages still
+     depend on the legacy template inventory and are not independent React
+     components yet.
 
-The original Django templates remain available for rollback. Running only
-Django still serves the original site. A full React conversion of the remaining
-workflows requires dedicated session/authentication, permission-aware CRUD,
-CMS rendering, and Odoo application API work and integration tests.
+2. **Administration & Staff Portal**:
+   - Real Next.js screens exist for login and the reusable dashboard list,
+     create, and edit routes. They use the permission-aware `/api/frontend/admin/`
+     API and retain Django's sessions, CSRF protection, validation, uploads, and
+     model permissions.
+   - Account registration/reset/profile, task management, suppliers, careers,
+     CMS editing, and remaining staff screens still require dedicated Next.js
+     components before legacy template support can be removed.
 
-Unused templates, theme demo/example skins, unused RTL stylesheets, and an
-unreferenced Bootstrap copy have been removed. Shared `templates/front/base.html`,
-the active public templates used by CMS, account/staff templates, and their
-Bootstrap/theme assets remain dependencies of the Django workflows above.
-Do not remove these directories wholesale while those workflows use Django.
+3. **Backend responsibilities**:
+   - Django's models, database (MySQL in production / SQLite in tests), ORM, permissions, auth sessions, file storage, and business logic remain untouched and unmodified.
+   - The presentation bridge exports structured context for unresolved routes.
+     Direct Django requests still serve the original templates if accessed
+     directly without Next.js.
+   - Allowlisted headless JSON APIs exist under `/api/frontend/` for public resources (`core/frontend_api.py`) and staff model operations (`core/admin_api.py`).
 
 ## Routing and data
 
@@ -95,11 +97,12 @@ This change does not deploy either service or change hosting.
 From the repository root:
 
 ```bash
-python manage.py check
-python manage.py test core.test_frontend_api --settings=core.frontend_test_settings
+python manage.py check --settings=core.frontend_test_settings
+python manage.py test core.test_frontend_api core.test_presentation core.test_admin_api --settings=core.frontend_test_settings
 npm --prefix frontend test
 npm --prefix frontend run typecheck
 npm --prefix frontend run build
+python scripts/check-ui.py
 ```
 
 API tests use an isolated in-memory SQLite database and do not modify MySQL.
