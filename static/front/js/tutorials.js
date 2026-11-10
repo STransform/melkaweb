@@ -65,9 +65,20 @@
   });
   const progress = root.querySelector('.tutorial-progress');
   const article = root.querySelector('.tutorial-prose');
+  const sectionLinks = Array.from(root.querySelectorAll('.tutorial-sidebar nav[aria-label="On this page"] a'));
+  const sections = sectionLinks.map(link => ({link, target:document.getElementById(link.hash.slice(1))})).filter(item => item.target);
+  let scrollPending = false;
   function updateProgress() {
     const rect = article.getBoundingClientRect();
     progress.style.width = Math.max(0, Math.min(100, (innerHeight - rect.top) / Math.max(1, rect.height) * 100)) + '%';
+    let current = sections[0];
+    sections.forEach(item => { if (item.target.getBoundingClientRect().top <= 160) current = item; });
+    sections.forEach(item => {
+      if (item === current) item.link.setAttribute('aria-current','location');
+      else item.link.removeAttribute('aria-current');
+    });
+    scrollPending = false;
   }
-  addEventListener('scroll', updateProgress, {passive:true}); updateProgress();
+  addEventListener('scroll', function () { if (!scrollPending) { scrollPending = true; requestAnimationFrame(updateProgress); } }, {passive:true});
+  addEventListener('resize', updateProgress); updateProgress();
 })();

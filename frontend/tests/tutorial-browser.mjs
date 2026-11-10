@@ -22,6 +22,10 @@ try {
   });
   await page.goto('https://melka.test/tutorials/docker/');
   await expect(page.getByRole('heading',{name:'Deploy Django with Docker'})).toBeVisible();
+  const contents=page.getByRole('navigation',{name:'On this page'});
+  await expect(contents.getByRole('link',{name:'What we will build'})).toHaveAttribute('aria-current','location');
+  await contents.getByRole('link',{name:'Configure the application'}).click();
+  await expect(contents.getByRole('link',{name:'Configure the application'})).toHaveAttribute('aria-current','location');
   await expect(page.getByRole('button',{name:'Copy code'}).first()).toBeVisible();
   await expect(page.locator('.tutorial-code-language').first()).toHaveText('Python');
   await page.addStyleTag({content:'.tutorial-prose code.hljs{color:#212529;background:#fff}'});
@@ -40,15 +44,13 @@ try {
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'No mobile horizontal overflow');
   await page.screenshot({path:'/tmp/melka-tutorial-mobile.png',fullPage:true});
-  // Posts without Markdown headings must not reserve an empty sidebar column.
+  // Posts without headings receive useful navigation instead of an empty sidebar.
   content=tutorialNodes({tutorial:{...post,content:'A simple guide for Java developers.\n\nRead this comfortably without an empty navigation column.'}},'').find(n=>n.args==='content').body[0].text;
   await page.setViewportSize({width:1920,height:1080});
   await page.goto('https://melka.test/tutorials/docker/');
-  assert.equal(await page.locator('.tutorial-sidebar').count(),0);
-  const head=await page.locator('.tutorial-article-head').boundingBox();
+  assert.equal(await page.locator('.tutorial-sidebar').count(),1);
+  await expect(page.getByRole('navigation',{name:'On this page'}).getByRole('link',{name:'Read tutorial',exact:true})).toHaveAttribute('href','#tutorial-content');
   const prose=await page.locator('.tutorial-prose').boundingBox();
-  assert.ok(Math.abs(head.x-prose.x)<2,'Title and article align without a sidebar');
-  assert.ok(Math.abs(prose.x-(1920-prose.width)/2)<2,'Reading column is centred');
   assert.ok(prose.width>=900,'Desktop uses a generous reading width');
   await page.screenshot({path:'/tmp/melka-tutorial-centred.png',fullPage:true});
   await page.setViewportSize({width:390,height:844});
@@ -56,7 +58,9 @@ try {
   content=tutorialNodes({tutorial_library:{items:[post,{...post,id:2,title:'Understanding cloud security',difficulty:'Intermediate',category:'Security'}],categories:['DevOps','Security'],q:'',category:'',difficulty:'',page:1,pages:1,total:2}},'').find(n=>n.args==='content').body[0].text;
   await page.goto('https://melka.test/tutorials/');
   await expect(page.getByRole('heading',{name:'Learn. Build. Go further.'})).toBeVisible();
-  assert.equal(await page.locator('.tutorial-card').count(),2);
+  assert.equal(await page.locator('.tutorial-feed-entry').count(),2);
+  await expect(page.locator('.tutorial-feed-excerpt').first()).toContainText('Build a repeatable deployment');
+  await expect(page.getByRole('link',{name:'Read more',exact:true}).first()).toHaveAttribute('href','/tutorials/docker/');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   await page.screenshot({path:'/tmp/melka-library-mobile.png',fullPage:true});
   await page.setViewportSize({width:1440,height:1000});

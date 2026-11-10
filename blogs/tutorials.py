@@ -24,6 +24,7 @@ def article_data(blog, request, include_body=True):
     author = f'{blog.created_by.first_name} {blog.created_by.last_name}'.strip() or 'MelkaTech'
     return {
         'id': blog.pk, 'title': blog.title, 'summary': blog.summary, 'content': blog.content if include_body else '', 'format': blog.content_format,
+        'excerpt_source': blog.content[:4000] if not include_body else '',
         'url': blog.get_absolute_url(), 'canonical': request.build_absolute_uri(blog.get_absolute_url()),
         'image': blog.images.url if blog.images else '', 'category': str(blog.blog_category or ''),
         'tags': [tag.strip() for tag in blog.tags.split(',') if tag.strip()], 'difficulty': blog.difficulty,
