@@ -1,21 +1,21 @@
 /* ==========================================================================
-   Modern About Page Card & Layout Overhaul
+   Clean & Modern About Page Card Styling
    ========================================================================== */
 
 /* Page Background & Spacing */
 .about-content {
-  background: linear-gradient(180deg, #f0f7ff 0%, #f8fafc 180px, #ffffff 100%) !important;
-  padding: 60px 0 90px !important;
+  background: transparent !important;
+  padding: 40px 0 80px !important;
   position: relative;
 }
 
 /* Main Section Heading */
 .about-content .about-title {
   font-family: "Playfair Display", Georgia, serif !important;
-  font-size: clamp(2.2rem, 4vw, 3rem) !important;
-  font-weight: 800 !important;
-  color: #0c2340 !important;
-  letter-spacing: -0.02em !important;
+  font-size: clamp(2.4rem, 4.5vw, 3.2rem) !important;
+  font-weight: 700 !important;
+  color: #0b4f8a !important;
+  letter-spacing: -0.01em !important;
   margin-bottom: 2.5rem !important;
   position: relative !important;
   text-align: center !important;
@@ -25,53 +25,35 @@
 .about-content .about-title::after {
   content: '' !important;
   display: block !important;
-  width: 72px !important;
-  height: 4px !important;
-  background: linear-gradient(90deg, #0284c7, #38bdf8) !important;
-  border-radius: 4px !important;
-  margin: 14px auto 0 !important;
+  width: 64px !important;
+  height: 3px !important;
+  background: #0284c7 !important;
+  border-radius: 3px !important;
+  margin: 12px auto 0 !important;
 }
 
-/* Narrative Container & Row */
+/* Narrative Card Container */
 .about-content .about-row {
-  max-width: 1100px;
+  max-width: 1040px;
   margin: 0 auto !important;
   background: #ffffff;
-  border-radius: 24px;
-  border: 1px solid #e0e7ff;
-  box-shadow: 0 10px 40px -10px rgba(12, 35, 64, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-  padding: 44px 48px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
+  padding: 40px 48px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.about-content .about-row:hover {
-  box-shadow: 0 18px 50px -12px rgba(2, 132, 199, 0.14);
-}
-
-/* Decorative accent bar at top of card */
+/* Top accent border */
 .about-content .about-row::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 5px;
-  background: linear-gradient(90deg, #0284c7 0%, #38bdf8 50%, #818cf8 100%);
-}
-
-/* Subtle corner watermark */
-.about-content .about-row::after {
-  content: '';
-  position: absolute;
-  bottom: -40px;
-  right: -40px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.06) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
+  height: 4px;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
 }
 
 .about-content .about-text-section {
@@ -81,27 +63,26 @@
   z-index: 2;
 }
 
-/* Sub-heading / Highlight Pill & Title */
+/* Sub-heading Pill */
 .about-content .about-text-highlight {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 8px !important;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  font-size: 1.35rem !important;
+  font-size: 1.15rem !important;
   font-weight: 700 !important;
   color: #0369a1 !important;
-  background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%) !important;
+  background: #e0f2fe !important;
   border: 1px solid #bae6fd !important;
-  padding: 8px 20px !important;
+  padding: 6px 18px !important;
   border-radius: 9999px !important;
-  margin-bottom: 1.75rem !important;
+  margin-bottom: 1.6rem !important;
   line-height: 1.4 !important;
-  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.06) !important;
 }
 
 .about-content .about-text-highlight::before {
   content: '✦';
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #0284c7;
 }
 
@@ -109,10 +90,10 @@
   display: none !important;
 }
 
-/* Body Prose Typography */
+/* Narrative Body Text */
 .about-content .about-description.otech-font {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  font-size: 1.15rem !important;
+  font-size: 1.12rem !important;
   line-height: 1.95 !important;
   color: #334155 !important;
   text-align: justify !important;
@@ -121,218 +102,33 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  letter-spacing: -0.005em !important;
 }
 
-/* First line drop/lead styling */
 .about-content .about-description.otech-font::first-letter {
   font-family: "Playfair Display", Georgia, serif;
-  font-size: 2.8rem;
+  font-size: 2.6rem;
   font-weight: 700;
   float: left;
-  line-height: 0.9;
+  line-height: 0.88;
   margin-right: 12px;
   margin-top: 4px;
   color: #0284c7;
 }
 
-/* Mission / Vision / Values Section */
-.mvv-section {
-  background: #ffffff !important;
-  padding: 85px 0 !important;
-  border-top: 1px solid #f1f5f9;
-}
-
-.mvv-title {
-  font-family: "Playfair Display", Georgia, serif !important;
-  font-size: clamp(2rem, 3.5vw, 2.6rem) !important;
-  font-weight: 800 !important;
-  color: #0c2340 !important;
-  text-align: center !important;
-  margin-bottom: 3.5rem !important;
-  position: relative !important;
-  display: block !important;
-}
-
-.mvv-title::after {
-  content: '' !important;
-  display: block !important;
-  width: 60px !important;
-  height: 4px !important;
-  background: linear-gradient(90deg, #0284c7, #38bdf8) !important;
-  border-radius: 4px !important;
-  margin: 14px auto 0 !important;
-}
-
-.mvv-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
-}
-
-.mvv-card {
-  background: #f8fafc !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 20px !important;
-  padding: 2.4rem 2rem !important;
-  height: 100% !important;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-.mvv-card::before {
-  content: '' !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #0284c7, #38bdf8);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.mvv-card:hover {
-  transform: translateY(-5px) !important;
-  box-shadow: 0 16px 36px rgba(2, 132, 199, 0.08) !important;
-  border-color: #cbd5e1 !important;
-}
-
-.mvv-card:hover::before {
-  opacity: 1 !important;
-}
-
-.mvv-card .card-icon {
-  width: 54px !important;
-  height: 54px !important;
-  border-radius: 14px !important;
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.12), rgba(56, 189, 248, 0.2)) !important;
-  color: #0284c7 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 1.5rem !important;
-  margin-bottom: 1.4rem !important;
-}
-
-.mvv-card .card-title {
-  font-family: "Inter", sans-serif !important;
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  color: #0f172a !important;
-  margin-bottom: 0.85rem !important;
-}
-
-.mvv-card .card-text {
-  font-size: 0.98rem !important;
-  line-height: 1.75 !important;
-  color: #475569 !important;
-  text-align: left !important;
-  margin: 0 !important;
-}
-
-/* Team Section */
-.team-section {
-  background: #f8fafc !important;
-  padding: 85px 0 !important;
-}
-
-.team-title {
-  font-family: "Playfair Display", Georgia, serif !important;
-  font-size: clamp(2rem, 3.5vw, 2.6rem) !important;
-  font-weight: 800 !important;
-  color: #0c2340 !important;
-  text-align: center !important;
-  margin-bottom: 3.5rem !important;
-  position: relative !important;
-  display: block !important;
-}
-
-.team-title::after {
-  content: '' !important;
-  display: block !important;
-  width: 60px !important;
-  height: 4px !important;
-  background: linear-gradient(90deg, #0284c7, #38bdf8) !important;
-  border-radius: 4px !important;
-  margin: 14px auto 0 !important;
-}
-
-.team-card {
-  background: #ffffff !important;
-  border-radius: 18px !important;
-  overflow: hidden !important;
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
-  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
-  margin-bottom: 24px !important;
-}
-
-.team-card:hover {
-  transform: translateY(-6px) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08) !important;
-}
-
-.team-card-image {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 1;
-  background: #e2e8f0;
-}
-
-.team-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.35s ease;
-}
-
-.team-card:hover .team-card-image img {
-  transform: scale(1.05);
-}
-
-.team-card-content {
-  padding: 1.5rem !important;
-  text-align: center !important;
-  background: #ffffff !important;
-}
-
-.team-member-name {
-  font-family: "Inter", sans-serif !important;
-  font-size: 1.15rem !important;
-  font-weight: 700 !important;
-  color: #0f172a !important;
-  margin-bottom: 0.35rem !important;
-}
-
-.team-member-name::after {
-  display: none !important;
-}
-
-.team-member-role {
-  color: #0284c7 !important;
-  font-weight: 600 !important;
-  font-size: 0.85rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  margin: 0 !important;
-}
-
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
   .about-content {
-    padding: 40px 16px 60px !important;
+    padding: 30px 16px 60px !important;
   }
   .about-content .about-row {
-    padding: 28px 20px !important;
-    border-radius: 18px !important;
+    padding: 24px 20px !important;
+    border-radius: 16px !important;
   }
   .about-content .about-description.otech-font {
-    font-size: 1.02rem !important;
+    font-size: 1rem !important;
     line-height: 1.8 !important;
   }
   .about-content .about-description.otech-font::first-letter {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 }
