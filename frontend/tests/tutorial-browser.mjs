@@ -40,6 +40,19 @@ try {
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'No mobile horizontal overflow');
   await page.screenshot({path:'/tmp/melka-tutorial-mobile.png',fullPage:true});
+  // Posts without Markdown headings must not reserve an empty sidebar column.
+  content=tutorialNodes({tutorial:{...post,content:'A simple guide for Java developers.\n\nRead this comfortably without an empty navigation column.'}},'').find(n=>n.args==='content').body[0].text;
+  await page.setViewportSize({width:1920,height:1080});
+  await page.goto('https://melka.test/tutorials/docker/');
+  assert.equal(await page.locator('.tutorial-sidebar').count(),0);
+  const head=await page.locator('.tutorial-article-head').boundingBox();
+  const prose=await page.locator('.tutorial-prose').boundingBox();
+  assert.ok(Math.abs(head.x-prose.x)<2,'Title and article align without a sidebar');
+  assert.ok(Math.abs(prose.x-(1920-prose.width)/2)<2,'Reading column is centred');
+  assert.ok(prose.width>=900,'Desktop uses a generous reading width');
+  await page.screenshot({path:'/tmp/melka-tutorial-centred.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   content=tutorialNodes({tutorial_library:{items:[post,{...post,id:2,title:'Understanding cloud security',difficulty:'Intermediate',category:'Security'}],categories:['DevOps','Security'],q:'',category:'',difficulty:'',page:1,pages:1,total:2}},'').find(n=>n.args==='content').body[0].text;
   await page.goto('https://melka.test/tutorials/');
   await expect(page.getByRole('heading',{name:'Learn. Build. Go further.'})).toBeVisible();
