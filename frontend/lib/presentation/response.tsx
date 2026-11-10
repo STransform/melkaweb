@@ -31,10 +31,18 @@ export function presentationDocument(payload: Parameters<typeof renderPresentati
     html = html.replace('</head>', tutorialHead(payload.context) + '</head>');
   }
   if (payload.template === 'front/about.html') {
+    const heroHeader = `<section class="about-hero-header">
+      <div class="container">
+        <span class="about-hero-badge">Discover MelkaTech</span>
+        <h1 class="about-hero-title">Engineering <span>Excellence</span> &amp; Innovation</h1>
+        <p class="about-hero-subtitle">Learn about our mission, vision, values, and the dedicated team driving transformative digital solutions.</p>
+      </div>
+    </section>`;
+    html = html.replace('<section class="about-content">', `${heroHeader}<section class="about-content">`);
     html = html.replace('</body>', `<style>
       .about-content .about-row:not(:has(.gallery-image)) > .col-lg-6:has(.image-gallery-container){display:none}
       .about-content .about-row:not(:has(.gallery-image)) > .about-text-section{width:100%;padding-right:0}
-    </style></body>`);
+    </style><link rel="stylesheet" href="/static/front/css/about-refresh.css"></body>`);
   }
   if (payload.template === 'front/index.html') {
     html = html.replace('</body>', '<link rel="stylesheet" href="/static/front/css/hero-refresh.css"></body>');

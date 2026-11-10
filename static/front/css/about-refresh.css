@@ -1,0 +1,315 @@
+/* Enhanced About Page Styling */
+.about-hero-header {
+  position: relative;
+  background: radial-gradient(ellipse at 70% 30%, rgba(0, 119, 190, 0.18) 0%, transparent 60%),
+              linear-gradient(135deg, #071933 0%, #0d2b52 50%, #0a3d68 100%);
+  color: #ffffff;
+  padding: 100px 0 90px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.about-hero-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.about-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #7dd3fc;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.about-hero-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.about-hero-title span {
+  background: linear-gradient(135deg, #38bdf8 0%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-hero-subtitle {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: #cbd5e1;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* About Content & Narrative Section */
+.about-content {
+  background: #f8fafc;
+  padding: 90px 0 80px;
+  position: relative;
+}
+
+.about-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: #0f172a !important;
+  margin-bottom: 2rem;
+  position: relative;
+  text-align: center;
+}
+
+.about-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #0077be, #38bdf8);
+  border-radius: 2px;
+  margin: 12px auto 0;
+}
+
+.about-text-highlight {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0077be;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  position: relative;
+  border-left: 4px solid #0077be;
+  padding-left: 1rem;
+}
+
+.about-text-highlight::after {
+  display: none !important;
+}
+
+.about-description.otech-font {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: #334155;
+  text-align: left;
+  background: #ffffff;
+  padding: 2.2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e2e8f0;
+}
+
+/* Mission / Vision / Values Section */
+.mvv-section {
+  background: #ffffff;
+  padding: 90px 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.mvv-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 3.5rem;
+  position: relative;
+  display: block;
+}
+
+.mvv-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #0077be, #38bdf8);
+  border-radius: 2px;
+  margin: 12px auto 0;
+}
+
+.mvv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-top: 20px;
+}
+
+.mvv-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2.2rem;
+  height: 100%;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.mvv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0077be, #38bdf8);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.mvv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(0, 119, 190, 0.08);
+  border-color: #cbd5e1;
+}
+
+.mvv-card:hover::before {
+  opacity: 1;
+}
+
+.mvv-card .card-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(56, 189, 248, 0.15));
+  color: #0077be;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.mvv-card .card-title {
+  font-family: "Inter", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1rem;
+}
+
+.mvv-card .card-text {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #475569;
+  text-align: left;
+  margin: 0;
+}
+
+/* Team Section */
+.team-section {
+  background: #f8fafc;
+  padding: 90px 0;
+}
+
+.team-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 3.5rem;
+  position: relative;
+  display: block;
+}
+
+.team-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #0077be, #38bdf8);
+  border-radius: 2px;
+  margin: 12px auto 0;
+}
+
+.team-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  margin-bottom: 24px;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+}
+
+.team-card-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: #e2e8f0;
+}
+
+.team-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.team-card:hover .team-card-image img {
+  transform: scale(1.05);
+}
+
+.team-card-content {
+  padding: 1.5rem;
+  text-align: center;
+  background: #ffffff;
+}
+
+.team-member-name {
+  font-family: "Inter", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.35rem;
+}
+
+.team-member-name::after {
+  display: none !important;
+}
+
+.team-member-role {
+  color: #0077be;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .about-hero-header {
+    padding: 70px 0 60px;
+  }
+  .about-content, .mvv-section, .team-section {
+    padding: 60px 0;
+  }
+  .about-description.otech-font {
+    padding: 1.5rem;
+  }
+}
