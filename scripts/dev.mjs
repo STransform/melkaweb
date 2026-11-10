@@ -16,7 +16,7 @@ const grouped = process.platform !== 'win32';
 const backend = spawn(python, ['manage.py', 'runserver', `127.0.0.1:${backendPort}`], {
   cwd: root, stdio: 'inherit', detached: grouped, env: { ...process.env, FRONTEND_ORIGINS: origins },
 });
-const frontend = spawn(process.execPath, [next, 'dev', '--hostname', '127.0.0.1', '--port', frontendPort], {
+const frontend = spawn(process.execPath, [next, 'dev', '--webpack', '--hostname', '127.0.0.1', '--port', frontendPort], {
   cwd: `${root}frontend`, stdio: 'inherit', detached: grouped, env: { ...process.env, DJANGO_ORIGIN: `http://127.0.0.1:${backendPort}` },
 });
 let stopping = false;

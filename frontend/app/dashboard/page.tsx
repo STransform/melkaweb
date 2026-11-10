@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
+import { getAdminStats } from '../../lib/admin-stats';
 
-type Stats = { counts: Record<string, number>; messages: { id: number; full_name: string; email: string; phone: string; subject: string; sent_date: string }[] };
-async function getStats(): Promise<Stats> {
+async function getStats() {
   const incoming = await headers();
-  const response = await fetch(`${process.env.DJANGO_ORIGIN || 'http://127.0.0.1:8000'}/api/frontend/admin-stats/`, { cache: 'no-store', headers: { cookie: incoming.get('cookie') || '' } });
-  if (!response.ok) throw new Error('Unable to load dashboard statistics.');
-  return response.json();
+  const result = await getAdminStats(incoming.get('cookie') || '');
+  if (!result.ok || !result.data) throw new Error('Unable to load dashboard statistics.');
+  return result.data;
 }
 const cards = [
   ['Gallery Images', 'galleries', 'GalleryImage', 'primary', 'bx bx-image'], ['Videos', 'videos', 'GalleryVideo', 'secondary', 'bx bx-video'], ['Documents', 'documents', 'Document', 'warning', 'bx bx-file'], ['Vacancies', 'jobs', 'Job', 'success', 'bx bx-briefcase'], ['Blogs', 'blogs', 'Blog', 'secondary', 'bx bx-news'], ['Contact Us messages', 'messages', 'ContactUs', 'success', 'bx bx-envelope'],
