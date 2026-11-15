@@ -1,6 +1,17 @@
 (function () {
   'use strict';
   const root = document.querySelector('[data-tutorial-id]');
+  document.querySelectorAll('.tutorial-prose pre').forEach(function (pre) {
+    const code = pre.querySelector('code');
+    if (!code) return;
+    const button = pre.closest('.tutorial-code-block')?.querySelector('[data-copy-tutorial-code]') || document.createElement('button');
+    button.type = 'button'; button.className = 'tutorial-copy-code'; button.textContent = 'Copy code';
+    button.addEventListener('click', async function () {
+      try { await navigator.clipboard.writeText(code.textContent); button.textContent = 'Copied!'; setTimeout(() => { button.textContent = 'Copy code'; }, 1800); }
+      catch (_) { button.textContent = 'Select code to copy'; }
+    });
+    if (!button.isConnected) pre.appendChild(button);
+  });
   if (!root) return;
   const feedback = root.querySelector('[data-feedback]');
   const id = root.dataset.tutorialId;
@@ -41,17 +52,6 @@
   root.querySelector('[data-copy-link]').addEventListener('click', async function () {
     try { await navigator.clipboard.writeText(root.dataset.canonical); feedback.textContent = 'Link copied. Ready to share!'; }
     catch (_) { feedback.textContent = 'Copy this link: ' + root.dataset.canonical; }
-  });
-  root.querySelectorAll('.tutorial-prose pre').forEach(function (pre) {
-    const code = pre.querySelector('code');
-    if (!code) return;
-    const button = pre.closest('.tutorial-code-block')?.querySelector('[data-copy-tutorial-code]') || document.createElement('button');
-    button.type = 'button'; button.className = 'tutorial-copy-code'; button.textContent = 'Copy code';
-    button.addEventListener('click', async function () {
-      try { await navigator.clipboard.writeText(code.textContent); button.textContent = 'Copied!'; setTimeout(() => { button.textContent = 'Copy code'; }, 1800); }
-      catch (_) { feedback.textContent = 'Clipboard unavailable. Select and copy the code manually.'; }
-    });
-    if (!button.isConnected) pre.appendChild(button);
   });
   const form = root.querySelector('[data-comment-form]');
   form.addEventListener('submit', async function (event) {

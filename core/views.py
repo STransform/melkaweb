@@ -75,7 +75,7 @@ def index(request):
     context = {
         'index':True,
         'recent_blogs': recent_blogs,
-        'recent_tutorials': [article_data(blog, request, False) for blog in published()[:3]],
+        'recent_tutorials': [article_data(blog, request, False) for blog in published()[:4]],
         'recent_news': recent_news,
         'recent_documents': recent_documents,
         'gallery_images': gallery_images,
