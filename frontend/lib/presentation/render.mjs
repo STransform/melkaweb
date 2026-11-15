@@ -7,7 +7,7 @@
 import trees from '../../ui/presentation.json' with { type: 'json' };
 import { homeHero } from './home-hero.mjs';
 import { homeAbout } from './home-about.mjs';
-import { serviceCards } from './services.mjs';
+import { serviceCards, serviceHeader, serviceNavigation } from './services.mjs';
 import { tutorialNodes, recentTutorialNodes } from './tutorials.mjs';
 
 const heroTemplate = 'front/landing_page/01hero_carousel.html';
@@ -15,6 +15,8 @@ const heroNodes = homeHero(trees[heroTemplate]);
 const aboutTemplate = 'front/landing_page/02stats_section.html';
 const aboutNodes = homeAbout(trees[aboutTemplate]);
 const serviceOverrides = {
+  'front/navbar.html': serviceNavigation(trees['front/navbar.html']),
+  'front/services_page/01header.html': serviceHeader(),
   'front/landing_page/03our_services.html': serviceCards(),
   'front/services_page/02cards.html': serviceCards('services', false),
 };

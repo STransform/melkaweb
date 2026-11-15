@@ -23,9 +23,9 @@ def bureau_structure(request): # Render structure page
 
 class ServicesPage(View): # Render service page 
     def get(self, request, **kwargs):
-        services = Service.objects.all()
+        services = Service.objects.order_by('pk')
         return render(request, "front/services.html", {'services':services, 
-        'service_page': True, 'page_title': 'Our Services', 'page_subtitle': 'Delivering impactful solutions that turn your vision into reality.'})
+        'service_page': True, 'page_title': 'Our Services', 'page_subtitle': 'From your first idea to your next stage of growth, discover technology services built around your business.'})
 
 
 class TechnologyPage(View): # Render technology page 

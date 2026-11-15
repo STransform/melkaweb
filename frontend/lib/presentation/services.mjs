@@ -30,10 +30,11 @@ const styles = `<style>
 
 export function serviceCards(collection = 'homepage_services', home = true) {
   const content = [
-    text(styles + '<section class="managed-services" aria-label="Our services"><div class="container">'),
+    text(styles + `<section class="managed-services${home ? '' : ' services-catalogue'}"${home ? '' : ' id="service-catalogue"'} aria-label="Our services"><div class="container">`),
     ...(home ? [text('<header class="services-intro"><p class="services-eyebrow">'), trans('What we do'),
       text('</p><h2 class="services-heading">'), trans('Our Services'),
       text('</h2><p>'), trans('Technology solutions built around your business.'), text('</p></header>')] : []),
+    ...(!home ? [text('<header class="services-catalogue-head"><div><p class="services-page-eyebrow">WHAT WE DO</p><h2>Find the right solution for your business.</h2></div><span>'), value('services|length'), text(' services to explore</span></header>')] : []),
     text('<div class="managed-services-grid">'),
     { op: 'for', args: `service in ${collection}`, empty: [], body: [
       text('<article class="managed-service"><div class="managed-service-top"><div class="managed-service-icon" aria-hidden="true"><i class="fas '),
@@ -48,6 +49,40 @@ export function serviceCards(collection = 'homepage_services', home = true) {
     text('</div>'),
     ...(!home ? [{ op: 'if', branches: [{ test: `not ${collection}`, body: [text('<p class="services-empty">'), trans('Our services will be available here soon.'), text('</p>')] }] }] : []),
     text('</div></section>'),
+    ...(!home ? [text('<section class="services-project-callout"><div class="container"><div><p class="services-page-eyebrow">LET’S BUILD SOMETHING USEFUL</p><h2>Have a challenge in mind?</h2><p>Tell us what you want to achieve. We’ll help you find a way forward.</p></div><a class="services-primary-action" href="'), {op:'url', args:"'contact_us'"}, text('">Start a conversation <span aria-hidden="true">↗</span></a></div></section>')] : []),
   ];
   return home ? [{ op: 'if', branches: [{ test: collection, body: content }] }] : content;
+}
+
+// Retain both configured and fallback navigation, with one direct Services link.
+export function serviceNavigation(nodes) {
+  const result = structuredClone(nodes);
+  function visit(list) {
+    for (let i = 0; i < list.length; i++) {
+      const node = list[i];
+      if (node.op === 'trans' && /^['"]Services['"]$/.test(node.args)) {
+        let start = i - 1;
+        while (start >= 0 && !list[start].text?.includes('<li class="dropdown">')) start--;
+        if (start >= 0 && list[i + 1]?.text?.includes('dropdown-menu')) {
+          const opening = list[start].text.lastIndexOf('<li class="dropdown">');
+          list[start].text = list[start].text.slice(0, opening) + list[start].text.slice(opening).replace('<li class="dropdown">', '<li class="services-menu">');
+          let end = i + 2;
+          while (end < list.length && !list[end].text?.includes('</li>')) end++;
+          if (end < list.length) {
+            const suffix = list[end].text.slice(list[end].text.indexOf('</li>') + 5);
+            list.splice(i + 1, end - i, text('</a></li>' + suffix));
+          }
+        }
+      }
+      if (node.body) visit(node.body);
+      if (node.empty) visit(node.empty);
+      for (const branch of node.branches || []) visit(branch.body);
+    }
+  }
+  visit(result);
+  return result;
+}
+
+export function serviceHeader() {
+  return [text(`<link rel="stylesheet" href="/static/front/css/services.css"><header class="services-page-hero"><div class="container"><nav class="services-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Services</span></nav><div class="services-page-hero-layout"><div><p class="services-page-eyebrow">EXPERTISE THAT MOVES YOU FORWARD</p><h1>`), value('page_title'), text('</h1><p class="services-page-deck">'), value('page_subtitle'), text('</p><div class="services-page-actions"><a class="services-primary-action" href="#service-catalogue">Explore our services <span aria-hidden="true">↓</span></a><a class="services-secondary-action" href="'), {op:'url',args:"'contact_us'"}, text(`">Let’s talk about your project ↗</a></div></div><div class="services-page-visual" aria-hidden="true"><div class="services-visual-symbol">&lt;/&gt;</div><span>IDEA → SOLUTION → IMPACT</span><div class="services-visual-labels"><span>Thoughtful design</span><span>Practical technology</span><span>Built around you</span></div></div></div></div></header>`)];
 }

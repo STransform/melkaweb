@@ -215,6 +215,29 @@ class PresentationTests(TestCase):
         page = BeautifulSoup(self.render_frontend(self.payload('/')), 'html.parser')
         self.assertIsNone(page.select_one('.managed-services'))
 
+    def test_services_navigation_is_direct_and_catalogue_lists_all_services(self):
+        from about_us.models import Service
+        Service.objects.create(title='API engineering', content='Secure integrations for your business.')
+        Service.objects.create(title='Cloud operations', content='Reliable infrastructure and support.')
+        payload = self.payload('/about-us/services/')
+        for pages in [None, {'services': True}]:
+            with self.subTest(pages=pages):
+                payload['context']['pages'] = pages
+                page = BeautifulSoup(self.render_frontend(payload), 'html.parser')
+                link = page.select_one('li.services-menu > a')
+                self.assertIsNotNone(link)
+                self.assertEqual(link['href'], '/about-us/services/')
+                self.assertIn('active', link.get('class', []))
+                self.assertIsNone(link.parent.select_one('ul'))
+                self.assertNotIn('dropdown', link.parent.get('class', []))
+                self.assertEqual([item.get_text() for item in page.select('.managed-service h3')],
+                                 ['API engineering', 'Cloud operations'])
+                self.assertIn('Secure integrations for your business.', page.get_text())
+                self.assertIn('Reliable infrastructure and support.', page.get_text())
+                self.assertEqual(page.select_one('h1').get_text(), 'Our Services')
+                self.assertIn('2 services to explore', page.get_text())
+                self.assertIsNotNone(page.select_one('a[href="#service-catalogue"]'))
+
     def test_about_can_be_created_and_edited_without_images(self):
         self.client.force_login(self.staff)
         schema = self.client.get('/api/frontend/admin/About/?schema=create').json()
