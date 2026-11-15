@@ -54,12 +54,25 @@ export function serviceCards(collection = 'homepage_services', home = true) {
   return home ? [{ op: 'if', branches: [{ test: collection, body: content }] }] : content;
 }
 
-// Retain both configured and fallback navigation, with one direct Services link.
+// Retain configured and fallback navigation, with direct Services and Gallery hidden.
 export function serviceNavigation(nodes) {
   const result = structuredClone(nodes);
   function visit(list) {
     for (let i = 0; i < list.length; i++) {
       const node = list[i];
+      if (node.op === 'trans' && /^['"]Gallery['"]$/.test(node.args)) {
+        let start = i - 1;
+        while (start >= 0 && !list[start].text?.includes('<li class="dropdown">')) start--;
+        let end = i + 1;
+        while (end < list.length && !list[end].text?.includes('</li>')) end++;
+        if (start >= 0 && end < list.length) {
+          const prefix = list[start].text.slice(0, list[start].text.lastIndexOf('<li class="dropdown">'));
+          const suffix = list[end].text.slice(list[end].text.indexOf('</li>') + 5);
+          list.splice(start, end - start + 1, text(prefix + suffix));
+          i = start - 1;
+          continue;
+        }
+      }
       if (node.op === 'trans' && /^['"]Services['"]$/.test(node.args)) {
         let start = i - 1;
         while (start >= 0 && !list[start].text?.includes('<li class="dropdown">')) start--;
