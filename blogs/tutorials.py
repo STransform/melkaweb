@@ -47,7 +47,7 @@ def library_data(request):
     return {'items': [article_data(row, request, False) for row in page], 'page': page.number,
             'pages': page.paginator.num_pages, 'total': page.paginator.count,
             'categories': list(BlogCategory.objects.filter(blog__published_status='Published').distinct().values_list('name', flat=True)),
-            'q': q, 'category': category, 'difficulty': difficulty, 'canonical': request.build_absolute_uri('/tutorials/')}
+            'q': q, 'category': category, 'difficulty': difficulty, 'canonical': request.build_absolute_uri('/tutorials/?browse=1')}
 
 def visitor(request):
     if not request.session.get('tutorial_visitor'):

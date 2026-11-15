@@ -151,6 +151,25 @@ class TutorialTests(TestCase):
         self.assertIn('docker compose up',result.stdout)
         self.assertIn('Share on LinkedIn',result.stdout)
 
+    def test_blog_menu_opens_latest_published_article_and_archive_remains_available(self):
+        for path in ['/tutorials/', '/blogs/blogs/']:
+            data = self.page(path).json()['context']
+            self.assertEqual(data['tutorial']['id'], self.post.pk)
+            self.assertEqual(data['tutorial']['content'], self.post.content)
+            self.assertNotIn('tutorial_library', data)
+            self.assertEqual(data['tutorial']['posts'][0]['url'], self.post.get_absolute_url())
+            self.assertNotIn(self.draft.pk, [post['id'] for post in data['tutorial']['posts']])
+        archive = self.page('/tutorials/?browse=1').json()['context']
+        self.assertEqual(archive['tutorial_library']['total'], 1)
+        self.assertNotIn('tutorial', archive)
+        self.assertEqual(self.page(self.post.get_absolute_url()).json()['context']['tutorial']['id'], self.post.pk)
+
+    def test_blog_menu_with_no_publications_shows_empty_archive(self):
+        Blog.objects.filter(pk=self.post.pk).update(published_status='Hold')
+        data = self.page('/tutorials/').json()['context']
+        self.assertEqual(data['tutorial_library']['total'], 0)
+        self.assertNotIn('tutorial', data)
+
     def test_homepage_tutorial_cards_support_optional_covers(self):
         payload = self.page('/').json()
         self.assertEqual(payload['context']['recent_tutorials'][0]['title'], self.post.title)

@@ -45,6 +45,8 @@ test('published content renders into homepage cards and the article reader witho
   assert.match(article,/About the author/);
   assert.match(article,/Backend developer/);
   assert.match(article,/tutorial-rail/);
+  assert.match(article,/aria-label="Blog posts"/);
+  assert.match(article,/href="\/tutorials\/\?browse=1"/);
   assert.doesNotMatch(article,/<script>alert/);
   const withCover = recentTutorialNodes({recent_tutorials:[{...post,image:'/media/redis.jpg'}]})[0].text;
   assert.match(withCover,/<img[^>]+src="\/media\/redis.jpg"/);
