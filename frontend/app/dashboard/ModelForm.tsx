@@ -57,6 +57,12 @@ export default function ModelForm({
       setErrors({'__all__':['Please wait for the screenshot upload to finish before saving.']});
       return;
     }
+    for (const editor of event.currentTarget.querySelectorAll('.tutorial-editor')) {
+      if (!editor.dispatchEvent(new Event('prepare-tutorial-save', {cancelable:true}))) {
+        setErrors({'__all__':['Please correct the YouTube embed code before saving. Nothing was saved.']});
+        return;
+      }
+    }
     setPending(true);
     setErrors({});
     try {

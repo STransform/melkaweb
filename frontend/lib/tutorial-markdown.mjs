@@ -16,10 +16,37 @@ export function tutorialMarkdown(source = '', format = 'markdown') {
     ? (/<[a-z][\s\S]*>/i.test(input) ? input : `<p>${escape(input).replaceAll('\n', '<br>')}</p>`)
     : marked.parse(input, { renderer, gfm: true, breaks: false });
   let html = sanitize(raw, {
-    allowedTags: sanitize.defaults.allowedTags.concat(['img', 'details', 'summary', 'kbd', 'figure', 'figcaption']),
-    allowedAttributes: { a: ['href', 'title', 'rel'], img: ['src', 'alt', 'title', 'loading'], code: ['class'], span: ['class'], th: ['align'], td: ['align'] },
+    allowedTags: sanitize.defaults.allowedTags.concat(['img', 'details', 'summary', 'kbd', 'figure', 'figcaption', 'iframe']),
+    allowedAttributes: { a: ['href', 'title', 'rel'], img: ['src', 'alt', 'title', 'loading'], code: ['class'], span: ['class'], th: ['align'], td: ['align'], iframe: ['src', 'title', 'loading', 'allow', 'allowfullscreen', 'referrerpolicy', 'style'] },
     allowedSchemes: ['http', 'https', 'mailto'], allowProtocolRelative: false,
-    transformTags: { a: sanitize.simpleTransform('a', { rel: 'noopener noreferrer' }), img: sanitize.simpleTransform('img', { loading: 'lazy' }) },
+    transformTags: {
+      a: sanitize.simpleTransform('a', { rel: 'noopener noreferrer' }),
+      img: sanitize.simpleTransform('img', { loading: 'lazy' }),
+      iframe: (_tag, attrs) => {
+        // Rebuild trusted YouTube embeds without authored scripts or attributes.
+        let url;
+        try { url = new URL(attrs.src); } catch { return { tagName: 'span', attribs: {} }; }
+        if (url.protocol !== 'https:' || url.port || url.username || url.password ||
+            !['www.youtube.com', 'youtube.com', 'www.youtube-nocookie.com', 'youtube-nocookie.com'].includes(url.hostname) ||
+            !/^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname)) {
+          return { tagName: 'span', attribs: {} };
+        }
+        return { tagName: 'iframe', attribs: {
+          src: `${url.origin}${url.pathname}${url.search}`,
+          title: attrs.title || 'YouTube video', loading: 'lazy',
+          allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+          allowfullscreen: '', referrerpolicy: 'strict-origin-when-cross-origin',
+          style: 'display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0',
+        } };
+      },
+    },
+  });
+  // Own the player dimensions instead of relying on authored iframe sizes or
+  // surrounding theme styles. The complete 16:9 player stays inside its column.
+  html = html.replace(/<iframe\b([^>]*)><\/iframe>/g, (frame, attrs) => {
+    const id = attrs.match(/src="https:\/\/[^/]+\/embed\/([A-Za-z0-9_-]{11})/)?.[1];
+    if (!id) return frame;
+    return `<div class="tutorial-video"><div class="tutorial-video-player">${frame}</div><div class="tutorial-video-footer"><span>Video lesson</span><a href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></div></div>`;
   });
   // Add trusted code chrome after sanitization so authored HTML cannot inject
   // buttons or handlers, and both editor previews and articles share one layout.

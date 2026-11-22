@@ -36,7 +36,7 @@ PRIVATE_FIELDS = {'password', 'session_data', 'email_for_contact_us'}
 
 @lru_cache(maxsize=1)
 def presentations():
-    return json.loads((Path(settings.BASE_DIR) / 'frontend/ui/presentation.json').read_text())
+    return json.loads((Path(settings.BASE_DIR) / 'frontend/ui/presentation.json').read_text(encoding='utf-8'))
 
 
 class PresentationTemplateLoader(BaseLoader):

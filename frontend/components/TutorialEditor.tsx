@@ -18,6 +18,8 @@ export default function TutorialEditor({ name, id, initial, draftKey, required=f
   const [language, setLanguage] = useState('python');
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
+  const [videoEmbed, setVideoEmbed] = useState('');
+  const [videoError, setVideoError] = useState('');
   const input = useRef<HTMLTextAreaElement>(null);
   const imageInput = useRef<HTMLInputElement>(null);
   const currentValue = useRef(initial);
@@ -43,6 +45,43 @@ export default function TutorialEditor({ name, id, initial, draftKey, required=f
     selection.current={start:start+before.length,end:start+before.length+selected.length};
     requestAnimationFrame(() => { element?.focus({preventScroll:true}); element?.setSelectionRange(selection.current.start,selection.current.end); });
   }
+  function insertVideo() {
+    const frame = new DOMParser().parseFromString(videoEmbed, 'text/html').querySelector('iframe');
+    let url:URL;
+    try { url = new URL(frame?.getAttribute('src') || ''); }
+    catch { setVideoError('Paste the iframe embed code from YouTube’s Share → Embed option.'); return false; }
+    if (url.protocol !== 'https:' || url.port || url.username || url.password ||
+        !['www.youtube.com','youtube.com','www.youtube-nocookie.com','youtube-nocookie.com'].includes(url.hostname) ||
+        !/^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname)) {
+      setVideoError('Please use a valid YouTube iframe embed code.'); return false;
+    }
+    const safeFrame = document.createElement('iframe');
+    safeFrame.src = url.href;
+    safeFrame.title = frame?.getAttribute('title') || 'YouTube video';
+    safeFrame.setAttribute('allowfullscreen','');
+    const source = currentValue.current;
+    const position = Math.min(selection.current.end, source.length);
+    const embed = `\n\n${safeFrame.outerHTML}\n\n`;
+    const next = source.slice(0,position) + embed + source.slice(position);
+    update(next);
+    // FormData may be collected in this same event, before React renders.
+    if (input.current) input.current.value = next;
+    selection.current = {start:position+embed.length,end:position+embed.length};
+    setVideoEmbed('');
+    setVideoError('');
+    setPreviewOpen(true);
+    setNotice('YouTube video inserted into the content. Save draft or Publish tutorial to save it to Melka.');
+    return true;
+  }
+  useEffect(() => {
+    const editor = input.current?.closest('.tutorial-editor');
+    if (!editor) return;
+    function prepareSave(event:Event) {
+      if (videoEmbed.trim() && !insertVideo()) event.preventDefault();
+    }
+    editor.addEventListener('prepare-tutorial-save', prepareSave);
+    return () => editor.removeEventListener('prepare-tutorial-save', prepareSave);
+  });
   useEffect(() => {
     if (!previewOpen) return;
     const controller = new AbortController();
@@ -87,6 +126,13 @@ export default function TutorialEditor({ name, id, initial, draftKey, required=f
   }
   return <div className="tutorial-editor" data-uploading={busy}>
     <p style={{fontSize:13,color:'#536a80'}}>Select text and choose a formatting tool. The editor inserts Markdown, and the live preview shows how readers will see it. Your text is saved to Melka when you choose Save draft or Publish tutorial.</p>
+    <div style={{padding:16,marginBottom:16,border:'1px solid #dce3ed',borderRadius:8}}>
+      <label htmlFor={`${id}-youtube`} style={{display:'block',fontWeight:600,marginBottom:8}}>YouTube video embed</label>
+      <p id={`${id}-youtube-help`} style={{fontSize:14,color:'#536a80'}}>On YouTube, choose Share → Embed and copy the iframe code. Paste it here. Save or Publish will include it automatically; Insert video adds it to the content and opens the preview now. Saved videos appear in the content below when you reopen the post.</p>
+      <textarea id={`${id}-youtube`} className="form-control" rows={3} value={videoEmbed} onChange={e=>{setVideoEmbed(e.target.value);setVideoError('');}} placeholder={'<iframe src="https://www.youtube.com/embed/wORBqbpaY3w" title="YouTube video" allowfullscreen></iframe>'} aria-describedby={`${id}-youtube-help`} aria-invalid={!!videoError} />
+      {videoError && <p role="alert" style={{color:'#b42318',marginTop:8}}>{videoError}</p>}
+      <button type="button" className="btn btn-primary" style={{marginTop:10}} disabled={!videoEmbed.trim()} onClick={insertVideo}>Insert video</button>
+    </div>
     <div style={{display:'flex',flexWrap:'wrap',gap:6,marginBottom:10}} role="toolbar" aria-label="Tutorial formatting">
       {tools.map(([label,before,placeholder,after]) => <button className="btn btn-sm btn-light" type="button" key={label} title={`Insert ${label.toLowerCase()} formatting`} onPointerDown={e=>e.preventDefault()} onClick={()=>insert(label==='Code'?`\n\`\`\`${language}\n`:before,label==='Code'?codeSamples[language]:placeholder,after)}>{label}</button>)}
       <select aria-label="Code language" value={language} onChange={e=>setLanguage(e.target.value)} className="form-select form-select-sm" style={{width:'auto'}}>{['python','java','javascript','typescript','bash','yaml','json','sql','dockerfile','plaintext'].map(lang=><option value={lang} key={lang}>{lang}</option>)}</select>

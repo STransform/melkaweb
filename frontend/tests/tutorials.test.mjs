@@ -3,6 +3,26 @@ import assert from 'node:assert/strict';
 import { tutorialMarkdown } from '../lib/tutorial-markdown.mjs';
 import { tutorialHead } from '../lib/presentation/tutorials.mjs';
 
+test('YouTube iframe embeds render responsively in Markdown and legacy posts', () => {
+  for (const format of ['markdown', 'legacy']) {
+    const {html} = tutorialMarkdown('<iframe width="1059" height="595" src="https://www.youtube.com/embed/wORBqbpaY3w" title="Java Records in SpringBoot" onload="alert(1)" srcdoc="unsafe" style="position:fixed" allowfullscreen></iframe>', format);
+    assert.match(html, /<iframe[^>]+src="https:\/\/www.youtube.com\/embed\/wORBqbpaY3w"/);
+    assert.match(html, /title="Java Records in SpringBoot"/);
+    assert.match(html, /width:100%/);
+    assert.match(html, /aspect-ratio:16 \/ 9/);
+    assert.match(html, /allowfullscreen/);
+    assert.doesNotMatch(html, /onload|srcdoc|position|1059|595/);
+  }
+  assert.match(tutorialMarkdown('<iframe src="https://www.youtube-nocookie.com/embed/wORBqbpaY3w?start=30"></iframe>').html, /<iframe/);
+});
+
+test('untrusted iframe sources are removed and code examples remain escaped', () => {
+  for (const src of ['https://evil.example/embed/wORBqbpaY3w', 'https://www.youtube.com.evil.example/embed/wORBqbpaY3w', '//www.youtube.com/embed/wORBqbpaY3w', 'javascript:alert(1)', 'https://www.youtube.com/watch?v=wORBqbpaY3w', 'https://www.youtube.com/embed/invalid', 'https://user@www.youtube.com/embed/wORBqbpaY3w']) {
+    assert.doesNotMatch(tutorialMarkdown(`<iframe src="${src}" srcdoc="unsafe"></iframe>`).html, /<iframe|srcdoc/);
+  }
+  assert.doesNotMatch(tutorialMarkdown('```html\n<iframe src="https://www.youtube.com/embed/wORBqbpaY3w"></iframe>\n```').html, /<iframe/);
+});
+
 test('tutorial Markdown sanitizes HTML and preserves highlighted code and tables', () => {
   const {html,toc}=tutorialMarkdown('## Install\n\n```javascript\nconst secret = "<script>";\n```\n\n| One | Two |\n| --- | --- |\n| a | b |\n\n<script>alert(1)</script><img src="x" onerror="alert(2)">[bad](javascript:alert(3))');
   assert.equal(toc[0].id,'section-1');

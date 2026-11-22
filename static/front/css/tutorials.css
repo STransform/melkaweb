@@ -197,3 +197,14 @@
 .tutorial-next-posts small{display:block;color:var(--t-muted);font-size:11px;margin-bottom:10px}
 .tutorial-next-posts strong{display:block;color:var(--t-ink);font-size:17px;line-height:1.4;overflow-wrap:anywhere}
 @media(max-width:767px){.tutorial-next-posts{grid-template-columns:1fr}}
+
+/* Keep the whole video player, including its right-hand controls, in view. */
+.tutorial-prose,.tutorial-video{min-width:0;max-width:100%}
+.tutorial-prose .tutorial-video{width:100%;margin:28px 0;border:1px solid var(--t-line);border-radius:12px;background:#fff;box-shadow:0 8px 28px #142c430c}
+.tutorial-video-player{position:relative;width:100%;aspect-ratio:16/9;background:#101c2c;border-radius:11px 11px 0 0}
+.tutorial-portal .tutorial-prose .tutorial-video-player iframe{position:absolute!important;inset:0!important;display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;height:100%!important;min-height:0!important;aspect-ratio:auto!important;border:0!important;margin:0!important;padding:0!important;border-radius:11px 11px 0 0}
+.tutorial-video-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;padding:12px 16px;font-size:14px;line-height:1.5}
+.tutorial-video-footer>span{color:var(--t-muted)}
+.tutorial-prose .tutorial-video-footer>a{font-weight:650;text-decoration:none}
+.tutorial-prose .tutorial-video-footer>a:hover{text-decoration:underline}
+@media(max-width:575px){.tutorial-prose .tutorial-video{margin:20px 0}.tutorial-video-footer{padding:10px 12px}}
