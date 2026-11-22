@@ -42,7 +42,7 @@ export default function ModelForm({
   const [pending, setPending] = useState(false);
   const [showTranslations, setShowTranslations] = useState(false);
   const editing = id != null;
-  const saved = params.get('saved');
+  const saved = params?.get('saved');
   useEffect(() => {
     if (!Object.keys(errors).length) return;
     if (Object.keys(errors).some(name => /_(ax|ox)$/.test(name))) setShowTranslations(true);

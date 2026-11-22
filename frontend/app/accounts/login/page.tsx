@@ -91,7 +91,7 @@ export default function LoginPage() {
         )}
 
         <form method="post" onSubmit={submit} aria-busy={loading} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          <input type="hidden" name="next" value={params.get('next') || ''} />
+          <input type="hidden" name="next" value={params?.get('next') || ''} />
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <label htmlFor="id_email" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>

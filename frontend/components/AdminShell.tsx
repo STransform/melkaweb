@@ -24,7 +24,7 @@ const sections: { title: string; entries: Entry[] }[] = [
 ];
 
 export default function AdminShell({ user, title, children }: { user: AdminIdentity; title: string; children: ReactNode }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
